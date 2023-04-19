@@ -99,3 +99,16 @@ if (!function_exists('is_login')) {
         }
     }
 }
+
+if (!function_exists('get_unit')) {
+    /**
+     * Mengambil unit barang berdasarkan id
+     * @param int $id
+     * @return object
+     */
+    function get_unit($id)
+    {
+        $model = model('App\Models\UnitModel');
+        return $model->where('id', $id)->get()->getRow();
+    }
+}

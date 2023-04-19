@@ -25,7 +25,7 @@ class Auth extends BaseController
 
     public function proses()
     {
-        // jika methodnya post lanjut proses 
+        // jika methodnya post lanjut proses
         if ($this->request->getMethod() == 'post') {
             $rules = $this->validate([
                 'username' => 'required|alpha_numeric',

@@ -30,10 +30,21 @@ class ItemModel extends Model
 
     public function barcodeModel($keyword)
     {
-        return $this->builder($this->table)->select('barcode, nama_item')
-        ->like('barcode', $keyword)
-        ->orLike('nama_item', $keyword)
-        ->get()->getResult();
+        // get barcode nama_item id_kategori id_unit dari tb_item dan nama_unit dari tb_unit 
+        $data = $this->builder($this->table)->select('tb_item.barcode, tb_item.nama_item, tb_unit.nama_unit, tb_kategori.nama_kategori')
+            ->join('tb_unit', 'tb_unit.id = id_unit')
+            ->join('tb_kategori', 'tb_kategori.id = id_kategori')
+            ->like('barcode', $keyword)
+            ->orLike('nama_item', $keyword)
+            ->get()->getResult();
+
+        return $data;
+
+
+        // return $this->builder($this->table)->select('barcode, nama_item, id_kategori, id_unit')
+        // ->like('barcode', $keyword)
+        // ->orLike('nama_item', $keyword)
+        // ->get()->getResult();
     }
 
     public function cariProduk($keyword)

@@ -179,8 +179,8 @@ class Item extends BaseController {
         $barcode = [];
         foreach ($data as $item) {
             array_push($barcode, [
-                'label' => "{$item->barcode} - {$item->nama_item}",
-                'value' => $item->barcode,
+                'label' => "{$item->barcode} - {$item->nama_item} ({$item->nama_unit})",
+                'value' => $item->barcode
             ]);
         }
 

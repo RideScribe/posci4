@@ -44,7 +44,7 @@ function responValidasi(target = [], kolom = [], respon = null) {
                     $("#" + target[0].toLowerCase()).prop("disabled", false).text(target[1])
                     $("input").prop("readonly", false)
                     toastr.error(respon.error[element], '', {
-                        timeOut: 3000,
+                        timeOut: 1000,
                         closeButton: true,
                         progressBar: true
                     });
@@ -53,7 +53,7 @@ function responValidasi(target = [], kolom = [], respon = null) {
             if (respon.sukses) {
                 // semua sudah ok
                 toastr.success(respon.pesan, '', {
-                    timeOut: 3000,
+                    timeOut: 1000,
                     closeButton: true,
                     progressBar: true,
                     onHidden: function() {

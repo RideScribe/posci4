@@ -9,7 +9,7 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
         <!-- Notifications Dropdown Menu -->
-        <li class="nav-item dropdown">
+        <!-- <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="javascript:void(0)">
                 <i class="far fa-bell"></i>
                 <span class="badge badge-warning navbar-badge">2</span>
@@ -25,7 +25,7 @@
                 <div class="dropdown-divider"></div>
                 <a href="<?= base_url('item') ?>" class="dropdown-item dropdown-footer">Lihat Semua</a>
             </div>
-        </li>
+        </li> -->
         <li class="nav-item">
             <a class="nav-link" href="javascript:void(0)" data-toggle="modal" data-target="#modal-logout" role="button">
                 <i class="fas fa-sign-out-alt"></i>

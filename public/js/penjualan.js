@@ -96,7 +96,7 @@ $(function () {
     },
   })
 
-  $('#jumlah').on('keyup', function (e) {
+  $('#jumlah').on('change', function (e) {
     let jumlah = parseInt(e.target.value)
     let barcode = $('#barcode').val()
 
