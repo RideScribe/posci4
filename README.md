@@ -2,7 +2,7 @@
 Aplikasi sistem penjualan berbasis web menggunakan framework codeigniter 4.
 
 ## Persyaratan
- - PHP versi 8.0 atau 8.1
+ - PHP versi 8.0
  - Semua persyaratan mengacu ke dokumentasi codeigniter 4. [Dokumentasi](https://codeigniter.com/user_guide/intro/requirements.html)
 
 ## Cara Install
