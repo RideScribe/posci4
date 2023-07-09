@@ -90,13 +90,15 @@ if (!function_exists('get_user')) {
 if (!function_exists('is_login')) {
     /**
      * Mengecek sudah login atau belum
-     * @return redirect ke halaman dashboard
+     * @return bool ke halaman dashboard
      */
     function is_login()
     {
         if (session()->has('login')) {
             return true;
         }
+        
+        return false;
     }
 }
 
@@ -110,5 +112,17 @@ if (!function_exists('get_unit')) {
     {
         $model = model('App\Models\UnitModel');
         return $model->where('id', $id)->get()->getRow();
+    }
+}
+
+if (!function_exists('user_loggedin')) {
+    /**
+     * Mengecek user yang sedang login
+     * @return object
+     */
+    function user_loggedin()
+    {
+        $model = model('App\Models\UserModel');
+        return $model->where('id', session()->get('id'))->get()->getRow();
     }
 }

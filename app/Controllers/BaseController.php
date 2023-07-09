@@ -36,6 +36,13 @@ class BaseController extends Controller
 	protected $helpers = ['fungsi'];
 
 	/**
+	 * Session
+	 * Service session
+	 * @see \Config\Services::session() 
+	 **/ 
+	protected $session;
+
+	/**
 	 * Constructor.
 	 */
 	public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)

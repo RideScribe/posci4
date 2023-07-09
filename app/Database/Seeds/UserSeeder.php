@@ -22,7 +22,7 @@ class UserSeeder extends \CodeIgniter\Database\Seeder
             [
                 'username'  => 'superadmin',
                 'email'     => 'sejatordev@gmail.com',
-                'password'  => buat_password('superadmin'),
+                'password'  => buat_password('123456'),
                 'nama'      => 'Super Admin',
                 'alamat'    => 'Bandung',
                 'id_role'   => 1,
@@ -34,7 +34,7 @@ class UserSeeder extends \CodeIgniter\Database\Seeder
             [
                 'username'  => 'admin',
                 'email'     => 'admin@gmail.com',
-                'password'  => buat_password('admin1234'),
+                'password'  => buat_password('123456'),
                 'nama'      => 'Administrator',
                 'alamat'    => 'Bandung',
                 'id_role'   => 2,
@@ -46,7 +46,7 @@ class UserSeeder extends \CodeIgniter\Database\Seeder
             [
                 'username'  => 'kasir',
                 'email'     => 'kasir@gmail.com',
-                'password'  => buat_password('kasir1234'),
+                'password'  => buat_password('123456'),
                 'nama'      => 'Kasir',
                 'alamat'    => 'Bandung',
                 'id_role'   => 3,
