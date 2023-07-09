@@ -25,11 +25,7 @@
                     <div class="form-group row">
                         <label for="pelanggan" class="col-sm-3 col-form-label">Pelanggan</label>
                         <div class="col-sm-9">
-                            <select name="pelanggan" id="pelanggan" class="form-control">
-                                <?php foreach (esc($pelanggan) as $data): ?>
-                                    <option value="<?=esc($data->id)?>"><?=esc($data->pelanggan);?></option>
-                                <?php endforeach;?>
-                            </select>
+                            <input type="text" class="form-control" name="pelanggan" id="pelanggan" placeholder="pesanan atas nama">
                         </div>
                     </div>
                 </div>

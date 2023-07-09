@@ -10,6 +10,13 @@ class PemasokSeeder extends Seeder
 	{
         // generate data dummy pemasok
 		$faker = \Faker\Factory::create('id_ID');
+		$this->db->table('tb_pemasok')->insert([
+			'nama_pemasok'   => 'Restoran Legita',
+			'telp_pemasok'   => $faker->phoneNumber(),
+			'alamat_pemasok' => ucwords($faker->address()),
+			'keterangan'     => ucfirst($faker->text(10)),
+		]);
+
 		for ($i = 0; $i < 5; $i++) {
 			$data = [
 				'nama_pemasok'   => ucwords($faker->company()),

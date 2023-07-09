@@ -4,19 +4,19 @@ namespace App\Controllers;
 
 use App\Libraries\Keranjang;
 use App\Models\KeranjangModel;
-use App\Models\PelangganModel;
+// use App\Models\PelangganModel;
 use App\Models\PenjualanModel;
 use App\Models\TransaksiModel;
 use Irsyadulibad\DataTables\DataTables;
 
 class Penjualan extends BaseController {
-    protected $pelangganModel;
+    // protected $pelangganModel;
     protected $keranjangModel;
     protected $penjualanModel;
     protected $transaksi;
 
     public function __construct() {
-        $this->pelangganModel = new PelangganModel();
+        // $this->pelangganModel = new PelangganModel();
         $this->penjualanModel = new PenjualanModel();
         $this->transaksi      = new TransaksiModel();
         $this->keranjangModel = new KeranjangModel();
@@ -25,7 +25,7 @@ class Penjualan extends BaseController {
     public function index() {
         $data = [
             'title'     => 'Input Penjualan',
-            'pelanggan' => $this->pelangganModel->detailPelanggan(),
+            // 'pelanggan' => $this->pelangganModel->detailPelanggan(),
         ];
         echo view('penjualan/index', $data);
     }
@@ -118,7 +118,7 @@ class Penjualan extends BaseController {
             $kembalian = $this->request->getPost('kembalian', FILTER_SANITIZE_NUMBER_INT);
             $data      = [
                 'invoice'      => $this->penjualanModel->invoice(),
-                'id_pelanggan' => $this->request->getPost('id_pelanggan', FILTER_SANITIZE_NUMBER_INT),
+                'pelanggan'    => htmlspecialchars($this->request->getPost('pelanggan')),
                 'total_harga'  => $this->request->getPost('subtotal', FILTER_SANITIZE_NUMBER_INT),
                 'diskon'       => $this->request->getPost('diskon', FILTER_SANITIZE_NUMBER_INT),
                 'total_akhir'  => $this->request->getPost('total_akhir', FILTER_SANITIZE_NUMBER_INT),
@@ -132,6 +132,14 @@ class Penjualan extends BaseController {
                 'updated_at'   => date('Y-m-d H:i:s'),
             ];
 
+            
+            if ($this->request->getPost('pelanggan') == '' || empty($this->request->getPost('pelanggan'))) {
+                return $this->response->setJSON([
+                    'status' => false,
+                    'pesan'  => 'Pelanggan tidak boleh kosong.',
+                ]);
+            }
+
             $result = $this->penjualanModel->simpanPenjualan($data);
             if ($result['status']) {
                 $respon = [
@@ -143,6 +151,7 @@ class Penjualan extends BaseController {
                 $respon = [
                     'status' => $result['status'],
                     'pesan'  => 'Transaksi gagal',
+                    'data'   => $result,
                 ];
             }
 
@@ -175,10 +184,16 @@ class Penjualan extends BaseController {
 
     public function cetak($id) {
         $transaksi = $this->transaksi->detailTransaksi($id);
+        $penjualan = $this->transaksi
+            ->select('tp.invoice, tp.pelanggan')
+            ->join('tb_penjualan tp', 'tp.id = tb_transaksi.id_penjualan')
+            ->where('tb_transaksi.id_penjualan', $id)
+            ->first();
+
         // jika id penjualan tidak ditemukan redirect ke halaman invoice dan tampilkan error
         if (empty($transaksi)) {
             return redirect()->to('/penjualan/invoice')->with('pesan', 'Invoice tidak ditemukan');
         }
-        echo view('penjualan/cetak_termal', ['transaksi' => $transaksi]);
+        echo view('penjualan/cetak_termal', ['transaksi' => $transaksi, 'penjualan' => $penjualan]);
     }
 }

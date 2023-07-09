@@ -71,9 +71,9 @@
                     <td class="kanan"><?= esc($transaksi[0]['kasir']); ?></td>
                 </tr>
                 <tr>
-                    <td class="kiri"><?= esc($transaksi[0]['invoice']); ?></td>
+                    <td class="kiri"><?= esc($penjualan['invoice']); ?></td>
                     <td class="kanan">Pelanggan :</td>
-                    <td class="kanan"><?= esc($transaksi[0]['pelanggan']); ?></td>
+                    <td class="kanan"><?= esc($penjualan['pelanggan']); ?></td>
                 </tr>
 
             </table>

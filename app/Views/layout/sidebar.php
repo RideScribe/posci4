@@ -35,12 +35,6 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?= base_url('pelanggan') ?>" class="nav-link">
-                            <i class="nav-icon fas fa-users"></i>
-                            <p> Pelanggan </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a href="<?= base_url('tempat') ?>" class="nav-link">
                             <i class="nav-icon fas fa-map-pin"></i>
                             <p> Tempat </p>

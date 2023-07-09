@@ -14,7 +14,7 @@ class Penjualan extends Migration
 		$this->forge->addField([
 			'id' => ['type' => 'int', 'constraint'	=> 11, 'unsigned' => true, 'auto_increment' => true],
 			'invoice' => ['type' => 'varchar', 'constraint'	=> 50],
-			'id_pelanggan' => ['type' => 'int', 'constraint' => 11, 'unsigned' => true],
+			'pelanggan' => ['type' => 'varchar', 'constraint'	=> 255, 'null' => false],
 			'total_harga' => ['type' => 'int', 'constraint'	=> 11, 'unsigned' => true],
 			'diskon' => ['type' => 'int', 'constraint'	=> 11, 'unsigned' => true],
 			'total_akhir' => ['type' => 'int', 'constraint'	=> 11, 'unsigned' => true],
@@ -29,8 +29,8 @@ class Penjualan extends Migration
 			'deleted_at'	=> ['type' => 'datetime', null => true],
 		]);
 		$this->forge->addKey('id', true);
-		$this->forge->addKey(['id_pelanggan', 'id_user']);
-		$this->forge->addForeignKey('id_pelanggan', 'tb_pelanggan', 'id', 'cascade', 'restrict');
+		$this->forge->addKey([/** 'id_pelanggan', */ 'id_user']);
+		// $this->forge->addForeignKey('id_pelanggan', 'tb_pelanggan', 'id', 'cascade', 'restrict');
 		$this->forge->addForeignKey('id_user', 'tb_users', 'id', 'cascade', 'restrict');
 		$this->forge->createTable('tb_penjualan', true);
 

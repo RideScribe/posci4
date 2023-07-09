@@ -13,7 +13,7 @@ class PenjualanModel extends Model
 
     protected $allowedFields = [
         'invoice',
-        'id_pelanggan',
+        'pelanggan',
         'total_harga',
         'diskon',
         'total_akhir',
@@ -75,10 +75,11 @@ class PenjualanModel extends Model
         if ($db->transStatus() === FALSE)
         {
             $db->transRollback();
-            return ['status' => false];
+            return ['status' => false, 'data' => $data];
         } else {
             // kosongkang keranjang
             unset($_SESSION['keranjang']);
+            unset($_SESSION['pelanggan']);
             return ['status' => $db->transCommit(), 'id' => $id_penjualan];
         }
     }

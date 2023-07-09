@@ -12,7 +12,7 @@ class Dashboard extends BaseController
 {
     protected $produk;
     protected $pemasok;
-    protected $pelanggan;
+    // protected $pelanggan;
     protected $pengguna;
     protected $penjualan;
 
@@ -20,7 +20,7 @@ class Dashboard extends BaseController
     {
         $this->produk = new ItemModel();
         $this->pemasok = new PemasokModel();
-        $this->pelanggan = new PelangganModel();
+        // $this->pelanggan = new PelangganModel();
         $this->pengguna = new UserModel();
         $this->penjualan = new PenjualanModel();
     }
@@ -30,7 +30,7 @@ class Dashboard extends BaseController
             'title'     => 'Dashboard',
             'produk'    => $this->produk->countAllResults(),
             'pemasok'  => $this->pemasok->countAllResults(),
-            'pelanggan' => $this->pelanggan->countAllResults(),
+            // 'pelanggan' => $this->pelanggan->countAllResults(),
             'pengguna'  => $this->pengguna->countAllResults()
         ];
         echo view('dashboard', $data);

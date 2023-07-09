@@ -368,7 +368,7 @@ $(function () {
 
   // proses pembayaran
   $('.wrapper').on('click', '#bayar', function () {
-    let id_pelanggan = $('#pelanggan').val()
+    let pelanggan = $('#pelanggan').val()
     let subtotal = $('#sub_total').val()
     let diskon = $('#diskon').val()
     let total_akhir = $('#total_akhir').val()
@@ -377,7 +377,10 @@ $(function () {
     let catatan = $('#catatan').val()
     let tanggal = $('#tanggal').val()
 
-    if (tunai < 1) {
+    if (pelanggan == '') {
+      toastr.error('Nama pelanggan belum diinput', '', { timeOut: 500 })
+      $('#pelanggan').focus()
+    } else if (tunai < 1) {
       toastr.error('Jumlah uang tunai belum diinput', '', { timeOut: 500 })
       $('#tunai').focus()
     } else {
@@ -396,7 +399,7 @@ $(function () {
             dataType: 'json',
             data: {
               [$('#token').attr('name')]: $('#token').val(),
-              id_pelanggan: id_pelanggan,
+              pelanggan: pelanggan,
               subtotal: subtotal,
               diskon: diskon,
               total_akhir: total_akhir,

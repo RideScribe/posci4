@@ -4,7 +4,7 @@
 <div class="container-fluid">
     <div id="pesan" data-pesan="<?=session()->getFlashdata('pesan')?>"></div>
     <div class="row">
-        <div class="col-lg-3 col-6">
+        <div class="col-lg-4 col-12">
             <!-- small card -->
             <div class="small-box bg-gradient-blue">
                 <div class="inner">
@@ -20,7 +20,7 @@
             </div>
         </div>
         <!-- ./col -->
-        <div class="col-lg-3 col-6">
+        <div class="col-lg-4 col-12">
             <!-- small card -->
             <div class="small-box bg-gradient-green">
                 <div class="inner">
@@ -36,23 +36,7 @@
             </div>
         </div>
         <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small card -->
-            <div class="small-box bg-gradient-maroon">
-                <div class="inner">
-                    <h3><?=esc($pelanggan)?></h3>
-                    <p>Pelanggan</p>
-                </div>
-                <div class="icon">
-                    <i class="fas fa-users"></i>
-                </div>
-                <a href="<?=base_url('pelanggan')?>" class="small-box-footer">
-                    Selengkapnya <i class="fas fa-arrow-circle-right"></i>
-                </a>
-            </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
+        <div class="col-lg-4 col-12">
             <!-- small card -->
             <div class="small-box bg-gradient-purple">
                 <div class="inner">
