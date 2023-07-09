@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\ItemModel;
 use App\Models\KategoriModel;
 use App\Models\PemasokModel;
+use App\Models\TempatModel;
 use App\Models\UnitModel;
 use Irsyadulibad\DataTables\DataTables;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -15,6 +16,7 @@ class Item extends BaseController {
     protected $kategori;
     protected $unit;
     protected $pemasok;
+    protected $tempat;
     private $rules = [
         'barcode'  => ['rules' => 'required|alpha_numeric_punct|is_unique[tb_item.barcode,id,{id}]'],
         'item'     => ['rules' => 'required|alpha_numeric_punct'],
@@ -31,17 +33,43 @@ class Item extends BaseController {
         $this->kategori  = new KategoriModel();
         $this->unit      = new UnitModel();
         $this->pemasok   = new PemasokModel();
+        $this->tempat    = new TempatModel();
         helper('form');
     }
 
     public function index() {
         $data = [
-            'title'    => 'Daftar Produk',
+            'title'    => 'Daftar Menu',
             'kategori' => $this->kategori->getKategori(),
             'unit'     => $this->unit->getUnit(),
             'pemasok'  => $this->pemasok->detailPemasok(),
         ];
         echo view('item/index', $data);
+    }
+
+    function menu($id_meja) {
+        // explode id_meja by .
+        $id_meja = base64_decode($id_meja);
+        $id_meja = explode('.', $id_meja);
+        $id_meja = end($id_meja);
+        // cek meja
+        $cek = $this->tempat->find($id_meja);
+        if (empty($cek)) {
+            dd('Meja tidak ditemukan');
+        } 
+
+        $menu = $this->itemModel->select(['tb_item.nama_item as item', 'tb_item.stok', 'tb_item.gambar', 'tb_item.harga', 'tb_kategori.nama_kategori as kategori', 'tb_unit.nama_unit as unit'])
+            ->join('tb_kategori', 'tb_kategori.id = id_kategori')
+            ->join('tb_unit', 'tb_unit.id = id_unit')
+            ->findAll();
+
+        $data = [
+            'title'    => 'Daftar Menu',
+            'meja'     => $cek,
+            'menu'     => $menu,
+        ];
+
+        echo view('tempat/menu', $data);
     }
 
     public function ajax() {

@@ -41,6 +41,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="<?= base_url('tempat') ?>" class="nav-link">
+                            <i class="nav-icon fas fa-map-pin"></i>
+                            <p> Tempat </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="javascript:void(0)" class="nav-link">
                             <i class="nav-icon fas fa-cube"></i>
                             <p> Master <i class="right fas fa-angle-left"></i></p>
@@ -59,9 +65,9 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="<?= base_url('item') ?>" class="nav-link">
+                                <a href="<?= base_url('menu') ?>" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Item</p>
+                                    <p>Menu</p>
                                 </a>
                             </li>
                         </ul>
@@ -87,7 +93,7 @@
                             </a>
                         </li>
                         <?php if (esc(get_user('id_role') == 1)) : ?>
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <a href="<?= base_url('stok/masuk') ?>" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Stok Masuk</p>
@@ -98,7 +104,7 @@
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Stok Keluar</p>
                                 </a>
-                            </li>
+                            </li> -->
                         <?php endif; ?>
 
                     </ul>

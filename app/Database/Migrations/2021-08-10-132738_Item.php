@@ -51,8 +51,7 @@ class Item extends Migration
 			'updated_at' => ['type' => 'datetime', null => true],
 			'deleted_at' => ['type' => 'datetime', null => true],
 		]);
-		$this->forge->addKey('id', true)->addKey(['id_kategori', 'id_unit', 'id_pemasok'])
-		->addUniqueKey('barcode');
+		$this->forge->addKey('id', true)->addKey(['id_kategori', 'id_unit', 'id_pemasok'])->addUniqueKey('barcode');
 		$this->forge->addForeignKey('id_kategori', 'tb_kategori', 'id', 'cascade', 'restrict');
 		$this->forge->addForeignKey('id_unit', 'tb_unit', 'id', 'cascade', 'restrict');
 		$this->forge->addForeignKey('id_pemasok', 'tb_pemasok', 'id', 'cascade', 'restrict');

@@ -2,7 +2,7 @@
 <?php $this->section('content'); ?>
 
 <div class="container-fluid">
-    <button class="btn btn-primary mb-1 tambah"><i class="fas fa-plus"></i> Tambah Item</button>
+    <button class="btn btn-primary mb-1 tambah"><i class="fas fa-plus"></i> Tambah Menu</button>
     <button class="btn btn-success mb-1 export-excel"><i class="fas fa-file-excel"></i> Export</button>
     <div class="card shadow mb-4">
         <div class="card-body">
@@ -45,7 +45,7 @@
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label for="item">Item</label>
+                        <label for="item">Menu</label>
                         <input type="text" class="form-control" name="item" id="item">
                         <small class="invalid-feedback"></small>
                     </div>
@@ -217,7 +217,7 @@
                                     <th>${response.barcode}</th>
                                 </tr>
                                 <tr>
-                                    <th>Item</th>
+                                    <th>Menu</th>
                                     <th>${response.item}</th>
                                 </tr>
                                 <tr>

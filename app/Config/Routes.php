@@ -39,6 +39,9 @@ $routes->group('auth', function ($routes) {
     $routes->post('ganti-password', 'Auth::gantiPassword', ['as' => 'ganti-password']);
 });
 
+$routes->get('/menu', 'Item::index', ['as' => 'menu']);
+$routes->get('/tempat/(:any)/menu', 'Item::menu/$1', ['as' => 'menu-tempat']);
+
 $routes->get('stok/masuk', 'Transaksi::index');
 $routes->get('stok/keluar', 'Transaksi::index');
 
