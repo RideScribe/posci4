@@ -72,7 +72,7 @@
         </div>
 
         <!-- Main Footer -->
-        <footer class="main-footer">
+        <footer class="main-footer" id="hidepenjualan">
             <!-- To the right -->
             <div class="float-right d-none d-sm-inline">
                 <span>{elapsed_time} detik</span> |

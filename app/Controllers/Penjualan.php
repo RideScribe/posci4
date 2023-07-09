@@ -9,20 +9,23 @@ use App\Models\PenjualanModel;
 use App\Models\TransaksiModel;
 use Irsyadulibad\DataTables\DataTables;
 
-class Penjualan extends BaseController {
+class Penjualan extends BaseController
+{
     // protected $pelangganModel;
     protected $keranjangModel;
     protected $penjualanModel;
     protected $transaksi;
 
-    public function __construct() {
+    public function __construct()
+    {
         // $this->pelangganModel = new PelangganModel();
         $this->penjualanModel = new PenjualanModel();
         $this->transaksi      = new TransaksiModel();
         $this->keranjangModel = new KeranjangModel();
         helper('form');
     }
-    public function index() {
+    public function index()
+    {
         $data = [
             'title'     => 'Input Penjualan',
             // 'pelanggan' => $this->pelangganModel->detailPelanggan(),
@@ -30,14 +33,16 @@ class Penjualan extends BaseController {
         echo view('penjualan/index', $data);
     }
 
-    public function cekStok() {
+    public function cekStok()
+    {
         $barcode = $this->request->getGet('barcode');
         $respon  = $this->keranjangModel->cekStokProduk($barcode);
 
         return $this->response->setJSON($respon);
     }
 
-    public function tambah() {
+    public function tambah()
+    {
         if ($this->request->getMethod() == 'post') {
             $id   = $this->request->getPost('iditem', FILTER_SANITIZE_NUMBER_INT);
             $item = [
@@ -65,7 +70,8 @@ class Penjualan extends BaseController {
         }
     }
 
-    public function ubah() {
+    public function ubah()
+    {
         if ($this->request->getMethod() == 'post') {
             $id   = $this->request->getPost('item_id', FILTER_SANITIZE_NUMBER_INT);
             $item = [
@@ -82,7 +88,8 @@ class Penjualan extends BaseController {
         }
     }
 
-    public function hapus() {
+    public function hapus()
+    {
         if ($this->request->isAJAX()) {
             $iditem = $this->request->getPost('iditem', FILTER_SANITIZE_NUMBER_INT);
             if (empty($iditem)) {
@@ -111,7 +118,8 @@ class Penjualan extends BaseController {
         }
     }
 
-    public function bayar() {
+    public function bayar()
+    {
         if ($this->request->getMethod() == 'post') {
             // tambahkan record ke tabel penjualan
             $tunai     = $this->request->getPost('tunai', FILTER_SANITIZE_NUMBER_INT);
@@ -132,7 +140,7 @@ class Penjualan extends BaseController {
                 'updated_at'   => date('Y-m-d H:i:s'),
             ];
 
-            
+
             if ($this->request->getPost('pelanggan') == '' || empty($this->request->getPost('pelanggan'))) {
                 return $this->response->setJSON([
                     'status' => false,
@@ -159,21 +167,21 @@ class Penjualan extends BaseController {
         }
     }
 
-    public function keranjang() {
-        if ($this->request->isAJAX()) {
-            $respon = [
-                'invoice'   => $this->penjualanModel->invoice(),
-                'keranjang' => Keranjang::keranjang(),
-                'sub_total' => Keranjang::sub_total(),
-            ];
+    public function keranjang()
+    {
+        $respon = [
+            'invoice'   => $this->penjualanModel->invoice(),
+            'keranjang' => Keranjang::keranjang(),
+            'sub_total' => Keranjang::sub_total(),
+        ];
 
-            return $this->response->setJSON($respon);
-        }
+        return $this->response->setJSON($respon);
     }
 
-    public function invoice() {
+    public function invoice()
+    {
         if ($this->request->isAJAX()) {
-            return DataTables::use ('tb_penjualan')->select('id, invoice, tanggal')->make();
+            return DataTables::use('tb_penjualan')->select('id, invoice, tanggal')->make();
         } else if ($this->request->getMethod() == 'get') {
             $data = [
                 'title' => 'Daftar Invoice',
@@ -182,7 +190,8 @@ class Penjualan extends BaseController {
         }
     }
 
-    public function cetak($id) {
+    public function cetak($id)
+    {
         $transaksi = $this->transaksi->detailTransaksi($id);
         $penjualan = $this->transaksi
             ->select('tp.invoice, tp.pelanggan')
