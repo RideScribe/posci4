@@ -43,7 +43,7 @@ class Unit extends BaseController
                 ];
             } else {
                 $data = [
-                    'nama_unit' => ucwords($this->request->getPost('unit', FILTER_SANITIZE_STRING))
+                    'nama_unit' => ucwords(htmlspecialchars($this->request->getPost('unit')))
                 ];
                 $this->unitModel->save($data); // simpan data
                 $respon = [
@@ -67,7 +67,7 @@ class Unit extends BaseController
             } else {
                 $data = [
                     'id' => $this->request->getPost('id', FILTER_SANITIZE_NUMBER_INT),
-                    'nama_unit' => ucwords($this->request->getPost('unit', FILTER_SANITIZE_STRING))
+                    'nama_unit' => ucwords(htmlspecialchars($this->request->getPost('unit')))
                 ];
                 $this->unitModel->save($data); // update data
                 $respon = [

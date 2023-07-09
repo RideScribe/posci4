@@ -37,7 +37,7 @@ class Auth extends BaseController
                     'error'  => $this->validator->getErrors()
                 ];
             } else {
-                $user = $this->userModel->getUser($this->request->getPost('username', FILTER_SANITIZE_STRING));
+                $user = $this->userModel->getUser(htmlspecialchars($this->request->getPost('username')));
                 // jika username tidak terdaftar 
                 if (empty($user)) {
                     $respon = [
@@ -119,7 +119,7 @@ class Auth extends BaseController
 
     public function reset()
     {
-        $token = $this->request->getGet('token', FILTER_SANITIZE_STRING);
+        $token = htmlspecialchars($this->request->getGet('token'));
         echo view('auth/ubah-password', ['title' => 'Ubah Password', 'token' => $token]);
     }
 
@@ -183,7 +183,7 @@ class Auth extends BaseController
      */
     public function verifikasi()
     {
-        $token = $this->request->getGet('token', FILTER_SANITIZE_STRING);
+        $token = htmlspecialchars($this->request->getGet('token'));
         $user = $this->userModel->getToken($token);
         if (empty($user)) {
             echo 'Token tidak valid :(';

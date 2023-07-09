@@ -53,11 +53,11 @@ class User extends BaseController
                 $email = strtolower($this->request->getPost('email', FILTER_VALIDATE_EMAIL));
                 $token = bin2hex(random_bytes(32));
                 $data = [
-                    'username' => strtolower($this->request->getPost('username', FILTER_SANITIZE_STRING)),
+                    'username' => strtolower(htmlspecialchars($this->request->getPost('username'))),
                     'email' => $email,
                     'password' => buat_password($this->request->getPost('password')),
-                    'nama'  => ucwords($this->request->getPost('nama', FILTER_SANITIZE_STRING)),
-                    'alamat' => ucwords($this->request->getPost('alamat', FILTER_SANITIZE_STRING)),
+                    'nama'  => ucwords(htmlspecialchars($this->request->getPost('nama'))),
+                    'alamat' => ucwords(htmlspecialchars($this->request->getPost('alamat'))),
                     'id_role' => $this->request->getPost('role', FILTER_SANITIZE_NUMBER_INT),
                     'status' => 0,
                     'token' => $token,
@@ -95,10 +95,10 @@ class User extends BaseController
                 $id = $this->request->getPost('id', FILTER_SANITIZE_NUMBER_INT);
                 $data = [
                     'id' => $id,
-                    'username' => strtolower($this->request->getPost('username', FILTER_SANITIZE_STRING)),
+                    'username' => strtolower(htmlspecialchars($this->request->getPost('username'))),
                     'email' => strtolower($this->request->getPost('email', FILTER_VALIDATE_EMAIL)),
-                    'nama'  => ucwords($this->request->getPost('nama', FILTER_SANITIZE_STRING)),
-                    'alamat' => ucwords($this->request->getPost('alamat', FILTER_SANITIZE_STRING))
+                    'nama'  => ucwords(htmlspecialchars($this->request->getPost('nama'))),
+                    'alamat' => ucwords(htmlspecialchars($this->request->getPost('alamat')))
                 ];
                 // jika password di update
                 if (!empty($this->request->getPost('password'))) {
@@ -108,7 +108,7 @@ class User extends BaseController
                 if (!empty($this->request->getPost('role'))) {
                     $data['id_role'] = $this->request->getPost('role', FILTER_SANITIZE_NUMBER_INT);
                 }
-                $photo = $this->request->getPost('avatarLama', FILTER_SANITIZE_STRING);
+                $photo = htmlspecialchars($this->request->getPost('avatarLama'));
                 // jika photo profile di update
                 if (!empty($this->request->getFile('avatar'))) {
                     $file = $this->request->getFile('avatar'); // ambil data file
@@ -146,7 +146,7 @@ class User extends BaseController
             // jika id user yang akan di hapus di temukan, lanjut proses
             if($this->userModel->find($id)){
                 // fitur hapus user hanya untuk superadmin, selain itu dilarang
-                if (user()->id == 1) {
+                if (user_loggedin()->id == 1) {
                     $this->userModel->where('id !=', 1)->where('id !=', session('id'))->where('id', $id)->delete();
                     $respon = [
                         'status' => true,

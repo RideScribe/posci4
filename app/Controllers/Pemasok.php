@@ -46,10 +46,10 @@ class Pemasok extends BaseController
             } else {
                 // sukses
                 $data = [
-                    'nama_pemasok'     => ucwords($this->request->getPost('pemasok', FILTER_SANITIZE_STRING)),
-                    'telp_pemasok'     => $this->request->getPost('telp', FILTER_SANITIZE_STRING),
-                    'alamat_pemasok'   => ucwords($this->request->getPost('alamat', FILTER_SANITIZE_STRING)),
-                    'keterangan'        => ucfirst($this->request->getPost('keterangan', FILTER_SANITIZE_STRING))
+                    'nama_pemasok'     => ucwords(htmlspecialchars($this->request->getPost('pemasok'))),
+                    'telp_pemasok'     => htmlspecialchars($this->request->getPost('telp')),
+                    'alamat_pemasok'   => ucwords(htmlspecialchars($this->request->getPost('alamat'))),
+                    'keterangan'        => ucfirst(htmlspecialchars($this->request->getPost('keterangan')))
                 ];
                 $this->pemasokModel->save($data);
                 if ($this->pemasokModel->getInsertID() > 0) {
@@ -84,10 +84,10 @@ class Pemasok extends BaseController
                 // validasi form sukses
                 $data = [
                     'id'       => $this->request->getPost('id', FILTER_SANITIZE_NUMBER_INT),
-                    'nama_pemasok'     => ucwords($this->request->getPost('pemasok', FILTER_SANITIZE_STRING)),
-                    'telp_pemasok'     => $this->request->getPost('telp', FILTER_SANITIZE_STRING),
-                    'alamat_pemasok'   => ucwords($this->request->getPost('alamat', FILTER_SANITIZE_STRING)),
-                    'keterangan'        => ucfirst($this->request->getPost('keterangan', FILTER_SANITIZE_STRING))
+                    'nama_pemasok'     => ucwords(htmlspecialchars($this->request->getPost('pemasok'))),
+                    'telp_pemasok'     => htmlspecialchars($this->request->getPost('telp')),
+                    'alamat_pemasok'   => ucwords(htmlspecialchars($this->request->getPost('alamat'))),
+                    'keterangan'        => ucfirst(htmlspecialchars($this->request->getPost('keterangan')))
                 ];
                 $this->pemasokModel->save($data); // update data
                 $respon = [

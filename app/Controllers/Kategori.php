@@ -39,7 +39,7 @@ class Kategori extends BaseController {
                 ];
             } else {
                 $data = [
-                    'nama_kategori' => ucwords($this->request->getPost('kategori', FILTER_SANITIZE_STRING)),
+                    'nama_kategori' => ucwords(htmlspecialchars($this->request->getPost('kategori'))),
                 ];
                 $this->kategoriModel->save($data); // simpan data
                 $respon = [
@@ -62,7 +62,7 @@ class Kategori extends BaseController {
             } else {
                 $data = [
                     'id'            => $this->request->getPost('id', FILTER_SANITIZE_NUMBER_INT),
-                    'nama_kategori' => ucwords($this->request->getPost('kategori', FILTER_SANITIZE_STRING)),
+                    'nama_kategori' => ucwords(htmlspecialchars($this->request->getPost('kategori'))),
                 ];
                 $this->kategoriModel->save($data); // simpan data
                 $respon = [

@@ -42,8 +42,8 @@ class Penjualan extends BaseController {
             $id   = $this->request->getPost('iditem', FILTER_SANITIZE_NUMBER_INT);
             $item = [
                 'id'      => $id,
-                'barcode' => $this->request->getPost('barcode', FILTER_SANITIZE_STRING),
-                'nama'    => $this->request->getPost('nama', FILTER_SANITIZE_STRING),
+                'barcode' => htmlspecialchars($this->request->getPost('barcode')),
+                'nama'    => htmlspecialchars($this->request->getPost('nama')),
                 'harga'   => $this->request->getPost('harga', FILTER_SANITIZE_NUMBER_INT),
                 'jumlah'  => $this->request->getPost('jumlah', FILTER_SANITIZE_NUMBER_INT),
                 'stok'    => $this->request->getPost('stok', FILTER_SANITIZE_NUMBER_INT),
@@ -124,8 +124,8 @@ class Penjualan extends BaseController {
                 'total_akhir'  => $this->request->getPost('total_akhir', FILTER_SANITIZE_NUMBER_INT),
                 'tunai'        => str_replace('.', '', $tunai),
                 'kembalian'    => str_replace('.', '', $kembalian),
-                'catatan'      => $this->request->getPost('catatan', FILTER_SANITIZE_STRING),
-                'tanggal'      => $this->request->getPost('tanggal', FILTER_SANITIZE_STRING),
+                'catatan'      => htmlspecialchars($this->request->getPost('catatan')),
+                'tanggal'      => htmlspecialchars($this->request->getPost('tanggal')),
                 'id_user'      => session('id'),
                 'ip_address'   => $this->request->getIPAddress(),
                 'created_at'   => date('Y-m-d H:i:s'),

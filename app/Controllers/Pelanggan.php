@@ -41,10 +41,10 @@ class Pelanggan extends BaseController
             } else {
                 // validation form sukses 
                 $data = [
-                    'nama_pelanggan'   => ucwords($this->request->getPost('pelanggan', FILTER_SANITIZE_STRING)),
-                    'jenkel'   => $this->request->getPost('jenkel', FILTER_SANITIZE_STRING),
-                    'telp_pelanggan'   => $this->request->getPost('telp', FILTER_SANITIZE_STRING),
-                    'alamat_pelanggan' => ucfirst($this->request->getPost('alamat', FILTER_SANITIZE_STRING))
+                    'nama_pelanggan'   => ucwords(htmlspecialchars($this->request->getPost('pelanggan'))),
+                    'jenkel'   => htmlspecialchars($this->request->getPost('jenkel')),
+                    'telp_pelanggan'   => htmlspecialchars($this->request->getPost('telp')),
+                    'alamat_pelanggan' => ucfirst(htmlspecialchars($this->request->getPost('alamat')))
                 ];
                 $this->pelangganModel->save($data);
                 $respon = [
@@ -69,10 +69,10 @@ class Pelanggan extends BaseController
                 // validation form sukses 
                 $data = [
                     'id'   => $this->request->getPost('id', FILTER_SANITIZE_NUMBER_INT),
-                    'nama_pelanggan'   => ucwords($this->request->getPost('pelanggan', FILTER_SANITIZE_STRING)),
-                    'jenkel'   => $this->request->getPost('jenkel', FILTER_SANITIZE_STRING),
-                    'telp_pelanggan'   => $this->request->getPost('telp', FILTER_SANITIZE_STRING),
-                    'alamat_pelanggan' => ucfirst($this->request->getPost('alamat', FILTER_SANITIZE_STRING))
+                    'nama_pelanggan'   => ucwords(htmlspecialchars($this->request->getPost('pelanggan'))),
+                    'jenkel'   => htmlspecialchars($this->request->getPost('jenkel')),
+                    'telp_pelanggan'   => htmlspecialchars($this->request->getPost('telp')),
+                    'alamat_pelanggan' => ucfirst(htmlspecialchars($this->request->getPost('alamat')))
                 ];
                 $this->pelangganModel->save($data);
                 $respon = [
