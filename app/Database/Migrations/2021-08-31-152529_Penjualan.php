@@ -18,7 +18,7 @@ class Penjualan extends Migration
 			'total_harga' => ['type' => 'int', 'constraint'	=> 11, 'unsigned' => true],
 			'diskon' => ['type' => 'int', 'constraint'	=> 11, 'unsigned' => true],
 			'total_akhir' => ['type' => 'int', 'constraint'	=> 11, 'unsigned' => true],
-			'tunai' => ['type' => 'int', 'constraint' => 11, 'unsigned' => true],
+			'tunai' => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'null' => true],
 			'kembalian' => ['type' => 'int', 'constraint' => 11, 'unsigned' => true],
 			'catatan' => ['type' => 'text', null => true],
 			'tanggal' => ['type' => 'date', null => true],

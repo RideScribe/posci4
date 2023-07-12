@@ -20,6 +20,7 @@ class InitialSeeder extends Seeder
         $kategori->insertBatch([
             ['nama_kategori' => 'Makanan'],
             ['nama_kategori' => 'Minuman'],
+            ['nama_kategori' => 'Snack'],
             ['nama_kategori' => 'Lainnya']
         ]);
 
