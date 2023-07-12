@@ -24,7 +24,7 @@
                                 <td><?= $t['tempat'] ?></td>
                                 <td><?= $t['keterangan'] ?></td>
                                 <td>
-                                    <img src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&choe=UTF-8&chld=H|1&chl=<?= urlencode(base_url('tempat') . '/' . base64_encode(random_int(100000, 999999) . '.' .  $t['id']) . '/menu') ?>" width="100px">
+                                    <img src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&choe=UTF-8&chld=H|1&chl=<?= urlencode(base_url('meja') . '/' . base64_encode(random_int(100000, 999999) . '.' .  $t['id']) . '/menu') ?>" width="100px">
                                 </td>
                                 <td>
                                     <button class="btn btn-success btn-sm mr-1 edit" data-id="<?= $t['id'] ?>" data-tempat="<?= $t['tempat'] ?>" data-keterangan="<?= $t['keterangan'] ?>"><i class="fas fa-edit"></i></button>

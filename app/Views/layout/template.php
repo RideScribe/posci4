@@ -5,7 +5,14 @@
 <?= $this->renderSection('header') ?>
 <!-- Head -->
 
-<body class="hold-transition sidebar-mini layout-navbar-fixed layout-fixed">
+<?php 
+    $isCollapsed = '';
+    if (str_contains(strtolower($_SERVER['REQUEST_URI']), 'penjualan')) {
+        $isCollapsed = 'sidebar-collapse';
+    }
+?>
+
+<body class="hold-transition sidebar-mini layout-navbar-fixed layout-fixed <?= $isCollapsed ?>">
     <div class="preloader">
         <div class="loading">
             <div class="spinner-grow text-primary" role="status">
@@ -24,6 +31,7 @@
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
+            <?php if(!str_contains(strtolower($_SERVER['REQUEST_URI']), 'penjualan')) : ?>
             <!-- Content Header (Page header) -->
             <div class="content-header">
                 <div class="container-fluid">
@@ -41,6 +49,9 @@
                 </div><!-- /.container-fluid -->
             </div>
             <!-- /.content-header -->
+            <?php else: ?>
+                <br>
+            <?php endif; ?>
 
             <!-- Main content -->
             <div class="content">
@@ -74,7 +85,7 @@
         <!-- Main Footer -->
         <footer class="main-footer" id="hidepenjualan">
             <!-- To the right -->
-            <div class="float-right d-none d-sm-inline">
+            <div class="float-right d-none">
                 <span>{elapsed_time} detik</span> |
                 <span>Dev : <a href="<?= esc(WA_DEV) ?>" target="blank" rel="nofollow"><?= esc(APP_DEV) ?></a></span> |
                 <span>Versi : <?= esc(APP_VER) ?></span>

@@ -20,3 +20,19 @@
 .login-box label {
   cursor: pointer;
 }
+
+/* Chrome, Safari, Edge, Opera */
+.qtyinput::-webkit-outer-spin-button,
+.qtyinput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.qtyinput[type=number] {
+  -moz-appearance: textfield;
+}
+
+.w-md-50 {
+  width: 50% !important;
+}

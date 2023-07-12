@@ -32,6 +32,18 @@
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="/penjualan/invoice"  title="halaman penjualan">
+                <i class="fas fa-invoice"></i>
+            </a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link">
+                |
+            </a>
+        </li>
+        
+        <li class="nav-item">
             <a class="nav-link" href="javascript:void(0)" data-toggle="modal" data-target="#modal-logout" role="button">
                 <i class="fas fa-sign-out-alt"></i>
             </a>

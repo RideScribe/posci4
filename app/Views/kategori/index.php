@@ -74,6 +74,10 @@
                 },
                 {
                     data: function(row) {
+                        if (row.kategori.toLowerCase() == "makanan" || row.kategori.toLowerCase() == "minuman" || row.kategori.toLowerCase() == "snack") {
+                            return "";
+                        }
+
                         let html = '<button class="btn btn-success btn-sm mr-1 edit" data-id="' + row.id + '" data-kategori="' + row.kategori + '"><i class="fas fa-edit"></i></button>';
                         html += '<button class="btn btn-danger btn-sm hapus" data-id="' + row.id + '"><i class="fa fa-trash"></i></button>'
                         return html;

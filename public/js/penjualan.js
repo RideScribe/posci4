@@ -47,7 +47,10 @@ $(function () {
           $('#batal').prop('disabled', false)
           // $("#tunai").val(0);
 
+          var jml_all = 0
+
           $.each(response.keranjang, function (i, data) {
+            jml_all += parseInt(data.jumlah)
             keranjang += `<tr>
 						<td>${data.barcode}</td>
 						<td>${data.nama}</td>
@@ -63,6 +66,21 @@ $(function () {
           })
         }
         $('tbody').html(keranjang)
+
+        $('#tabel-keranjang').DataTable({
+          retrieve: true,
+          destroy: true,
+          scrollY: '40vh',
+          pageLength: -1,
+          lengthChange: false,
+          searching: false,
+          ordering: false,
+          info: true,
+          paging: false,
+          language: {
+            info: 'Total pesanan : _TOTAL_ menu ( ' + jml_all + ' item )',
+          }
+        });
       },
     })
   }
@@ -159,7 +177,7 @@ $(function () {
           $('#tambah').prop('disabled', true)
           $('#barcode').val('').focus()
           $('#tampil-stok').text('')
-          toastr.success(response.pesan, 'Sukses', { timeOut: 500 })
+          toastr.success(response.pesan, 'Sukses', { timeOut: 3000 })
         } else {
           toastr.error(response.pesan)
         }
@@ -210,7 +228,7 @@ $(function () {
       })
     }
   })
-	*/
+  */
 
   // hapus item di keranjang
   $('.content').on('click', '#hapus-item', function () {
@@ -233,9 +251,9 @@ $(function () {
             if (response.status) {
               detailKeranjang()
               $('#tunai').val(0)
-              toastr.success(response.pesan, 'Sukses', { timeOut: 500 })
+              toastr.success(response.pesan, 'Sukses', { timeOut: 3000 })
             } else {
-              toastr.error(response.pesan, 'Error', { timeOut: 500 })
+              toastr.error(response.pesan, 'Error', { timeOut: 3000 })
             }
           },
         })
@@ -271,7 +289,7 @@ $(function () {
         $('#modal-item-edit').modal('hide')
         $('#barcode').focus()
         detailKeranjang()
-        toastr.success(response.pesan, 'Sukses', { timeOut: 500 })
+        toastr.success(response.pesan, 'Sukses', { timeOut: 3000 })
       },
     })
   })
@@ -287,11 +305,11 @@ $(function () {
 
     if (parseInt(jumlah) > parseInt(stok)) {
       toastr.error('Jumlah melebihi stok, maksimal ' + stok, '', {
-        timeOut: 500,
+        timeOut: 3000,
       })
       $('#item_jumlah').val(1)
     } else if (jumlah == '' || jumlah < 1) {
-      toastr.error('Jumlah minimal 1', '', { timeOut: 500 })
+      toastr.error('Jumlah minimal 1', '', { timeOut: 3000 })
       $('#item_jumlah').val(1)
     }
 
@@ -313,7 +331,7 @@ $(function () {
     let sub_total = $('#sub_total').val(),
       diskon_akhir = ($('#diskon').val() / 100) * sub_total,
       total_akhir = sub_total - diskon_akhir,
-      tunai = $('#tunai').val().replace('.', ''),
+      tunai = $('#tunai').val().replaceAll('.', ''),
       kembalian =
         tunai - total_akhir > 0
           ? rupiah(tunai - total_akhir)
@@ -333,6 +351,13 @@ $(function () {
 
   // jika kolom diskon dan tunai di edit load kalkulasi
   $('.wrapper').on('keyup mouseup', '#diskon, #tunai', function (e) {
+    if ($('#diskon').val() > 100) {
+      toastr.error('Diskon maksimal 100%', '', { timeOut: 3000 })
+      $('#diskon').val(0)
+
+      kalkulasi()
+    }
+
     kalkulasi()
   })
   // jika kolom jumlah dan diskon di edit update isi total otomatis
@@ -359,7 +384,7 @@ $(function () {
             $('#tunai').val(0)
             $('#kembalian').val(0)
             $('#barcode').focus()
-            toastr.success(response.pesan, '', { timeOut: 500 })
+            toastr.success(response.pesan, '', { timeOut: 3000 })
           },
         })
       }
@@ -378,10 +403,10 @@ $(function () {
     let tanggal = $('#tanggal').val()
 
     if (pelanggan == '') {
-      toastr.error('Nama pelanggan belum diinput', '', { timeOut: 500 })
+      toastr.error('Nama pelanggan belum diinput', '', { timeOut: 3000 })
       $('#pelanggan').focus()
     } else if (tunai < 1) {
-      toastr.error('Jumlah uang tunai belum diinput', '', { timeOut: 500 })
+      toastr.error('Jumlah uang tunai belum diinput', '', { timeOut: 3000 })
       $('#tunai').focus()
     } else {
       // semua sudah oke

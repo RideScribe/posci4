@@ -7,10 +7,15 @@
     #hidepenjualan {
         display: none;
     }
+    .dataTables_info {
+        padding-top: 5px !important;
+        padding-left: 15px;
+        padding-bottom: 10px;
+    }
 </style>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-lg-4">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card card-primary card-outline">
@@ -22,64 +27,58 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-12 col-md-6 col-lg-12">
                     <div class="card card-primary card-outline">
                         <div class="card-body">
                             <div class="form-group row">
-                                <label for="sub_total" class="col-sm-5 col-form-label">Sub Total</label>
-                                <div class="col-sm-7">
+                                <label for="sub_total" class="col-sm-4 col-form-label">Sub Total</label>
+                                <div class="col-sm-8">
                                     <input type="text" class="form-control text-right" name="sub_total" id="sub_total" value="0" disabled>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="diskon" class="col-sm-5 col-form-label">Dis Total (%)</label>
-                                <div class="col-sm-7">
-                                    <input type="number" class="form-control text-right" name="diskon" id="diskon" autocomplete="off" value="0" min="0" disabled>
+                                <label for="diskon" class="col-sm-4 col-form-label">Dis Total (%)</label>
+                                <div class="col-sm-8">
+                                    <input type="number" class="form-control text-right bg-danger" name="diskon" id="diskon" autocomplete="off" value="0" min="0" max="100" disabled>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="total_akhir" class="col-sm-5 col-form-label">Total Akhir</label>
-                                <div class="col-sm-7">
+                                <label for="total_akhir" class="col-sm-4 col-form-label">Total Akhir</label>
+                                <div class="col-sm-8">
                                     <input type="text" class="form-control text-right" name="total_akhir" id="total_akhir" value="0" disabled>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card card-primary card-outline">
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label for="catatan">Catatan</label>
-                                <textarea class="form-control" name="catatan" id="catatan" rows="2" disabled></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card card-primary card-outline">
-                        <div class="card-body">
                             <div class="form-group row">
-                                <label for="tunai" class="col-sm-5 col-form-label">Tunai</label>
-                                <div class="col-sm-7">
+                                <label for="tunai" class="col-sm-4 col-form-label">Tunai</label>
+                                <div class="col-sm-8">
                                     <input type="text" class="form-control text-right" name="tunai" id="tunai" value="0" disabled>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="kembalian" class="col-sm-5 col-form-label">Kembalian</label>
-                                <div class="col-sm-7">
+                                <label for="kembalian" class="col-sm-4 col-form-label">Kembalian</label>
+                                <div class="col-sm-8">
                                     <input type="text" class="form-control text-right" name="kembalian" id="kembalian" value="0" disabled>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="col-12 col-md-6 col-lg-12">
+                    <div class="card card-primary card-outline" style="height:95%;">
+                        <div class="card-body">
+                            <div class="form-group" style="display: flex; flex-direction: column; height: 100%;">
+                                <label for="catatan">Catatan</label>
+                                <textarea class="form-control" name="catatan" id="catatan" placeholder="catatan pembeli untuk penjual" disabled style="height: 100% !important; flex: 1;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-md-7">
+        <div class="col-lg-8">
             <div class="card card-primary card-outline">
                 <div class="card-body p-0">
-                    <div class="p-3">
+                    <div class="px-3 pt-3">
                         <div class="form-group row">
                             <label for="barcode" class="col-sm-3 col-form-label">Barcode</label>
                             <div class="col-sm-9">
@@ -111,7 +110,7 @@
                                     <th>Barcode</th>
                                     <th>Menu</th>
                                     <th>Harga</th>
-                                    <th>Jumlah</th>
+                                    <th>Qty</th>
                                     <th style="width: 137px;">Diskon item (%)</th>
                                     <th>Total</th>
                                     <th>Aksi</th>
@@ -122,7 +121,7 @@
                     </div>
 
                     <div class="px-3 pb-3 pt-1">
-                        <div class="mb-2">
+                        <div>
                             <div class="row">
                                 <div class="col-md-4">
                                     <input type="text" name="kasir" id="kasir" value="<?= get_user('nama') ?>" readonly class="form-control">
@@ -142,9 +141,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="d-flex justify-content-between" style="gap:5px">
-                            <button class="btn btn-sm btn-warning" id="batal" disabled><i class="fa fa-refresh"></i> Batal</button>
-                            <button class="btn btn-sm btn-success" id="bayar" disabled><i class="fa fa-paper-plane"></i> Proses Pembayaran</button>
+                        <div class="d-flex justify-content-end" style="gap:10px">
+                            <button class="btn btn-warning" id="batal" disabled><i class="fa fa-refresh"></i> Batal</button>
+                            <button class="btn btn-success" id="bayar" disabled><i class="fa fa-paper-plane"></i> Proses Pembayaran</button>
                         </div>
                     </div>
                 </div>

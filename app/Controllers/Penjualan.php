@@ -178,10 +178,25 @@ class Penjualan extends BaseController
         return $this->response->setJSON($respon);
     }
 
+    public function keranjang_data($draw = null)
+    {
+        $keranjang = Keranjang::keranjang();
+
+        $respon = [
+            'invoice'           => $this->penjualanModel->invoice(),
+            'sub_total'         => Keranjang::sub_total(),
+            'draw'              => $draw == null ? 0 : intval($draw),
+            'data'              => $keranjang,
+        ];
+
+        return $this->response->setJSON($respon);
+    }
+
+
     public function invoice()
     {
         if ($this->request->isAJAX()) {
-            return DataTables::use('tb_penjualan')->select('id, invoice, tanggal')->make();
+            return DataTables::use('tb_penjualan')->select('id, invoice, tanggal, tunai, pelanggan')->make();
         } else if ($this->request->getMethod() == 'get') {
             $data = [
                 'title' => 'Daftar Invoice',

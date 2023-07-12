@@ -11,7 +11,9 @@
                         <tr>
                             <th>#</th>
                             <th>Invoice</th>
+                            <th>Pelanggan</th>
                             <th>Tanggal</th>
+                            <th>Status</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -53,12 +55,30 @@
                     data: 'invoice'
                 },
                 {
+                    data: 'pelanggan'
+                },
+                {
                     data: 'tanggal'
                 },
                 {
                     render: function(data, type, row) {
-                        let html = `<button class="btn btn-success btn-sm print" data-id='${row.id}'><i class="fas fa-print"></i></button>`;
-                        return html;
+                        if (row.tunai) {
+                            return `<span class="badge badge-success">Lunas</span>`;
+                        } else {
+                            return `<span class="badge badge-warning">Belum Lunas</span>`;
+                        }
+                    }
+                },
+                {
+                    render: function(data, type, row) {
+                        if (row.tunai) {
+                            let html = `<button class="btn btn-success btn-sm print" data-id='${row.id}'><i class="fas fa-print"></i></button>`;
+                            return html;
+                        } else {
+                            // belum bayar tunai
+                            let html = `<a href="<?= base_url('penjualan/bayar/') ?>${row.id}" class="btn btn-primary btn-sm"><i class="fas fa-money-bill-wave"></i></a>`;
+                            return html;
+                        }
                     }
                 }
             ],
