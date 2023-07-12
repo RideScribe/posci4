@@ -58,15 +58,41 @@ class Item extends BaseController {
             dd('Meja tidak ditemukan');
         } 
 
-        $menu = $this->itemModel->select(['tb_item.nama_item as item', 'tb_item.stok', 'tb_item.gambar', 'tb_item.harga', 'tb_kategori.nama_kategori as kategori', 'tb_unit.nama_unit as unit'])
+        $menu = $this->itemModel->select(['tb_item.id', 'tb_item.nama_item as item', 'tb_item.stok', 'tb_item.gambar', 'tb_item.harga', 'tb_kategori.nama_kategori as kategori', 'tb_unit.nama_unit as unit'])
             ->join('tb_kategori', 'tb_kategori.id = id_kategori')
             ->join('tb_unit', 'tb_unit.id = id_unit')
             ->findAll();
 
+        // makanan is map from menu where kategori = makanan
+        $makanan = array_filter($menu, function ($var) {
+            return (strtolower($var->kategori) == 'makanan');
+        });
+
+        // minuman is map from menu where kategori = minuman
+        $minuman = array_filter($menu, function ($var) {
+            return (strtolower($var->kategori) == 'minuman');
+        });
+
+        // snack is map from menu where kategori = snack
+        $snack = array_filter($menu, function ($var) {
+            return (strtolower($var->kategori) == 'snack');
+        });
+
+        $others = array_filter($menu, function ($var) {
+            return (strtolower($var->kategori) != 'makanan' && strtolower($var->kategori) != 'minuman' && strtolower($var->kategori) != 'snack');
+        });
+
+        $menus = [
+            'makanan' => $makanan,
+            'minuman' => $minuman,
+            'snack'   => $snack,
+            'others'  => $others,
+        ];
+
         $data = [
             'title'    => 'Daftar Menu',
             'meja'     => $cek,
-            'menu'     => $menu,
+            'menus'    => $menus,
         ];
 
         echo view('tempat/menu', $data);

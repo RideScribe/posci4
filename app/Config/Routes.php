@@ -40,7 +40,7 @@ $routes->group('auth', function ($routes) {
 });
 
 $routes->get('/menu', 'Item::index', ['as' => 'menu']);
-$routes->get('/tempat/(:any)/menu', 'Item::menu/$1', ['as' => 'menu-tempat']);
+$routes->get('/meja/(:any)/menu', 'Item::menu/$1', ['as' => 'menu-tempat']);
 
 $routes->get('stok/masuk', 'Transaksi::index');
 $routes->get('stok/keluar', 'Transaksi::index');
