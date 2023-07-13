@@ -28,12 +28,12 @@
         </li> -->
         <li class="nav-item">
             <a class="nav-link" href="/penjualan"  title="halaman penjualan">
-                <i class="fas fa-cash-register"></i>
+                <i class="fas fa-cash-register"></i> <span class="ml-1">Penjualan</span>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="/penjualan/invoice"  title="halaman penjualan">
-                <i class="fas fa-invoice"></i>
+                <i class="fas fa-file-invoice"></i> <span class="ml-1">Invoice</span>
             </a>
         </li>
         

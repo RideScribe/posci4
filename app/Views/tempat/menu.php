@@ -36,7 +36,7 @@
         <div class="container">
             <a class="navbar-brand" href="#"><strong><?= get_pengaturan('nama_toko'); ?></strong></a>
             <div class="mr-auto"></div>
-            <button class="btn btn-outline-light">
+            <button class="btn btn-outline-light" type="button" data-toggle="modal" data-target="#modalKeranjang">
                 <i class="fa fa-shopping-cart"></i>
                 <span class="ml-2"><strong>3</strong></span>
             </button>
@@ -96,6 +96,54 @@
                     </div>
                 </div>
             <?php endforeach; ?>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalKeranjang" tabindex="-1" aria-labelledby="modalKeranjangLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalKeranjangLabel">Keranjang Anda</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="p-3">
+                        <div class="row">
+                            <label for="diskon" class="col-sm-4 col-form-label">Atas Nama</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="pelanggan" id="pelanggan" autocomplete="off" placeholder="pesanan atas nama . . .">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-3">
+                        <div class="row d-block d-sm-block d-md-none">
+                            <label for="diskon" class="col-sm-4 col-form-label">Daftar Pesanan Anda</label>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped" id="tabel-keranjang" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Barcode</th>
+                                    <th>Menu</th>
+                                    <th>Harga</th>
+                                    <th>Qty</th>
+                                    <th style="width: 137px;">Diskon item (%)</th>
+                                    <th>Total</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn bg-indigo">Proses Pesanan</button>
+                </div>
+            </div>
         </div>
     </div>
 
