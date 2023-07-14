@@ -220,4 +220,47 @@ class Penjualan extends BaseController
         }
         echo view('penjualan/cetak_termal', ['transaksi' => $transaksi, 'penjualan' => $penjualan]);
     }
+
+    public function invoice_detail($id) {
+        $transaksi = $this->transaksi->detailTransaksi($id);
+        if ($transaksi) {
+            return $this->response->setJSON([
+                'status' => true,
+                'data'   => $transaksi,
+            ]);
+        } else {
+            return $this->response->setJSON([
+                'status' => false,
+                'pesan'  => 'Data tidak ditemukan',
+            ]);
+        }
+    }
+
+    public function bayar_invoice() {
+        if ($this->request->getMethod() == 'post') {
+            $id = $this->request->getPost('id_penjualan', FILTER_SANITIZE_NUMBER_INT);
+            $data = [
+                'tunai'     => $this->request->getPost('tunai', FILTER_SANITIZE_NUMBER_INT),
+                'kembalian' => $this->request->getPost('kembalian', FILTER_SANITIZE_NUMBER_INT),
+            ];
+            $result = $this->penjualanModel->bayarInvoice($id, $data);
+            // barar invoice return affected rows
+
+            if ($result) {
+                $respon = [
+                    'status' => true,
+                    'no_invoice' => $this->request->getPost('no_invoice'),
+                    'pesan'  => 'Pembayaran berhasil.',
+                ];
+            } else {
+                $respon = [
+                    'status' => false,
+                    'no_invoice' => $this->request->getPost('no_invoice'),
+                    'pesan'  => 'Pembayaran gagal',
+                ];
+            }
+
+            return $this->response->setJSON($respon);
+        }
+    }
 }

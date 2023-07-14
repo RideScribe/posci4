@@ -89,4 +89,12 @@ class PenjualanModel extends Model
     {
         return $this->builder('tb_bulan_tahun')->select('bulan')->selectCount('jumlah_item', 'total')->join('tb_transaksi', 'date_format(created_at, "%m-%Y") = bln_thn', 'left')->where('tahun', $tahun)->groupBy('bln_thn')->get()->getResult();
     }
+
+    public function bayarInvoice($id, $data) {
+        $this->set($data);
+        $this->where('id', $id);
+        $this->update();
+
+        return $this->affectedRows();
+    }
 }

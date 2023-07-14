@@ -26,7 +26,7 @@ class TransaksiModel extends Model
         if ($id) {
             return $this->builder($this->table)
             // ->select('harga_item AS harga, jumlah_item AS jumlah, diskon_item, subtotal, p.invoice, p.total_harga, p.diskon, p.total_akhir, p.tunai, p.kembalian, p.catatan, p.created_at AS tanggal, i.nama_item AS item, pb.nama_pelanggan AS pelanggan, u.nama AS kasir')
-            ->select('harga_item AS harga, jumlah_item AS jumlah, diskon_item, subtotal, p.invoice, p.total_harga, p.diskon, p.total_akhir, p.tunai, p.kembalian, p.catatan, p.created_at AS tanggal, i.nama_item AS item, u.nama AS kasir')
+            ->select('harga_item AS harga, jumlah_item AS jumlah, diskon_item, subtotal, p.invoice, p.pelanggan, p.total_harga, p.diskon, p.total_akhir, p.tunai, p.kembalian, p.catatan, p.created_at AS tanggal, i.nama_item AS item, u.nama AS kasir')
             ->join('tb_penjualan p', 'p.id = id_penjualan')
             ->join('tb_item i', 'i.id = id_item')
             // ->join('tb_pelanggan pb', 'pb.id = id_pelanggan')
