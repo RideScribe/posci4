@@ -41,7 +41,7 @@ class PenjualanModel extends Model
         return "INV" . date('ymd') . $no;
     }
 
-    public function simpanPenjualan(array $post)
+    public function simpanPenjualan($post = [])
     {
         $item = new ItemModel();
         $transaksi = new TransaksiModel();

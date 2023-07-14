@@ -47,7 +47,7 @@ class KeranjangModel extends Model {
         }
     }
 
-    protected function updateStok(array $data) {
+    protected function updateStok($data = []) {
         $itemModel = new ItemModel();
         $cek_stok  = $itemModel->getItem($data['data']['id_item']);
         $stok      = [

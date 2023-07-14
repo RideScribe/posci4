@@ -173,7 +173,7 @@ class Auth extends BaseController
      * @param string $email email tujuan
      * @param string $token token verifikasi
      */
-    public function verifikasiAkun(string $email, string $token)
+    public function verifikasiAkun($email = "", $token = "")
     {
         return $this->_kirimEmail($email, 'verifikasi', $token);
     }

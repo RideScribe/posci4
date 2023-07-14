@@ -1,5 +1,7 @@
 const link = window.location;
-const BASE_URL = $("#base-url").data("url");
+const BURL = $("#base-url").data("url");
+// remove last / from BURL
+const BASE_URL = BURL.replace(/\/$/, "");
 
 /* tambahkan class active pada menu yang dipilih tanpa class nav-treeview */
 $("ul.nav-sidebar a").filter(function () {

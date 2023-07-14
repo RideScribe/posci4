@@ -4,7 +4,7 @@ namespace App\Libraries;
 
 class Keranjang {
 
-    public static function tambah($id = null, array $item)
+    public static function tambah($id = null, $item = [])
     {
         $item['total'] = ($item['harga'] * $item['jumlah']);
         $item['diskon'] = 0;

@@ -18,7 +18,7 @@ if (!function_exists('buat_password')) {
      * @link https://paragonie.com/blog/2015/04/secure-authentication-php-with-long-term-persistence
      * @param string $password
      */
-    function buat_password(string $password)
+    function buat_password($password = "")
     {
         return password_hash(
             base64_encode(hash('sha384', $password, true)),
@@ -34,7 +34,7 @@ if (!function_exists('verifikasi_password')) {
      *
      * @return bool
      */
-    function verifikasi_password(string $password, string $hash)
+    function verifikasi_password($password = "", $hash = "")
     {
         return password_verify(base64_encode(hash('sha384', $password, true)), $hash);
     }

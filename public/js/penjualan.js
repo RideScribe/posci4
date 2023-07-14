@@ -25,6 +25,7 @@ $(function () {
    */
   function detailKeranjang() {
     let keranjang = ''
+    console.log(BASE_URL);
     $.ajax({
       url: `${BASE_URL}/penjualan/keranjang`,
       dataType: 'json',

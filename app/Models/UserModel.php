@@ -21,7 +21,7 @@ class UserModel extends Model
         return $this->builder($this->table)->where('id', $kolom)->orWhere('username', $kolom)->orWhere('email', $kolom)->get(1)->getRow();
     }
 
-    public function getToken(string $token)
+    public function getToken($token = "")
     {
         return $this->builder($this->table)->select('id, email, token')->where('token', $token)->get(1)->getRow();
     }

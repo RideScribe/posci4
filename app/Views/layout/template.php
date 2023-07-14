@@ -48,9 +48,6 @@
                     </div><!-- /.row -->
                 </div><!-- /.container-fluid -->
             </div>
-            <!-- /.content-header -->
-            <?php else: ?>
-                <br>
             <?php endif; ?>
 
             <!-- Main content -->

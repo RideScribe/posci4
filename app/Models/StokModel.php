@@ -12,7 +12,7 @@ class StokModel extends Model
     protected $allowedFields = ['tipe', 'id_item', 'id_pemasok', 'jumlah', 'keterangan', 'id_user', 'ip_address'];
     protected $useTimestamps = true;
 
-    public function simpanTransaksi(array $data)
+    public function simpanTransaksi($data = [])
     {
         $db = \Config\Database::connect();
         $db->transBegin();
