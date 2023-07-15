@@ -26,3 +26,5 @@ Aplikasi sistem penjualan berbasis web menggunakan framework codeigniter 4.
  - Akun untuk login :
     - Username : superadmin / admin / kasir
     - Password : 123456
+
+---
