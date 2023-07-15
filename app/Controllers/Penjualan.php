@@ -47,7 +47,7 @@ class Penjualan extends BaseController
             $id   = $this->request->getPost('iditem', FILTER_SANITIZE_NUMBER_INT);
             $item = [
                 'id'      => $id,
-                'barcode' => htmlspecialchars($this->request->getPost('barcode')),
+                // 'barcode' => htmlspecialchars($this->request->getPost('barcode')),
                 'nama'    => htmlspecialchars($this->request->getPost('nama')),
                 'harga'   => $this->request->getPost('harga', FILTER_SANITIZE_NUMBER_INT),
                 'jumlah'  => $this->request->getPost('jumlah', FILTER_SANITIZE_NUMBER_INT),
@@ -134,12 +134,11 @@ class Penjualan extends BaseController
                 'kembalian'    => str_replace('.', '', $kembalian),
                 'catatan'      => htmlspecialchars($this->request->getPost('catatan')),
                 'tanggal'      => htmlspecialchars($this->request->getPost('tanggal')),
-                'id_user'      => session('id'),
+                'id_user'      => session('id') ?? 1,
                 'ip_address'   => $this->request->getIPAddress(),
                 'created_at'   => date('Y-m-d H:i:s'),
                 'updated_at'   => date('Y-m-d H:i:s'),
             ];
-
 
             if ($this->request->getPost('pelanggan') == '' || empty($this->request->getPost('pelanggan'))) {
                 return $this->response->setJSON([
@@ -154,12 +153,14 @@ class Penjualan extends BaseController
                     'status'      => $result['status'],
                     'pesan'       => 'Transaksi berhasil.',
                     'idpenjualan' => $result['id'],
+                    'no_invoice'  => $data['invoice'],
                 ];
             } else {
                 $respon = [
                     'status' => $result['status'],
                     'pesan'  => 'Transaksi gagal',
                     'data'   => $result,
+                    'no_invoice'  => $data['invoice'],
                 ];
             }
 
@@ -196,7 +197,10 @@ class Penjualan extends BaseController
     public function invoice()
     {
         if ($this->request->isAJAX()) {
-            return DataTables::use('tb_penjualan')->select('id, invoice, tanggal, tunai, pelanggan')->make();
+            return DataTables::use('tb_penjualan')
+                ->select('tb_penjualan.id, tb_penjualan.invoice, tb_penjualan.tanggal, tb_penjualan.tunai, tb_penjualan.pelanggan, tb_users.nama as kasir')
+                ->join('tb_users', 'tb_users.id = tb_penjualan.id_user', 'left')
+                ->make();
         } else if ($this->request->getMethod() == 'get') {
             $data = [
                 'title' => 'Daftar Invoice',
@@ -221,7 +225,8 @@ class Penjualan extends BaseController
         echo view('penjualan/cetak_termal', ['transaksi' => $transaksi, 'penjualan' => $penjualan]);
     }
 
-    public function invoice_detail($id) {
+    public function invoice_detail($id)
+    {
         $transaksi = $this->transaksi->detailTransaksi($id);
         if ($transaksi) {
             return $this->response->setJSON([
@@ -236,12 +241,14 @@ class Penjualan extends BaseController
         }
     }
 
-    public function bayar_invoice() {
+    public function bayar_invoice()
+    {
         if ($this->request->getMethod() == 'post') {
             $id = $this->request->getPost('id_penjualan', FILTER_SANITIZE_NUMBER_INT);
             $data = [
                 'tunai'     => $this->request->getPost('tunai', FILTER_SANITIZE_NUMBER_INT),
                 'kembalian' => $this->request->getPost('kembalian', FILTER_SANITIZE_NUMBER_INT),
+                'id_user'   => session('id'),
             ];
             $result = $this->penjualanModel->bayarInvoice($id, $data);
             // barar invoice return affected rows

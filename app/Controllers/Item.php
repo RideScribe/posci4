@@ -91,6 +91,7 @@ class Item extends BaseController {
 
         $data = [
             'title'    => 'Daftar Menu',
+            'base_url' => base_url(),
             'meja'     => $cek,
             'menus'    => $menus,
         ];

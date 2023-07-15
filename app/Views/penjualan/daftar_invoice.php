@@ -14,6 +14,7 @@
                             <th>Pelanggan</th>
                             <th>Tanggal</th>
                             <th>Status</th>
+                            <th>kasir</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -142,7 +143,8 @@
                 },
                 {
                     render: function(data, type, row) {
-                        if (row.tunai) {
+                        console.log(row)
+                        if (row.tunai && row.tunai != 0) {
                             return `<span class="badge badge-success">Lunas</span>`;
                         } else {
                             return `<span class="badge badge-warning">Belum Lunas</span>`;
@@ -151,11 +153,19 @@
                 },
                 {
                     render: function(data, type, row) {
-                        if (row.tunai || row.tunai != 0) {
+                        if (row.tunai && row.tunai != 0) {
+                            return row.kasir;
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    render: function(data, type, row) {
+                        if (row.tunai && row.tunai != 0) {
                             let html = `<button class="btn btn-success btn-sm print" data-id='${row.id}'><i class="fas fa-print"></i></button>`;
                             return html;
                         } else {
-                            // belum bayar tunai
                             let html = `<button type="button" id="btnBayar" data-id="${row.id}" data-invoice="${row.invoice}" data-toggle="modal" data-target="#modalBayar" class="btn btn-primary btn-sm"><i class="fas fa-money-bill-wave"></i></button>`;
                             return html;
                         }
@@ -193,6 +203,7 @@
             let total_akhir = $('#total_akhir').val();
             let tunai = $('#tunai').val();
             let kembalian = $('#kembalian').val();
+            let kasir = $('#id_user').val();
 
             if (pelanggan == '') {
                 toastr.error('Pelanggan tidak boleh kosong')

@@ -43,6 +43,7 @@ class Filters extends BaseConfig
 					'penjualan/tambah',
 					'penjualan/hapus',
 					'penjualan/ubah',
+					'penjualan/bayar',
 				]
 			]
 		],

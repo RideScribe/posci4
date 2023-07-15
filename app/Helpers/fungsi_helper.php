@@ -126,3 +126,13 @@ if (!function_exists('user_loggedin')) {
         return $model->where('id', session()->get('id'))->get()->getRow();
     }
 }
+
+// get nama from user using id_user
+if (!function_exists('get_nama')) {
+    function get_nama($id)
+    {
+        $model = model('App\Models\UserModel');
+        $data = $model->where('id', $id)->get()->getRow();
+        return $data->nama;
+    }
+}

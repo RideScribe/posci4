@@ -22,14 +22,14 @@ class Users extends Migration
 		 * Tabel Users
 		 */
 		$this->forge->addField([
-			'id' => ['type' => 'int', 'constraint'	=> 11, 'unsigned' => true, 'auto_increment' => true],
+			'id' 			=> ['type' => 'int', 'constraint'	=> 11, 'unsigned' => true, 'auto_increment' => true],
 			'email'			=> ['type' => 'varchar', 'constraint' => 255],
 			'username'		=> ['type' => 'varchar', 'constraint' => 30, 'null' => true],
 			'password'		=> ['type' => 'varchar', 'constraint' => 255],
 			'nama'			=> ['type' => 'varchar', 'constraint' => 255, 'null' => true],
 			'alamat'		=> ['type' => 'varchar', 'constraint' => 255, 'null' => true],
-			'id_role'			=> ['type' => 'int', 'constraint' => 11],
-			'avatar' => ['type' => 'varchar', 'constraint' => 255, 'default' => 'avatar.jpg'],
+			'id_role'		=> ['type' => 'int', 'constraint' => 11],
+			'avatar' 		=> ['type' => 'varchar', 'constraint' => 255, 'default' => 'avatar.jpg'],
 			'status'		=> ['type' => 'int', 'constraint' => 1, 'null' => 0, 'default' => 0],
 			'token'			=> ['type' => 'varchar', 'constraint' => 255, 'null' => true],
 			'ip_address'	=> ['type' => 'varchar', 'constraint' => 100, 'null' => true],
