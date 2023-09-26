@@ -10,7 +10,7 @@ class Unit extends BaseController
     protected $unitModel;
     protected $rules = [
         'unit' => [
-            'rules' => 'required|alpha_numeric_punct|is_unique[tb_unit.nama_unit,id,{id}]'
+            'rules' => 'required|alpha_numeric_punct|is_unique[tb_unit.nama_unit,id]'
         ]
     ];
 

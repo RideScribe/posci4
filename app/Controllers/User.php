@@ -11,8 +11,8 @@ class User extends BaseController
 
     private $rules = [
         'nama'     => ['rules' => 'required'],
-        'username' => ['rules' => 'required|alpha_numeric|is_unique[tb_users.username,id,{id}]'],
-        'email'    => ['rules' => 'required|valid_email|is_unique[tb_users.email,id,{id}]'],
+        'username' => ['rules' => 'required|alpha_numeric|is_unique[tb_users.username]'],
+        'email'    => ['rules' => 'required|valid_email|is_unique[tb_users.email]'],
         'role'     => ['rules' => 'required']
     ];
 

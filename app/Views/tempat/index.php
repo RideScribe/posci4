@@ -135,7 +135,7 @@
                     responValidasi(['tambah'], ['tempat', 'keterangan'], response);
                     if (response.sukses) {
                         $('#formModal').modal('hide');
-                        table.ajax.reload()
+                        window.location.reload();
                     }
                 }
             })
@@ -162,7 +162,7 @@
                     responValidasi(['ubah'], ['tempat', 'keterangan'], response);
                     if (response.sukses) {
                         $('#formModal').modal('hide');
-                        table.ajax.reload()
+                        window.location.reload();
                     }
                 }
             })
@@ -184,7 +184,7 @@
                             id: $(this).data('id')
                         },
                         success: function(response) {
-                            table.ajax.reload()
+                            window.location.reload();
                             if (response.status) {
                                 toastr.success(response.pesan, 'Sukses')
                             } else {

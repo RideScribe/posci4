@@ -9,7 +9,7 @@ class BulantahunSeeder extends Seeder
 	public function run()
 	{
 		// generate data dummy bulan dan tahun
-		for ($i = -1; $i < 10; $i++) {
+		for ($i = -1; $i < 3; $i++) {
 			// generate 1 tahun kebelakang dan 10 tahun mendatang
 			$tahun = ($i < 0) ? date('Y', strtotime("$i year")) : date('Y', strtotime("+$i year"));
 			$data = [

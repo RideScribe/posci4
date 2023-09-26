@@ -9,7 +9,7 @@ class Kategori extends BaseController {
     protected $kategoriModel;
     private $rules = [
         'kategori' => [
-            'rules' => 'required|alpha_numeric_punct|is_unique[tb_kategori.nama_kategori,id,{id}]',
+            'rules' => 'required|alpha_numeric_punct|is_unique[tb_kategori.nama_kategori]',
         ],
     ];
 

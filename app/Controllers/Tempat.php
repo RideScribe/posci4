@@ -10,7 +10,7 @@ class Tempat extends BaseController
     protected $tempat;
 
     private $rules = [
-        'tempat' => ['rules' => 'required'],
+        'tempat' => ['rules' => 'required|alpha_numeric_punct|is_unique[tb_tempat.tempat]'],
     ];
 
     public function __construct() {

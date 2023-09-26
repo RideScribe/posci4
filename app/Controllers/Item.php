@@ -18,7 +18,7 @@ class Item extends BaseController {
     protected $pemasok;
     protected $tempat;
     private $rules = [
-        'barcode'  => ['rules' => 'required|alpha_numeric_punct|is_unique[tb_item.barcode,id,{id}]'],
+        'barcode'  => ['rules' => 'required|alpha_numeric_punct|is_unique[tb_item.barcode]'],
         'item'     => ['rules' => 'required|alpha_numeric_punct'],
         'kategori' => ['rules' => 'required'],
         'unit'     => ['rules' => 'required'],
