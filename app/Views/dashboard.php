@@ -58,7 +58,7 @@
         <div class="col-md-6">
             <div class="small-box bg-gradient-red">
                 <div class="inner">
-                    <h3>Rp. <?= number_format(esc($harian), 0, ',', '.') ?>,-</h3>
+                    <h3>Rp. <?= number_format(esc($harian) ?? 0, 0, ',', '.') ?>,-</h3>
                     <p>Pendapatan Hari Ini</p>
                 </div>
                 <div class="icon">
