@@ -31,8 +31,11 @@ class Dashboard extends BaseController
             'produk'    => $this->produk->countAllResults(),
             'pemasok'  => $this->pemasok->countAllResults(),
             // 'pelanggan' => $this->pelanggan->countAllResults(),
-            'pengguna'  => $this->pengguna->countAllResults()
+            'pengguna'  => $this->pengguna->countAllResults(),
+            'harian'    => $this->penjualan->penjualanHarian(date('Y-m-d')),
+            'bulanan'   => $this->penjualan->penjualanBulanan(date('m'), date('Y')),
         ];
+
         echo view('dashboard', $data);
     }
 

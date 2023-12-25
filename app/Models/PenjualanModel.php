@@ -97,4 +97,18 @@ class PenjualanModel extends Model
 
         return $this->affectedRows();
     }
+
+    // penjualan harian
+    public function penjualanHarian($tanggal)
+    {
+        $builder = $this->builder($this->table)->selectSum('total_akhir', 'total')->where('tanggal', $tanggal)->get(1)->getRow();
+        return $builder->total;
+    }
+
+    // penjualan bulanan
+    public function penjualanBulanan($bulan, $tahun)
+    {
+        $builder = $this->builder($this->table)->selectSum('total_akhir', 'total')->where('month(tanggal)', $bulan)->where('year(tanggal)', $tahun)->get(1)->getRow();
+        return $builder->total;
+    }
 }
