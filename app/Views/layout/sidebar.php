@@ -34,12 +34,16 @@
                             <p> Pemasok </p>
                         </a>
                     </li>
+                <?php endif; ?>
+                <?php if (esc(get_user('id_role') != 1)) : ?>
                     <li class="nav-item">
                         <a href="<?= base_url('tempat') ?>" class="nav-link">
                             <i class="nav-icon fas fa-map-pin"></i>
                             <p> Tempat </p>
                         </a>
                     </li>
+                <?php endif; ?>
+                <?php if (esc(get_user('id_role') == 1) || esc(get_user('id_role') == 2)) : ?>
                     <li class="nav-item">
                         <a href="javascript:void(0)" class="nav-link">
                             <i class="nav-icon fas fa-cube"></i>
@@ -74,12 +78,14 @@
                         <p> Transaksi <i class="right fas fa-angle-left"></i></p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="<?= base_url('penjualan') ?>" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Penjualan</p>
-                            </a>
-                        </li>
+                        <?php if (esc(get_user('id_role') != 1)) : ?>
+                            <li class="nav-item">
+                                <a href="<?= base_url('penjualan') ?>" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Penjualan</p>
+                                </a>
+                            </li>
+                        <?php endif ?>
                         <li class="nav-item">
                             <a href="<?= base_url('penjualan/invoice') ?>" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
