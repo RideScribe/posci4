@@ -92,7 +92,7 @@
                 </div>
                 <div class="card-body">
                     <div class="position-relative mb-4">
-                        <canvas id="laporan-penjualan" height="100"></canvas>
+                        <canvas id="laporan-penjualan" height="300"></canvas>
                     </div>
                 </div>
             </div>

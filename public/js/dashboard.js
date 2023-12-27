@@ -63,11 +63,12 @@ $(function () {
               ticks: $.extend(
                 {
                   beginAtZero: true,
+                  stepSize: 3,
                   callback: function (value) {
                     return value
                   },
                 },
-                ticksStyle
+                ticksStyle,
               ),
             },
           ],
@@ -81,6 +82,10 @@ $(function () {
             },
           ],
         },
+        title: {
+          display: true,
+          text: 'Grafik Penjualan',
+        }
       },
     })
   })
