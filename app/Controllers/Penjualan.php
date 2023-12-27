@@ -202,9 +202,7 @@ class Penjualan extends BaseController
                 ->join('tb_users', 'tb_users.id = tb_penjualan.id_user', 'left')
                 ->make();
         } else if ($this->request->getMethod() == 'get') {
-            $data = [
-                'title' => 'Daftar Invoice',
-            ];
+            $data = ['title' => 'Daftar Invoice'];
             echo view('penjualan/daftar_invoice', $data);
         }
     }

@@ -1,6 +1,8 @@
 <?= $this->extend('layout/template'); ?>
 <?= $this->section('content'); ?>
 
+
+
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-body">
@@ -22,66 +24,106 @@
             </div>
         </div>
     </div>
+</div>
 
-    <div class="modal fade" id="modalBayar" tabindex="-1" aria-labelledby="modalBayarLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <form id="formBayar">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalBayarLabel">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+<div class="modal fade" id="modalBayar" tabindex="-1" aria-labelledby="modalBayarLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <form id="formBayar">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalBayarLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body p-0 m-0">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped" id="tabel-keranjang" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Menu</th>
+                                    <th>Harga</th>
+                                    <th>Qty</th>
+                                    <th style="width: 137px;">Diskon item (%)</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
                     </div>
-                    <div class="modal-body p-0 m-0">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped" id="tabel-keranjang" width="100%">
-                                <thead>
-                                    <tr>
-                                        <th>Menu</th>
-                                        <th>Harga</th>
-                                        <th>Qty</th>
-                                        <th style="width: 137px;">Diskon item (%)</th>
-                                        <th>Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
-                        </div>
-                        <div class="px-3">
-                            <input type="hidden" name="id_penjualan">
-                            <input type="hidden" name="no_invoice">
-                            <div class="form-group row">
-                                <label for="pelanggan" class="col-sm-4 col-form-label">Pesanan Atas</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control text-right" name="pelanggan" id="pelanggan" readonly>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="total_akhir" class="col-sm-4 col-form-label">Total Akhir</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control text-right" name="total_akhir" id="total_akhir" value="0" readonly>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="tunai" class="col-sm-4 col-form-label">Tunai</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control text-right" name="tunai" id="tunai" value="0">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="kembalian" class="col-sm-4 col-form-label">Kembalian</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control text-right" name="kembalian" id="kembalian" value="0" readonly>
-                                </div>
+                    <div class="px-3">
+                        <input type="hidden" name="id_penjualan">
+                        <input type="hidden" name="no_invoice">
+                        <div class="form-group row">
+                            <label for="pelanggan" class="col-sm-4 col-form-label">Pesanan Atas</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control text-right" name="pelanggan" id="pelanggan" readonly>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="total_akhir" class="col-sm-4 col-form-label">Total Akhir</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control text-right" name="total_akhir" id="total_akhir" value="0" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="tunai" class="col-sm-4 col-form-label">Tunai</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control text-right" name="tunai" id="tunai" value="0">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="kembalian" class="col-sm-4 col-form-label">Kembalian</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control text-right" name="kembalian" id="kembalian" value="0" readonly>
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Selesaikan Pembayaran</button>
-                    </div>
-                </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Selesaikan Pembayaran</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalDetailInvoice" tabindex="-1" aria-labelledby="modalDetailInvoiceLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalBayarLabel">Detail Invoice</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            <table class="table table-sm table-compact">
+                <?php foreach (['invoice', 'kasir', 'tanggal', 'total_akhir', 'tunai', 'kembalian'] as $item) : ?>
+                    <tr>
+                        <!-- replace _ with space -->
+                        <td><?= str_replace('_', ' ', $item) ?></td>
+                        <td id="<?= $item ?>"></td>
+                    </tr>
+                <?php endforeach ?>
+            </table>
+
+                <div class="table-responsive">
+                    <table class="table tabel-invoice">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Harga</th>
+                                <th>Jumlah</th>
+                                <th>Diskon Item</th>
+                                <th>Sub Total</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -133,7 +175,11 @@
                     }
                 },
                 {
-                    data: 'invoice'
+                    // data: 'invoice'
+                    render: function(data, type, row) {
+                        console.log(row)
+                        return `<a href="javascript:void(0)" class="text-primary" data-id="${row.id}">${row.invoice}</a>`;
+                    }
                 },
                 {
                     data: 'pelanggan'
@@ -143,7 +189,6 @@
                 },
                 {
                     render: function(data, type, row) {
-                        console.log(row)
                         if (row.tunai && row.tunai != 0) {
                             return `<span class="badge badge-success">Lunas</span>`;
                         } else {
@@ -267,7 +312,6 @@
                 type: "get",
                 dataType: "json",
                 success: function(data) {
-                    console.log(data)
                     // if data status false 
                     if (!data.status) {
                         toastr.error('Data tidak ditemukan')
@@ -300,6 +344,60 @@
 
             $('#modalBayarLabel').html(`<code>${$(this).data('invoice')}</code>`)
         });
+
+        // tabel-invoice tbody tr click except last column
+        $(document).on('click', '#tabel-invoice tbody tr td:not(:last-child)', function(e) {
+            $('#noInv').html($(this).closest('tr').find('td:nth-child(2)').text())
+            getDetailInvoice($(this).closest('tr').find('td:nth-child(2) a').data('id'))
+
+            $('#modalDetailInvoice').modal('toggle');
+        });
+
+        function formatRupiah(params) {
+            return new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0
+            }).format(params);
+        }
+
+        // get detail invoice using url penjualan/invoice_detail
+        function getDetailInvoice(id) {
+            $.ajax({
+                url: `${BASE_URL}/penjualan/invoice_detail/${id}`,
+                type: "get",
+                dataType: "json",
+                success: function(data) {
+                    console.log(data)
+                    if (data.status) {
+                        const dDetail = ['invoice', 'kasir', 'tanggal', 'total_akhir', 'tunai', 'kembalian'];
+
+                        $.each(dDetail, function(i, v) {
+                            console.log(data.data[0][v])
+                            if (v == 'tunai' || v == 'kembalian' || v == 'total_akhir') {
+                                $(`#modalDetailInvoice #${v}`).html(formatRupiah(data.data[0][v]))
+                            } else {
+                                $(`#modalDetailInvoice #${v}`).html(data.data[0][v])
+                            }
+                        });
+
+                        let html = '';
+                        $.each(data.data, function(i, v) {
+                            html += `<tr>
+                                        <td>${v.item}</td>
+                                        <td>${formatRupiah(v.harga)}</td>
+                                        <td>${v.jumlah}</td>
+                                        <td>${v.diskon_item}</td>
+                                        <td>${formatRupiah(v.subtotal)}</td>
+                                    </tr>`;
+                        });
+                        $('#modalDetailInvoice .tabel-invoice tbody').html(html);
+                    } else {
+                        toastr.error(data.pesan)
+                    }
+                },
+            });
+        }
     });
 </script>
 
