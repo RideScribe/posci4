@@ -53,3 +53,9 @@ public/uploads/profile/*
 public/uploads/produk/*
 !public/uploads/produk/index.html
 !public/uploads/produk/gambar.jpg
+
+# Cpanel Auto Files
+public/.htaccess
+public/.htpasswd
+public/.user.ini
+public/php.ini
