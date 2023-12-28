@@ -26,23 +26,25 @@
                 <a href="<?= base_url('item') ?>" class="dropdown-item dropdown-footer">Lihat Semua</a>
             </div>
         </li> -->
+        <?php if (esc(get_user('id_role') != 1)) : ?>
+            <li class="nav-item">
+                <a class="nav-link" href="/penjualan" title="halaman penjualan">
+                    <i class="fas fa-cash-register"></i> <span class="ml-1">Penjualan</span>
+                </a>
+            </li>
+        <?php endif; ?>
         <li class="nav-item">
-            <a class="nav-link" href="/penjualan"  title="halaman penjualan">
-                <i class="fas fa-cash-register"></i> <span class="ml-1">Penjualan</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/penjualan/invoice"  title="halaman penjualan">
+            <a class="nav-link" href="/penjualan/invoice" title="halaman penjualan">
                 <i class="fas fa-file-invoice"></i> <span class="ml-1">Invoice</span>
             </a>
         </li>
-        
+
         <li class="nav-item">
             <a class="nav-link">
                 |
             </a>
         </li>
-        
+
         <li class="nav-item">
             <a class="nav-link" href="javascript:void(0)" data-toggle="modal" data-target="#modal-logout" role="button">
                 <i class="fas fa-sign-out-alt"></i>
