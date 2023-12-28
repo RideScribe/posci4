@@ -41,6 +41,12 @@ class PenjualanModel extends Model
         return "INV" . date('ymd') . $no;
     }
 
+    public function invoiceHariIni()
+    {
+        $builder = $this->builder($this->table)->selectCount('invoice', 'total')->where('tanggal', date('Y-m-d'))->get(1)->getRow();
+        return $builder->total;
+    }
+
     public function simpanPenjualan($post = [])
     {
         $item = new ItemModel();
@@ -66,14 +72,13 @@ class PenjualanModel extends Model
             ];
             array_push($data, $itemTransaksi); // masukan item transaksi ke variabel $data
             // update stok item sesuai idnya
-            $item->set('stok', 'stok-'.$val['jumlah'], false);
+            $item->set('stok', 'stok-' . $val['jumlah'], false);
             $item->where('id', $val['id']);
             $item->update();
         }
         $transaksi->insertBatch($data); // tambahkan ke tabel transaksi
 
-        if ($db->transStatus() === FALSE)
-        {
+        if ($db->transStatus() === FALSE) {
             $db->transRollback();
             return ['status' => false, 'data' => $data];
         } else {
@@ -90,7 +95,8 @@ class PenjualanModel extends Model
         return $this->builder('tb_bulan_tahun')->select('bulan')->selectCount('jumlah_item', 'total')->join('tb_transaksi', 'date_format(created_at, "%m-%Y") = bln_thn', 'left')->where('tahun', $tahun)->groupBy('bln_thn')->get()->getResult();
     }
 
-    public function bayarInvoice($id, $data) {
+    public function bayarInvoice($id, $data)
+    {
         $this->set($data);
         $this->where('id', $id);
         $this->update();

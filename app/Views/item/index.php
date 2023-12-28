@@ -36,21 +36,21 @@
                 </button>
             </div>
             <div class="modal-body row">
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label for="barcode">Barcode</label>
                         <input type="text" class="form-control" name="barcode" id="barcode">
                         <small class="invalid-feedback"></small>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label for="item">Menu</label>
                         <input type="text" class="form-control" name="item" id="item">
                         <small class="invalid-feedback"></small>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label for="kategori">Kategori</label>
                         <select name="kategori" id="kategori" class="form-control">
@@ -62,7 +62,7 @@
                         <small class="invalid-feedback"></small>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label for="unit">Unit</label>
                         <select name="unit" id="unit" class="form-control">
@@ -74,33 +74,34 @@
                         <small class="invalid-feedback"></small>
                     </div>
                 </div>
-                <div class="col-6">
+                <!-- <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label for="pemasok">Pemasok</label>
                         <select name="pemasok" id="pemasok" class="form-control">
                             <option value="">Pilih Pemasok</option>
-                            <?php foreach (esc($pemasok) as $data) : ?>
-                                <option value="<?= esc($data->id) ?>"><?= esc($data->pemasok)  ?></option>
-                            <?php endforeach; ?>
+                            <?php // foreach (esc($pemasok) as $data) : ?>
+                                <option value="<?= '' // esc($data->id) ?>"><?= '' //esc($data->pemasok)  ?></option>
+                            <?php // endforeach; ?>
                         </select>
                         <small class="invalid-feedback"></small>
                     </div>
-                </div>
-                <div class="col-6">
+                </div> -->
+                <input type="hidden" name="pemasok" id="pemasok" value="1">
+                <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label for="harga">Harga</label>
                         <input type="text" class="form-control" name="harga" id="harga">
                         <small class="invalid-feedback"></small>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label for="stok">Stok</label>
                         <input type="text" class="form-control" name="stok" id="stok">
                         <small class="invalid-feedback"></small>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-12">
                     <div class="form-group">
                         <label for="gambar">Gambar</label>
                         <div class="custom-file">
@@ -110,7 +111,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <div class="form-group d-none">
                         <img class="img-thumbnail" id="img-preview">
                     </div>

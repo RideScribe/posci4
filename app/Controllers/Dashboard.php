@@ -30,6 +30,7 @@ class Dashboard extends BaseController
             'title'     => 'Dashboard',
             'produk'    => $this->produk->countAllResults(),
             'pemasok'  => $this->pemasok->countAllResults(),
+            'invoice_hari_ini' => $this->penjualan->invoiceHariIni(),
             // 'pelanggan' => $this->pelanggan->countAllResults(),
             'pengguna'  => $this->pengguna->countAllResults(),
             'harian'    => $this->penjualan->penjualanHarian(date('Y-m-d')),

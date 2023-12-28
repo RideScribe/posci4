@@ -28,13 +28,14 @@
                 </li>
 
                 <?php if (esc(get_user('id_role') == 1) || esc(get_user('id_role') == 2)) : ?>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a href="<?= base_url('pemasok') ?>" class="nav-link">
                             <i class="nav-icon fas fa-truck"></i>
                             <p> Pemasok </p>
                         </a>
-                    </li>
+                    </li> -->
                 <?php endif; ?>
+
                 <?php if (esc(get_user('id_role') != 1)) : ?>
                     <li class="nav-item">
                         <a href="<?= base_url('tempat') ?>" class="nav-link">
