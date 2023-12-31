@@ -72,8 +72,8 @@ $(function () {
                 <td>${data.jumlah}</td>
                 <td>${data.total}</td>
                 <td>
-                    <button class="btn btn-success btn-sm" id="edit-item" data-toggle="modal" data-target="#modal-item-edit" data-id="${data.id}" data-barcode="${data.barcode}" data-item="${data.nama}" data-harga="${data.harga}" data-jumlah="${data.jumlah}" data-diskon="${data.diskon}" data-subtotal="${data.total}" data-stok="${data.stok}"><i class="fa fa-edit"></i></button>
-                    <button class="btn btn-danger btn-sm" id="hapus-item" data-id="${data.id}"><i class="fa fa-trash"></i></button>
+                    <button type="button" class="btn btn-success btn-sm" id="edit-item" data-toggle="modal" data-target="#modal-item-edit" data-id="${data.id}" data-barcode="${data.barcode}" data-item="${data.nama}" data-harga="${data.harga}" data-jumlah="${data.jumlah}" data-diskon="${data.diskon}" data-subtotal="${data.total}" data-stok="${data.stok}"><i class="fa fa-edit"></i></button>
+                    <button type="button" class="btn btn-danger btn-sm" id="hapus-item" data-id="${data.id}"><i class="fa fa-trash"></i></button>
                 </td>
             </tr>`
           })
@@ -225,6 +225,9 @@ $(function () {
           success: function (response) {
             console.log(response);
             if (response.status) {
+              // close modal
+              $('#modalKeranjang').modal('hide')
+
               Swal.fire({
                 icon: 'success',
                 title: 'Sukses!',

@@ -83,7 +83,7 @@
         <div class="col-md-6">
             <div class="small-box bg-gradient-yellow">
                 <div class="inner">
-                    <h3>Rp. <?= number_format(esc($bulanan), 0, ',', '.') ?>,-</h3>
+                    <h3>Rp. <?= number_format(esc($bulanan) ?? 0, 0, ',', '.') ?>,-</h3>
                     <p>Pendapatan Bulan Ini</p>
                 </div>
                 <div class="icon">
