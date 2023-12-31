@@ -54,28 +54,38 @@
                     <div class="px-3">
                         <input type="hidden" name="id_penjualan">
                         <input type="hidden" name="no_invoice">
-                        <div class="form-group row">
-                            <label for="pelanggan" class="col-sm-4 col-form-label">Pesanan Atas</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control text-right" name="pelanggan" id="pelanggan" readonly>
+                        <div class="row">
+                            <div class="col-12 col-lg-6">
+                                <div class="form-group row">
+                                    <label for="pelanggan" class="col-sm-4 col-form-label">Pesanan Atas</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control text-right" name="pelanggan" id="pelanggan" readonly>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="total_akhir" class="col-sm-4 col-form-label">Total Akhir</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control text-right" name="total_akhir" id="total_akhir" value="0" readonly>
+                            <div class="col-12 col-lg-6">
+                                <div class="form-group row">
+                                    <label for="total_akhir" class="col-sm-4 col-form-label">Total Akhir</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control text-right" name="total_akhir" id="total_akhir" value="0" readonly>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="tunai" class="col-sm-4 col-form-label">Tunai</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control text-right" name="tunai" id="tunai" value="0">
+                            <div class="col-12 col-lg-6">
+                                <div class="form-group row">
+                                    <label for="tunai" class="col-sm-4 col-form-label">Tunai</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control text-right" name="tunai" id="tunai" value="0">
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="kembalian" class="col-sm-4 col-form-label">Kembalian</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control text-right" name="kembalian" id="kembalian" value="0" readonly>
+                            <div class="col-12 col-lg-6">
+                                <div class="form-group row">
+                                    <label for="kembalian" class="col-sm-4 col-form-label">Kembalian</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control text-right" name="kembalian" id="kembalian" value="0" readonly>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -100,15 +110,15 @@
             </div>
             <div class="modal-body">
 
-            <table class="table table-sm table-compact">
-                <?php foreach (['invoice', 'kasir', 'tanggal', 'total_akhir', 'tunai', 'kembalian'] as $item) : ?>
-                    <tr>
-                        <!-- replace _ with space -->
-                        <td><?= str_replace('_', ' ', $item) ?></td>
-                        <td id="<?= $item ?>"></td>
-                    </tr>
-                <?php endforeach ?>
-            </table>
+                <table class="table table-sm table-compact">
+                    <?php foreach (['invoice', 'kasir', 'tanggal', 'total_akhir', 'tunai', 'kembalian'] as $item) : ?>
+                        <tr>
+                            <!-- replace _ with space -->
+                            <td><?= str_replace('_', ' ', $item) ?></td>
+                            <td id="<?= $item ?>"></td>
+                        </tr>
+                    <?php endforeach ?>
+                </table>
 
                 <div class="table-responsive">
                     <table class="table tabel-invoice">
