@@ -19,14 +19,16 @@
                     <tbody>
                         <?php $no = 1 ?>
                         <?php foreach ($tempat as $t) : ?>
+                            <?php $url = base_url('meja') . '/' . base64_encode(random_int(100000, 999999) . '.' .  $t['id']) . '/menu' ?>
                             <tr>
                                 <td><?= $no++ ?></td>
                                 <td><?= $t['tempat'] ?></td>
                                 <td><?= $t['keterangan'] ?></td>
                                 <td>
-                                    <img src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&choe=UTF-8&chld=H|1&chl=<?= urlencode(base_url('meja') . '/' . base64_encode(random_int(100000, 999999) . '.' .  $t['id']) . '/menu') ?>" width="100px">
+                                    <img src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&choe=UTF-8&chld=H|1&chl=<?= urlencode($url) ?>" width="100px">
                                 </td>
                                 <td>
+                                    <a href="<?= $url ?>" target="_blank" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
                                     <button class="btn btn-success btn-sm mr-1 edit" data-id="<?= $t['id'] ?>" data-tempat="<?= $t['tempat'] ?>" data-keterangan="<?= $t['keterangan'] ?>"><i class="fas fa-edit"></i></button>
                                     <button class="btn btn-danger btn-sm hapus" data-id="<?= $t['id'] ?>"><i class="fas fa-trash"></i></button>
                                 </td>
