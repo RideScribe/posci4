@@ -118,14 +118,29 @@ class Penjualan extends BaseController
         }
     }
 
+    public function clear_cart()
+    {
+        session()->remove('keranjang');
+        return $this->response->setJSON([
+            'status' => true,
+            'pesan'  => 'Keranjang berhasil dibersihkan.',
+        ]);
+    }
+
     public function bayar()
     {
         if ($this->request->getMethod() == 'post') {
             // tambahkan record ke tabel penjualan
             $tunai     = $this->request->getPost('tunai', FILTER_SANITIZE_NUMBER_INT);
             $kembalian = $this->request->getPost('kembalian', FILTER_SANITIZE_NUMBER_INT);
+
+            // if in request post has invoice get id from penjualan table
+            if ($this->request->getPost('invoice')) {
+                $id_penjualan = $this->penjualanModel->select('id')->where('invoice', $this->request->getPost('invoice'))->first()['id'];
+            }
+
             $data      = [
-                'invoice'      => $this->penjualanModel->invoice(),
+                'invoice'      => $this->request->getPost('invoice') ?? $this->penjualanModel->invoice(),
                 'pelanggan'    => htmlspecialchars($this->request->getPost('pelanggan')),
                 'total_harga'  => $this->request->getPost('subtotal', FILTER_SANITIZE_NUMBER_INT),
                 'diskon'       => $this->request->getPost('diskon', FILTER_SANITIZE_NUMBER_INT),
@@ -139,6 +154,11 @@ class Penjualan extends BaseController
                 'created_at'   => date('Y-m-d H:i:s'),
                 'updated_at'   => date('Y-m-d H:i:s'),
             ];
+
+            // add id penjualan if invoice is exist
+            if (isset($id_penjualan)) {
+                $data['id_penjualan'] = $id_penjualan;
+            }
 
             if ($this->request->getPost('pelanggan') == '' || empty($this->request->getPost('pelanggan'))) {
                 return $this->response->setJSON([
@@ -262,6 +282,53 @@ class Penjualan extends BaseController
                     'status' => false,
                     'no_invoice' => $this->request->getPost('no_invoice'),
                     'pesan'  => 'Pembayaran gagal',
+                ];
+            }
+
+            return $this->response->setJSON($respon);
+        }
+    }
+
+    public function cek_invoice()
+    {
+        if ($this->request->isAJAX()) {
+            $invoice = $this->request->getVar('invoice');
+            $result = $this->penjualanModel->cekInvoice($invoice);
+            if ($result) {
+                $respon = [
+                    'status' => true,
+                    'data'   => $result,
+                ];
+            } else {
+                $respon = [
+                    'status' => false,
+                    'pesan'  => 'Invoice tidak ditemukan',
+                    'no_invoice' => $invoice,
+                ];
+            }
+
+            return $this->response->setJSON($respon);
+        }
+    }
+
+    public function get_unpaid_invoice() 
+    {
+        if ($this->request->isAJAX()) {
+            $invoice = $this->request->getVar('id_penjualan');            
+            $result = $this->transaksi->select('tb_transaksi.*, tb_item.nama_item as item, tb_item.harga as harga_item')
+                ->where('id_penjualan', $invoice)
+                ->join('tb_item', 'tb_item.id = tb_transaksi.id_item')
+                ->findAll();
+            if ($result) {
+                $respon = [
+                    'status' => true,
+                    'data'   => $result,
+                ];
+            } else {
+                $respon = [
+                    'status' => false,
+                    'pesan'  => 'Invoice tidak ditemukan',
+                    'no_invoice' => $invoice,
                 ];
             }
 

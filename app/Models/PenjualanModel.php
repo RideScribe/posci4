@@ -54,8 +54,16 @@ class PenjualanModel extends Model
 
         $db = \Config\Database::connect();
         $db->transBegin();
-        $this->save($post); // simpan transaksi ke tabel penjualan
-        $id_penjualan = $this->insertID; // mengambil id penjualan
+        // $this->save($post); // simpan transaksi ke tabel penjualan
+        if (isset($post['id_penjualan'])) {
+            $this->set($post);
+            $this->where('id', $post['id_penjualan']);
+            $this->update();
+        } else {
+            $this->insert($post);
+        }
+
+        $id_penjualan = $post['id_penjualan'] ?? $this->insertID(); // ambil id penjualan terakhir
         $keranjang = session('keranjang'); // menampung session keranjang
         $data = [];
         foreach ($keranjang as $val) {
@@ -76,6 +84,7 @@ class PenjualanModel extends Model
             $item->where('id', $val['id']);
             $item->update();
         }
+        $transaksi->where('id_penjualan', $id_penjualan)->delete();
         $transaksi->insertBatch($data); // tambahkan ke tabel transaksi
 
         if ($db->transStatus() === FALSE) {
@@ -116,5 +125,10 @@ class PenjualanModel extends Model
     {
         $builder = $this->builder($this->table)->selectSum('total_akhir', 'total')->where('month(tanggal)', $bulan)->where('year(tanggal)', $tahun)->get(1)->getRow();
         return $builder->total;
+    }
+
+    public function cekInvoice($invoice)
+    {
+        return $this->builder($this->table)->where('invoice', $invoice)->get(1)->getRow();
     }
 }

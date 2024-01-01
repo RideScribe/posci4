@@ -49,10 +49,22 @@
                 <i class="fa fa-shopping-cart"></i>
                 <span class="ml-2"><strong id="jml_item_keranjang">0</strong></span>
             </button>
+            <button class="btn btn-outline-light ml-2 btn-cek-pesanan" type="button" data-toggle="modal" data-target="#modalTambahPesanan">
+                tambah pesanan
+            </button>
         </div>
     </nav>
 
     <div class="container my-3">
+
+        <div class="alert alert-warning alert-dismissible fade show d-none" id="invReady" role="alert">
+            <strong>anda dalam mode menambahkan pesanan untuk invoice <br>
+                <span class="badge badge-secondary" id="noInv"></span></strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="remove_from_cart()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
         <ul class="nav nav-pills mb-3 d-flex border" id="pills-tab" role="tablist">
             <?php foreach ($menus as $key => $val) : ?>
                 <li class="nav-item text-center border" style="flex:1;" role="presentation">
@@ -129,6 +141,34 @@
             <?php endforeach; ?>
         </div>
     </div>
+
+    <!-- Modal Tambah Pesanan -->
+    <div class="modal fade" id="modalTambahPesanan" tabindex="-1" aria-labelledby="modalTambahPesananLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTambahPesananLabel">Tambah Pesanan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="bodal-body">
+                    <div class="p-3">
+                        Anda bisa menambahkan pesanan dengan memasukkan nomor invoice anda disini
+                        <form action="" id="formTambahPesanan">
+                            <div class="my-3">
+                                <input type="text" name="no-invoice" id="no-invoice" class="form-control" placeholder="Masukkan nomor invoice anda disini">
+                                <div class="mt-3">
+                                    <button class="btn btn-block bg-indigo" id="cek-invoice">Tambah Pesanan</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Modal Tambah Pesanan -->
 
     <!-- Modal Keranjang -->
     <div class="modal fade" id="modalKeranjang" tabindex="-1" aria-labelledby="modalKeranjangLabel" aria-hidden="true">
@@ -262,6 +302,144 @@
     <script src="<?= base_url('js/script.js') ?>"></script>
     <!-- Penjualan Pub  -->
     <script src="<?= base_url('js/penjualan-pub.js') ?>"></script>
+
+    <script>
+        setTextBtnCekPesanan();
+        setDetail();
+
+        $('#formTambahPesanan').on('submit', function(e) {
+            e.preventDefault();
+            let no_invoice = $('#no-invoice').val();
+            localStorage.setItem('no_invoice', no_invoice);
+
+            cekInvoice();
+        });
+
+        function cekInvoice() {
+            let no_invoice = localStorage.getItem('no_invoice');
+            console.log(`${BASE_URL}/penjualan/cek_invoice`);
+            if (no_invoice) {
+                $.ajax({
+                    url: `${BASE_URL}/penjualan/cek_invoice`,
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        invoice: no_invoice
+                    },
+                    success: function(res) {
+                        if (!res.status) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: res.pesan,
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    localStorage.removeItem('pelanggan');
+                                    remove_from_cart();
+                                }
+                            });
+                        }
+
+                        const data = res.data;
+                        if (data.tunai && data.tunai != 0) {
+                            Swal.fire({
+                                icon: 'info',
+                                title: 'Oops...',
+                                text: "Invoice sudah dibayar, anda tidak bisa menambahkan pesanan. \n Silahkan buat invoice baru",
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    localStorage.removeItem('pelanggan');
+                                    setTextBtnCekPesanan();
+                                }
+                            });
+                        } else {
+                            setTextBtnCekPesanan();
+                            get_unpaid_invoice(data.id);
+                            localStorage.setItem('pelanggan', data.pelanggan);
+
+                            setTimeout(() => {
+                                $('#modalTambahPesanan').modal('hide');
+                            }, 1000);
+                        }
+
+                    }
+                });
+            }
+        }
+
+        function get_unpaid_invoice(id_penjualan) {
+            $.ajax({
+                url: `${BASE_URL}/penjualan/get_unpaid_invoice`,
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    id_penjualan: id_penjualan
+                },
+                success: function(res) {
+                    if (!res.status) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: res.pesan,
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                remove_from_cart();
+                            }
+                        });
+                    }
+
+                    const data = res.data;
+                    data.forEach(item => {
+                        add_to_cart(item.id_item, item.item, item.harga_item, item.jumlah_item);
+                    });
+                }
+            });
+        }
+
+        function setDetail() {
+            let pelanggan = localStorage.getItem('pelanggan');
+            if (pelanggan) {
+                $('#form-keranjang #pelanggan').val(pelanggan).prop('readonly', true);
+            }
+        }
+
+        function setTextBtnCekPesanan() {
+            let no_invoice = localStorage.getItem('no_invoice');
+            if (no_invoice) {
+                $('.btn-cek-pesanan').text(no_invoice);
+                $('#invReady').removeClass('d-none');
+                $('#noInv').text(no_invoice);
+
+            } else {
+                localStorage.removeItem('no_invoice');
+                localStorage.removeItem('pelanggan');
+                $('.btn-cek-pesanan').text('tambah pesanan');
+                $('#invReady').addClass('d-none');
+            }
+        }
+
+        function remove_from_cart() {
+            $.ajax({
+                url: `${BASE_URL}/penjualan/clear_cart`,
+                type: 'GET',
+                success: function(res) {
+                    if (res.status) {
+                        toastr.success(res.pesan);
+                    } else {
+                        toastr.error(res.pesan);
+                    }
+
+                    localStorage.removeItem('no_invoice');
+                    localStorage.removeItem('pelanggan');
+                    setTextBtnCekPesanan();
+
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
+                }
+            });
+        }
+    </script>
 </body>
 
 </html>

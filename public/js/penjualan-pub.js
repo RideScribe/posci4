@@ -58,7 +58,12 @@ $(function () {
           $('#pelanggan').prop('readonly', true)
           $('#catatan').prop('readonly', true)
         } else {
-          $('#pelanggan').prop('readonly', false)
+          let localSpelanggan = localStorage.getItem('pelanggan');
+          if (localSpelanggan) {
+            $('#pelanggan').val(localSpelanggan).prop('readonly', true)
+          } else {
+            $('#pelanggan').val('').prop('readonly', false)
+          }
           $('#catatan').prop('readonly', false)
 
           var jml_all = 0
@@ -199,6 +204,24 @@ $(function () {
       return false;
     }
 
+    let data = {
+      [$('#token').attr('name')]: $('#token').val(),
+      pelanggan: pelanggan,
+      subtotal: subtotal,
+      diskon: 0,
+      total_akhir: subtotal,
+      tunai: 0,
+      kembalian: 0,
+      catatan: catatan,
+      tanggal: tanggal,
+    }
+
+    // if in local storage contains no invoice
+    const localNoInvoice = localStorage.getItem('no_invoice')
+    if (localNoInvoice) {
+      data.invoice = localNoInvoice
+    } 
+
     Swal.fire({
       title: 'Yakin proses transaksi sudah benar?',
       icon: 'question',
@@ -211,19 +234,9 @@ $(function () {
           url: `${BASE_URL}/penjualan/bayar`,
           type: 'post',
           dataType: 'json',
-          data: {
-            [$('#token').attr('name')]: $('#token').val(),
-            pelanggan: pelanggan,
-            subtotal: subtotal,
-            diskon: 0,
-            total_akhir: subtotal,
-            tunai: 0,
-            kembalian: 0,
-            catatan: catatan,
-            tanggal: tanggal,
-          },
+          data: data,
           success: function (response) {
-            console.log(response);
+            console.log(response)
             if (response.status) {
               // close modal
               $('#modalKeranjang').modal('hide')
@@ -235,6 +248,8 @@ $(function () {
                 showConfirmButton: true,
                 html: `<p>${response.pesan}, nomor invoice anda <b>${response.no_invoice}</b> <br /> <code>harap simpan nomor invoice, sebagai tanda bukti pesanan anda</code></p>`,
                 willClose: () => {
+                  localStorage.removeItem('no_invoice')
+                  localStorage.removeItem('pelanggan')
                   window.location.reload()
                 }
               })

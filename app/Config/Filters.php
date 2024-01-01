@@ -42,8 +42,11 @@ class Filters extends BaseConfig
 					'penjualan/cekStok',
 					'penjualan/tambah',
 					'penjualan/hapus',
+					'penjualan/clear_cart',
 					'penjualan/ubah',
 					'penjualan/bayar',
+					'penjualan/cek_invoice',
+					'penjualan/get_unpaid_invoice',
 				]
 			]
 		],
