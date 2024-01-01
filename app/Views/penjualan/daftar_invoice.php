@@ -103,7 +103,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalBayarLabel">Detail Invoice</h5>
+                <h5 class="modal-title" id="modalDetailInvoiceLabel">Detail Invoice</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -138,7 +138,6 @@
         </div>
     </div>
 </div>
-
 <?= $this->endSection(); ?>
 
 <?= $this->section('js'); ?>
@@ -187,7 +186,6 @@
                 {
                     // data: 'invoice'
                     render: function(data, type, row) {
-                        console.log(row)
                         return `<a href="javascript:void(0)" class="text-primary" data-id="${row.id}">${row.invoice}</a>`;
                     }
                 },
@@ -222,6 +220,7 @@
                             return html;
                         } else {
                             let html = `<button type="button" id="btnBayar" data-id="${row.id}" data-invoice="${row.invoice}" data-toggle="modal" data-target="#modalBayar" class="btn btn-primary btn-sm"><i class="fas fa-money-bill-wave"></i></button>`;
+                            // html += `<button type="button" id="btnTambahPesanan" data-id="${row.id}" data-invoice="${row.invoice}" data-toggle="modal" data-target="#modalTambahPesanan" class="btn btn-warning btn-sm ml-1"><i class="fas fa-plus"></i></button>`;
                             return html;
                         }
                     }
@@ -242,6 +241,12 @@
                 {
                     targets: [0, 2, 3],
                     searchable: false
+                },
+                // last column
+                {
+                    targets: -1,
+                    width: "10%",
+                    className: "text-center"
                 }
             ]
         });
@@ -318,7 +323,7 @@
 
             // ajax get data
             $.ajax({
-                url: `${BASE_URL}/penjualan/invoice_detail/${$(this).data('id')}`,
+                url: `${BASE_URL}/penjualan/invoice_detail/${id}`,
                 type: "get",
                 dataType: "json",
                 success: function(data) {
@@ -328,30 +333,32 @@
                         return false;
                     }
 
-                    // id penjualan
+                    const dta = data.data;
                     $('input[name="id_penjualan"]').val(id);
                     // no invoice
                     $('input[name="no_invoice"]').val(invoice);
 
                     // set data pelanggan
-                    $('#pelanggan').val(data.data[0].pelanggan)
+                    $('#pelanggan').val(dta[0].pelanggan)
                     // total akhir
-                    $('#total_akhir').val(data.data[0].total_akhir)
+                    $('#total_akhir').val(dta[0].total_akhir)
 
                     let html = '';
-                    $.each(data.data, function(i, v) {
+                    $.each(dta, function(i, v) {
                         html += `<tr>
-                                    <td>${v.item}</td>
-                                    <td>${v.harga}</td>
-                                    <td>${v.jumlah}</td>
-                                    <td>${v.diskon_item}</td>
-                                    <td>${v.subtotal}</td>
-                                </tr>`;
+                            <td>${v.item}</td>
+                            <td>${v.harga}</td>
+                            <td>${v.jumlah}</td>
+                            <td>${v.diskon_item}</td>
+                            <td>${v.subtotal}</td>
+                        </tr>`;
                     });
                     $('#tabel-keranjang tbody').html(html);
+
                 },
             });
 
+            // id penjualan
             $('#modalBayarLabel').html(`<code>${$(this).data('invoice')}</code>`)
         });
 
@@ -378,12 +385,10 @@
                 type: "get",
                 dataType: "json",
                 success: function(data) {
-                    console.log(data)
                     if (data.status) {
                         const dDetail = ['invoice', 'kasir', 'tanggal', 'total_akhir', 'tunai', 'kembalian'];
 
                         $.each(dDetail, function(i, v) {
-                            console.log(data.data[0][v])
                             if (v == 'tunai' || v == 'kembalian' || v == 'total_akhir') {
                                 $(`#modalDetailInvoice #${v}`).html(formatRupiah(data.data[0][v]))
                             } else {
@@ -408,6 +413,52 @@
                 },
             });
         }
+
+        $(document).on('click', '#btnTambahPesanan', function(e) {
+            var id = $(this).data('id');
+            var invoice = $(this).data('invoice');
+
+            // ajax get data
+            $.ajax({
+                url: `${BASE_URL}/penjualan/invoice_detail/${id}`,
+                type: "get",
+                dataType: "json",
+                success: function(data) {
+                    // if data status false 
+                    if (!data.status) {
+                        toastr.error('Data tidak ditemukan')
+                        return false;
+                    }
+
+                    const dta = data.data;
+                    $('input[name="id_penjualan"]').val(id);
+                    // no invoice
+                    $('input[name="no_invoice"]').val(invoice);
+
+                    // set data pelanggan
+                    $('#pelanggan').val(dta[0].pelanggan)
+                    // total akhir
+                    $('#total_akhir').val(dta[0].total_akhir)
+
+                    let html = '';
+                    $.each(dta, function(i, v) {
+                        html += `<tr>
+                            <td>${v.item}</td>
+                            <td>${v.harga}</td>
+                            <td>${v.jumlah}</td>
+                            <td>${v.diskon_item}</td>
+                            <td>${v.subtotal}</td>
+                            <td>
+                                <button type="button" class="btn btn-danger btn-sm btnHapusItem" data-id="${v.id}"><i class="fas fa-trash"></i></button>
+                                <button type="button" class="btn btn-warning btn-sm btnEditItem" data-id="${v.id}"><i class="fas fa-pen"></i></button>
+                            </td>
+                        </tr>`;
+                    });
+                    $('#modalTambahPesanan .tabel-invoice tbody').html(html);
+
+                },
+            });
+        });
     });
 </script>
 
