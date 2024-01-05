@@ -110,6 +110,15 @@
 
                     </ul>
                 </li>
+                
+                <li class="nav-header">Laporan</li>
+                <li class="nav-item">
+                    <a href="<?= base_url('laporan/penjualan') ?>" class="nav-link">
+                        <i class="nav-icon fas fa-file"></i>
+                        <p>Laporan Penjualan</p>
+                    </a>
+                </li>
+
                 <li class="nav-header">Administrator</li>
                 <li class="nav-item">
                     <a href="<?= base_url('user/profile') ?>" class="nav-link">

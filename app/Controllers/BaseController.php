@@ -33,7 +33,7 @@ class BaseController extends Controller
 	 *
 	 * @var array
 	 */
-	protected $helpers = ['fungsi'];
+	protected $helpers = ['fungsi', 'date'];
 
 	/**
 	 * Session
@@ -55,5 +55,6 @@ class BaseController extends Controller
 		//--------------------------------------------------------------------
 		// E.g.:
 		$this->session = \Config\Services::session();
+		setlocale(LC_ALL, 'id_ID.utf8');
 	}
 }
