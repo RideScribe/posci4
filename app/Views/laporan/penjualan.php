@@ -8,11 +8,11 @@
             
             <!-- Filter -->
             <form action="" method="get" class="mb-3 d-flex flex-column flex-md-row justify-content-center align-items-center" style="gap: 5px;">
-                <input type="date" name="tanggal" id="tanggal" class="form-control" value="<?= $filter['tanggal'] ?>">
-                <select name="status" id="status" class="form-control custom-select" value="<?= $filter['status'] ?>">
+                <input type="date" name="tanggal" id="tanggal" class="form-control" value="<?= in_array('tanggal', $filter) ? $filter['tanggal'] : null ?>">
+                <select name="status" id="status" class="form-control custom-select" value="<?= in_array('tanggal', $filter) ? $filter['status'] : null ?>">
                     <option value="">-- Status --</option>
-                    <option <?= $filter['status'] == 1 ? 'selected' : '' ?> value="1">Lunas</option>
-                    <option <?= $filter['status'] == 0 ? 'selected' : '' ?> value="0">Belum Lunas</option>
+                    <option <?= (in_array('status', $filter) ? $filter['status'] : null) == 1 ? 'selected' : '' ?> value="1">Lunas</option>
+                    <option <?= (in_array('status', $filter) ? $filter['status'] : null) == 0 ? 'selected' : '' ?> value="0">Belum Lunas</option>
                 </select>
 
                 <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
