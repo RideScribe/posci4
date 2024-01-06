@@ -110,14 +110,22 @@
 
                     </ul>
                 </li>
-                
-                <li class="nav-header">Laporan</li>
-                <li class="nav-item">
-                    <a href="<?= base_url('laporan/penjualan') ?>" class="nav-link">
-                        <i class="nav-icon fas fa-file"></i>
-                        <p>Laporan Penjualan</p>
-                    </a>
-                </li>
+
+                <?php if (esc(get_user('id_role') == 1)) : ?>
+                    <li class="nav-header">Laporan</li>
+                    <li class="nav-item">
+                        <a href="<?= base_url('laporan/penjualan') ?>" class="nav-link">
+                            <i class="nav-icon fas fa-file-alt"></i>
+                            <p>Laporan Penjualan</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?= base_url('laporan/pendapatan') ?>" class="nav-link">
+                            <i class="nav-icon fas fa-dollar-sign"></i>
+                            <p>Laporan Pendapatan</p>
+                        </a>
+                    </li>
+                <?php endif; ?>
 
                 <li class="nav-header">Administrator</li>
                 <li class="nav-item">

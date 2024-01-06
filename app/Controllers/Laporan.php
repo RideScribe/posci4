@@ -66,21 +66,56 @@ class Laporan extends BaseController
         return view('laporan/penjualan', $data);
     }
 
-    public function getLaporanPenjualan()
+    public function pendapatan()
     {
-        $data = $this->penjualan->select('tb_penjualan.id, tb_penjualan.invoice, tb_penjualan.tanggal, tb_penjualan.tunai, tb_penjualan.pelanggan, tb_users.nama as kasir')
-            ->join('tb_users', 'tb_users.id = tb_penjualan.id_user', 'left')
-            ->orderBy('tb_penjualan.id', 'desc')
-            ->findAll();
+        $month = $this->request->getGet('bulan');
 
-        // loop data id and get the transaksi
-        $transaksi = [];
-        foreach ($data as $item) {
-            $transaksi[$item['id']] = $this->transaksi->where('id_penjualan', $item['id'])->findAll();
+        if ($month) {
+            $bulan = date('m', strtotime($month));
+            $tahun = date('Y', strtotime($month));
+            
+        } else {
+            $bulan = date('m');
+            $tahun = date('Y');            
         }
 
-        dd($transaksi[3]);
+        $pendapatanBulananDetail = $this->penjualan->select('tanggal, SUM(total_akhir) as total')->where('tunai >', 0)->where('tunai !=', null)->where('YEAR(tanggal)', $tahun)->groupBy('MONTH(tanggal)')->findAll();
+        
+        $pendapatan_bulanan_array_total = [];
+        foreach ($pendapatanBulananDetail as $key => $value) {
+            $pendapatan_bulanan_array_total[] = $value['total'];
+        }
+        
+        $averageTahunan = array_sum($pendapatan_bulanan_array_total) / count($pendapatan_bulanan_array_total);
+        $minTahunan = min($pendapatan_bulanan_array_total);
+        $maxTahunan = max($pendapatan_bulanan_array_total);
 
-        dd($data);
+        $data = [
+            'title'                     => 'Laporan Pendapatan',
+            'filter'                    => $this->request->getGet() ? $this->request->getGet() : ['bulan' => date('Y-m')],
+
+            'pendapatanHarianDetail'    => $this->penjualan->select('tanggal, SUM(total_akhir) as total')->where('tunai >', 0)->where('tunai !=', null)->where('YEAR(tanggal)', $tahun)->where('MONTH(tanggal)', $bulan)->groupBy('tanggal')->findAll(),
+            'pendapatanBulananDetail'   => $pendapatanBulananDetail,
+            'pendapatanHariIniDetail'   => $this->penjualan->select('tanggal, SUM(total_akhir) as total')->where('tunai >', 0)->where('tunai !=', null)->where('tanggal', date('Y-m-d'))->groupBy('tanggal')->findAll(),
+            
+            'pendapatanBulanan'         => $this->penjualan->selectSum('total_akhir')->where('tunai >', 0)->where('tunai !=', null)->where('YEAR(tanggal)', $tahun)->where('MONTH(tanggal)', $bulan)->first(),
+            'pendapatanTahunan'         => $this->penjualan->selectSum('total_akhir')->where('tunai >', 0)->where('tunai !=', null)->where('YEAR(tanggal)', $tahun)->first(),
+            'pendapatanHariIni'         => $this->penjualan->selectSum('total_akhir')->where('tunai >', 0)->where('tunai !=', null)->where('tanggal', date('Y-m-d'))->first(),
+
+            'averageBulanan'            => $this->penjualan->selectAvg('total_akhir')->where('tunai >', 0)->where('tunai !=', null)->where('YEAR(tanggal)', $tahun)->where('MONTH(tanggal)', $bulan)->first(),
+            'averageTahunan'            => $averageTahunan,
+            'averageHariIni'            => $this->penjualan->selectAvg('total_akhir')->where('tunai >', 0)->where('tunai !=', null)->where('tanggal', date('Y-m-d'))->first(),
+            
+            'minBulanan'                => $this->penjualan->selectMin('total_akhir')->where('tunai >', 0)->where('tunai !=', null)->where('YEAR(tanggal)', $tahun)->where('MONTH(tanggal)', $bulan)->first(),
+            'minTahunan'                => $minTahunan,
+            'minHariIni'                => $this->penjualan->selectMin('total_akhir')->where('tunai >', 0)->where('tunai !=', null)->where('tanggal', date('Y-m-d'))->first(), // 'minHariIni'                => '
+
+            'maxBulanan'                => $this->penjualan->selectMax('total_akhir')->where('tunai >', 0)->where('tunai !=', null)->where('YEAR(tanggal)', $tahun)->where('MONTH(tanggal)', $bulan)->first(),
+            'maxTahunan'                => $maxTahunan,
+            'maxHariIni'                => $this->penjualan->selectMax('total_akhir')->where('tunai >', 0)->where('tunai !=', null)->where('tanggal', date('Y-m-d'))->first(),
+            
+        ];
+
+        return view('laporan/pendapatan', $data);
     }
 }
