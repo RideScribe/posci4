@@ -1,6 +1,12 @@
 <?php $this->extend('layout/template'); ?>
 <?php $this->section('content'); ?>
 <div class="container-fluid">
+
+  <form action="" method="get" class="d-flex mb-3">
+    <input type="month" name="bulan" id="bulan" class="form-control" value="<?= $filter['bulan'] ?>">
+    <button type="submit" class="btn btn-primary ml-2">Filter</button>
+  </form>
+
   <div class="row">
     <div class="col-12 col-md-4">
       <div class="small-box bg-gradient-green">
