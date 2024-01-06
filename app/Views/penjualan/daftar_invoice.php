@@ -193,7 +193,18 @@
                     data: 'pelanggan'
                 },
                 {
-                    data: 'tanggal'
+                    // data: 'tanggal'
+                    // date is YYYY-MM-DD make it day name, dd month yyyy
+                    render: function(data, type, row) {
+                        let date = new Date(row.tanggal);
+                        let options = {
+                            weekday: 'short',
+                            day: 'numeric',
+                            month: 'short',
+                            year: 'numeric',
+                        };
+                        return date.toLocaleDateString('id-ID', options);
+                    }
                 },
                 {
                     render: function(data, type, row) {

@@ -57,7 +57,7 @@ class Laporan extends BaseController
         }
 
         $data = [
-            'title'     => 'Laporan Penjualan Hari Ini',
+            'title'     => 'Laporan Penjualan Harian',
             'data'      => $dataPenjualan,
             'transaksi' => $dataTransaksi,
             'filter'    => $this->request->getGet()
