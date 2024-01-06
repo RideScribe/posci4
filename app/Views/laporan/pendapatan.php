@@ -66,7 +66,7 @@
     <div class="col-12 col-md-4">
       <div class="small-box bg-gradient-blue">
         <div class="inner">
-          <          <h3>Rp. <?= rupiah($pendapatanBulanan['total_akhir'] ? $pendapatanBulanan['total_akhir'] : 0) ?>,-</h3>
+          <h3>Rp. <?= rupiah($pendapatanBulanan['total_akhir'] ? $pendapatanBulanan['total_akhir'] : 0) ?>,-</h3>
           <p>Pendapatan <?= date('F', strtotime($filter['bulan'])) ?> <?= date('Y', strtotime($filter['bulan'])) ?></p>
         </div>
         <div class="icon">
