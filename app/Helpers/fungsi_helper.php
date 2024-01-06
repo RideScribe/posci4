@@ -8,7 +8,7 @@ if (!function_exists('rupiah')) {
     // format rupiah indonesia
     function rupiah($nominal)
     {
-        return number_format($nominal, 0, ',', '.');
+        return number_format(($nominal ? $nominal : 0), 0, ',', '.');
     }
 }
 

@@ -11,7 +11,7 @@
     <div class="col-12 col-md-4">
       <div class="small-box bg-gradient-green">
         <div class="inner">
-          <h3>Rp. <?= rupiah($pendapatanTahunan['total_akhir']) ?>,-</h3>
+          <h3>Rp. <?= rupiah($pendapatanTahunan['total_akhir'] ? $pendapatanTahunan['total_akhir'] : 0) ?>,-</h3>
           <p>Pendapatan Tahun <?= date('Y', strtotime($filter['bulan'])) ?></p>
         </div>
         <div class="icon">
@@ -24,15 +24,15 @@
           <tbody>
             <tr>
               <th>MIN</th>
-              <td>Rp. <?= rupiah($minTahunan) ?></td>
+              <td>Rp. <?= rupiah($minTahunan ? $minTahunan : 0) ?></td>
             </tr>
             <tr>
               <th>MAX</th>
-              <td>Rp. <?= rupiah($maxTahunan) ?></td>
+              <td>Rp. <?= rupiah($maxTahunan ? $maxTahunan : 0) ?></td>
             </tr>
             <tr>
               <th>AVG</th>
-              <td>Rp. <?= rupiah($averageTahunan) ?></td>
+              <td>Rp. <?= rupiah($averageTahunan ? $averageTahunan : 0) ?></td>
             </tr>
           </tbody>
         </table>
@@ -54,7 +54,7 @@
               <?php foreach ($pendapatanBulananDetail as $bulan) : ?>
                 <tr>
                   <td><?= date('M, Y', strtotime($bulan['tanggal'])) ?></td>
-                  <td>Rp. <?= rupiah($bulan['total']) ?></td>
+                  <td>Rp. <?= rupiah($bulan['total'] ? $bulan['total'] : 0) ?></td>
                 </tr>
               <?php endforeach ?>
             </tbody>
@@ -66,7 +66,7 @@
     <div class="col-12 col-md-4">
       <div class="small-box bg-gradient-blue">
         <div class="inner">
-          <h3>Rp. <?= rupiah($pendapatanBulanan['total_akhir']) ?>,-</h3>
+          <          <h3>Rp. <?= rupiah($pendapatanBulanan['total_akhir'] ? $pendapatanBulanan['total_akhir'] : 0) ?>,-</h3>
           <p>Pendapatan <?= date('F', strtotime($filter['bulan'])) ?> <?= date('Y', strtotime($filter['bulan'])) ?></p>
         </div>
         <div class="icon">
@@ -79,15 +79,15 @@
           <tbody>
             <tr>
               <th>MIN</th>
-              <td>Rp. <?= rupiah($minBulanan['total_akhir']) ?></td>
+              <td>Rp. <?= rupiah($minBulanan['total_akhir'] ? $minBulanan['total_akhir'] : 0) ?></td>
             </tr>
             <tr>
               <th>MAX</th>
-              <td>Rp. <?= rupiah($maxBulanan['total_akhir']) ?></td>
+              <td>Rp. <?= rupiah($maxBulanan['total_akhir'] ? $maxBulanan['total_akhir'] : 0) ?></td>
             </tr>
             <tr>
               <th>AVG</th>
-              <td>Rp. <?= rupiah($averageBulanan['total_akhir']) ?></td>
+              <td>Rp. <?= rupiah($averageBulanan['total_akhir'] ? $averageBulanan['total_akhir'] : 0) ?></td>
             </tr>
           </tbody>
         </table>
@@ -109,7 +109,7 @@
               <?php foreach ($pendapatanHarianDetail as $harian) : ?>
                 <tr>
                   <td><?= date('d M Y', strtotime($harian['tanggal'])) ?></td>
-                  <td>Rp. <?= rupiah($harian['total']) ?></td>
+                  <td>Rp. <?= rupiah($harian['total'] ? $harian['total'] : 0) ?></td>
                 </tr>
               <?php endforeach ?>
             </tbody>
@@ -121,7 +121,7 @@
     <div class="col-12 col-md-4">
       <div class="small-box bg-gradient-yellow">
         <div class="inner">
-          <h3>Rp. <?= rupiah($pendapatanHariIni['total_akhir']) ?>,-</h3>
+          <h3>Rp. <?= rupiah($pendapatanHariIni['total_akhir'] ? $pendapatanHariIni['total_akhir'] : 0) ?>,-</h3>
           <p>Pendapatan Hari Ini</p>
         </div>
         <div class="icon">
@@ -134,15 +134,15 @@
           <tbody>
             <tr>
               <th>MIN</th>
-              <td>Rp. <?= rupiah($minHariIni['total_akhir']) ?></td>
+              <td>Rp. <?= rupiah($minHariIni['total_akhir'] ? $minHariIni['total_akhir'] : 0) ?></td>
             </tr>
             <tr>
               <th>MAX</th>
-              <td>Rp. <?= rupiah($maxHariIni['total_akhir']) ?></td>
+              <td>Rp. <?= rupiah($maxHariIni['total_akhir'] ? $maxHariIni['total_akhir'] : 0) ?></td>
             </tr>
             <tr>
               <th>AVG</th>
-              <td>Rp. <?= rupiah($averageHariIni['total_akhir']) ?></td>
+              <td>Rp. <?= rupiah($averageHariIni['total_akhir'] ? $averageHariIni['total_akhir'] : 0) ?></td>
             </tr>
           </tbody>
         </table>
@@ -150,7 +150,7 @@
 
       <div class="card shadow mb-4">
         <div class="card-header">
-          <h6 class="m-0 font-weight-bold text-primary">Pendapatan Bulanan</h6>
+          <h6 class="m-0 font-weight-bold text-primary">Pendapatan Hari ini</h6>
         </div>
         <div class="card-body p-1 m-1">
           <table class="table table-compact table-sm">
@@ -164,7 +164,7 @@
               <?php foreach ($pendapatanHariIniDetail as $hariIni) : ?>
                 <tr>
                   <td><?= date('d M Y', strtotime($hariIni['tanggal'])) ?></td>
-                  <td>Rp. <?= rupiah($hariIni['total']) ?></td>
+                  <td>Rp. <?= rupiah($hariIni['total'] ? $hariIni['total'] : 0) ?></td>
                 </tr>
               <?php endforeach ?>
             </tbody>
