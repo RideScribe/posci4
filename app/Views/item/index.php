@@ -74,19 +74,6 @@
                         <small class="invalid-feedback"></small>
                     </div>
                 </div>
-                <!-- <div class="col-12 col-md-6">
-                    <div class="form-group">
-                        <label for="pemasok">Pemasok</label>
-                        <select name="pemasok" id="pemasok" class="form-control">
-                            <option value="">Pilih Pemasok</option>
-                            <?php // foreach (esc($pemasok) as $data) : ?>
-                                <option value="<?= '' // esc($data->id) ?>"><?= '' //esc($data->pemasok)  ?></option>
-                            <?php // endforeach; ?>
-                        </select>
-                        <small class="invalid-feedback"></small>
-                    </div>
-                </div> -->
-                <input type="hidden" name="pemasok" id="pemasok" value="1">
                 <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label for="harga">Harga</label>
@@ -185,7 +172,7 @@
                 {
                     data: function(row) {
                         let html = '<button class="btn btn-primary btn-sm mr-1 detail" data-barcode="' + row.barcode + '"><i class="fa fa-eye"></i></button>';
-                        html += '<button class="btn btn-success btn-sm mr-1 ubah" data-id="' + row.iditem + '" data-barcode="' + row.barcode + '" data-item="' + row.item + '" data-kategori="' + row.idkategori + '" data-unit="' + row.idunit + '" data-pemasok="' + row.id_pemasok + '" data-harga="' + row.harga + '" data-stok="' + row.stok + '" data-gambar="' + row.gambar + '"><i class="fas fa-edit"></i></button>';
+                        html += '<button class="btn btn-success btn-sm mr-1 ubah" data-id="' + row.iditem + '" data-barcode="' + row.barcode + '" data-item="' + row.item + '" data-kategori="' + row.idkategori + '" data-unit="' + row.idunit + '" data-harga="' + row.harga + '" data-stok="' + row.stok + '" data-gambar="' + row.gambar + '"><i class="fas fa-edit"></i></button>';
                         html += '<button class="btn btn-danger btn-sm hapus" data-id="' + row.iditem + '"><i class="fa fa-trash"></i></button>'
                         return html;
                     }
@@ -237,10 +224,6 @@
                                     <th>Stok</th>
                                     <th>${response.stok}</th>
                                 </tr>
-                                <tr>
-                                    <th>Pemasok</th>
-                                    <th>${response.pemasok}</th>
-                                </tr>
                             </table>
                         </div>
                         <div class="col-md-6">
@@ -276,7 +259,7 @@
                 cache: false,
                 data: formData,
                 success: function(response) {
-                    responValidasi(['tambah'], ['barcode', 'item', 'kategori', 'unit', 'pemasok', 'harga', 'stok'], response);
+                    responValidasi(['tambah'], ['barcode', 'item', 'kategori', 'unit', 'harga', 'stok'], response);
                     if (response.sukses) {
                         $("#formModal").modal("hide");
                         table.ajax.reload();
@@ -294,7 +277,6 @@
             $("#item").val($(this).data("item"));
             $("#kategori").val($(this).data("kategori"));
             $("#unit").val($(this).data("unit"));
-            $("#pemasok").val($(this).data("pemasok"));
             $("#harga").val($(this).data("harga"));
             $("#stok").val($(this).data("stok"));
             $("#img-preview").prop("src", `${BASE_URL}/uploads/produk/` + $(this).data('gambar')).parent().removeClass("d-none");
@@ -314,7 +296,7 @@
                 cache: false,
                 data: formData,
                 success: function(response) {
-                    responValidasi(['ubah'], ['barcode', 'item', 'kategori', 'unit', 'pemasok', 'harga', 'stok'], response);
+                    responValidasi(['ubah'], ['barcode', 'item', 'kategori', 'unit', 'harga', 'stok'], response);
                     if (response.sukses) {
                         $("#formModal").modal("hide");
                         table.ajax.reload();

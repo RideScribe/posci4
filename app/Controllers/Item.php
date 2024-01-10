@@ -11,7 +11,8 @@ use Irsyadulibad\DataTables\DataTables;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-class Item extends BaseController {
+class Item extends BaseController
+{
     protected $itemModel;
     protected $kategori;
     protected $unit;
@@ -22,13 +23,13 @@ class Item extends BaseController {
         'item'     => ['rules' => 'required|alpha_numeric_punct'],
         'kategori' => ['rules' => 'required'],
         'unit'     => ['rules' => 'required'],
-        'pemasok'  => ['rules' => 'required'],
         'harga'    => ['rules' => 'required|numeric'],
         'stok'     => ['rules' => 'required|numeric'],
         'gambar'   => ['rules' => 'max_size[gambar,2048]|mime_in[gambar,image/png,image/jpg,image/jpeg]|ext_in[gambar,png,jpg,jpeg]|is_image[gambar]'],
     ];
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->itemModel = new ItemModel();
         $this->kategori  = new KategoriModel();
         $this->unit      = new UnitModel();
@@ -37,7 +38,8 @@ class Item extends BaseController {
         helper('form');
     }
 
-    public function index() {
+    public function index()
+    {
         $data = [
             'title'    => 'Daftar Menu',
             'kategori' => $this->kategori->getKategori(),
@@ -47,7 +49,8 @@ class Item extends BaseController {
         echo view('item/index', $data);
     }
 
-    function menu($id_meja) {
+    function menu($id_meja)
+    {
         // explode id_meja by .
         $id_meja = base64_decode($id_meja);
         $id_meja = explode('.', $id_meja);
@@ -56,7 +59,7 @@ class Item extends BaseController {
         $cek = $this->tempat->find($id_meja);
         if (empty($cek)) {
             dd('Meja tidak ditemukan');
-        } 
+        }
 
         $menu = $this->itemModel->select(['tb_item.id', 'tb_item.nama_item as item', 'tb_item.stok', 'tb_item.gambar', 'tb_item.harga', 'tb_kategori.nama_kategori as kategori', 'tb_unit.nama_unit as unit'])
             ->join('tb_kategori', 'tb_kategori.id = id_kategori')
@@ -99,17 +102,19 @@ class Item extends BaseController {
         echo view('tempat/menu', $data);
     }
 
-    public function ajax() {
+    public function ajax()
+    {
         if ($this->request->isAJAX()) {
-            return DataTables::use ('tb_item')
-                ->select('tb_item.id AS iditem, barcode, nama_item as item, harga, stok, gambar, id_pemasok, tb_unit.id AS idunit, tb_kategori.id AS idkategori')
+            return DataTables::use('tb_item')
+                ->select('tb_item.id AS iditem, barcode, nama_item as item, harga, stok, gambar, tb_unit.id AS idunit, tb_kategori.id AS idkategori')
                 ->join('tb_unit', 'tb_unit.id = id_unit')
                 ->join('tb_kategori', 'tb_kategori.id = id_kategori')
                 ->make();
         }
     }
 
-    public function detail() {
+    public function detail()
+    {
         $barcode = $this->request->getGet('barcode', FILTER_SANITIZE_SPECIAL_CHARS);
         $data    = $this->itemModel->detailItem($barcode);
         if (!empty($data)) {
@@ -117,7 +122,8 @@ class Item extends BaseController {
         }
     }
 
-    public function tambah() {
+    public function tambah()
+    {
         if ($this->request->isAJAX()) {
             if (!$this->validate($this->rules)) {
                 $respon = [
@@ -131,7 +137,6 @@ class Item extends BaseController {
                     'nama_item'   => ucwords($this->request->getPost('item', FILTER_SANITIZE_SPECIAL_CHARS)),
                     'id_kategori' => $this->request->getPost('kategori', FILTER_SANITIZE_NUMBER_INT),
                     'id_unit'     => $this->request->getPost('unit', FILTER_SANITIZE_NUMBER_INT),
-                    'id_pemasok'  => $this->request->getPost('pemasok', FILTER_SANITIZE_NUMBER_INT),
                     'harga'       => $this->request->getPost('harga', FILTER_SANITIZE_NUMBER_INT),
                     'stok'        => $this->request->getPost('stok', FILTER_SANITIZE_NUMBER_INT),
                 ];
@@ -152,9 +157,18 @@ class Item extends BaseController {
         }
     }
 
-    public function ubah() {
+    public function ubah()
+    {
         if ($this->request->isAJAX()) {
-            if (!$this->validate($this->rules)) {
+            if (!$this->validate([
+                'barcode'  => ['rules' => 'required|alpha_numeric_punct'],
+                'item'     => ['rules' => 'required|alpha_numeric_punct'],
+                'kategori' => ['rules' => 'required'],
+                'unit'     => ['rules' => 'required'],
+                'harga'    => ['rules' => 'required|numeric'],
+                'stok'     => ['rules' => 'required|numeric'],
+                'gambar'   => ['rules' => 'max_size[gambar,2048]|mime_in[gambar,image/png,image/jpg,image/jpeg]|ext_in[gambar,png,jpg,jpeg]|is_image[gambar]'],
+            ])) {
                 $respon = [
                     'validasi' => false,
                     'error'    => $this->validator->getErrors(),
@@ -166,7 +180,6 @@ class Item extends BaseController {
                     'nama_item'   => ucwords($this->request->getPost('item', FILTER_SANITIZE_SPECIAL_CHARS)),
                     'id_kategori' => $this->request->getPost('kategori', FILTER_SANITIZE_NUMBER_INT),
                     'id_unit'     => $this->request->getPost('unit', FILTER_SANITIZE_NUMBER_INT),
-                    'id_pemasok'  => $this->request->getPost('pemasok', FILTER_SANITIZE_NUMBER_INT),
                     'harga'       => $this->request->getPost('harga', FILTER_SANITIZE_NUMBER_INT),
                     'stok'        => $this->request->getPost('stok', FILTER_SANITIZE_NUMBER_INT),
                     'id'          => $this->request->getPost('id', FILTER_SANITIZE_NUMBER_INT),
@@ -189,7 +202,8 @@ class Item extends BaseController {
         }
     }
 
-    public function hapus() {
+    public function hapus()
+    {
         if ($this->request->isAJAX()) {
             $id   = $this->request->getGet('id', FILTER_SANITIZE_NUMBER_INT);
             $data = $this->itemModel->find($id);
@@ -213,7 +227,8 @@ class Item extends BaseController {
         }
     }
 
-    private function _unggahGambarProduk($gambarLama = null) {
+    private function _unggahGambarProduk($gambarLama = null)
+    {
         $file       = $this->request->getFile('gambar'); // ambil data file
         $namaRandom = $file->getRandomName();
         if ($file->isValid() && !$file->hasMoved()) {
@@ -228,7 +243,8 @@ class Item extends BaseController {
         }
     }
 
-    public function barcode() {
+    public function barcode()
+    {
         $keyword = $this->request->getGet('term', FILTER_SANITIZE_SPECIAL_CHARS);
         $data    = $this->itemModel->barcodeModel($keyword);
         $barcode = [];
@@ -242,7 +258,8 @@ class Item extends BaseController {
         return $this->response->setJSON($barcode);
     }
 
-    public function cariProduk() {
+    public function cariProduk()
+    {
         $keyword = $this->request->getGet('search', FILTER_SANITIZE_SPECIAL_CHARS);
         $cek     = $this->itemModel->cariProduk($keyword);
         $data    = [];
@@ -259,7 +276,8 @@ class Item extends BaseController {
         ]);
     }
 
-    public function download() {
+    public function download()
+    {
         // Instansiasi Spreadsheet
         $spreadsheet = new Spreadsheet();
         // styling
