@@ -27,15 +27,6 @@
                     </a>
                 </li>
 
-                <?php if (esc(get_user('id_role') == 1) || esc(get_user('id_role') == 2)) : ?>
-                    <!-- <li class="nav-item">
-                        <a href="<?= base_url('pemasok') ?>" class="nav-link">
-                            <i class="nav-icon fas fa-truck"></i>
-                            <p> Pemasok </p>
-                        </a>
-                    </li> -->
-                <?php endif; ?>
-
                 <?php if (esc(get_user('id_role') != 1)) : ?>
                     <li class="nav-item">
                         <a href="<?= base_url('tempat') ?>" class="nav-link">
@@ -125,6 +116,12 @@
                             <p>Laporan Pendapatan</p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="<?= base_url('laporan/pembelian') ?>" class="nav-link">
+                            <i class="nav-icon fas fa-hand-holding-usd"></i>
+                            <p>Laporan Pembelian</p>
+                        </a>
+                    </li>
                 <?php endif; ?>
 
                 <?php if (esc(get_user('id_role') == 1) || esc(get_user('id_role') == 2)) : ?>
@@ -135,7 +132,14 @@
                             <p> Barang </p>
                         </a>
                     </li>
-                    
+
+                    <li class="nav-item">
+                        <a href="<?= base_url('barang/history') ?>" class="nav-link">
+                            <i class="nav-icon fas fa-history"></i>
+                            <p> History Barang </p>
+                        </a>
+                    </li>
+
                     <li class="nav-item">
                         <a href="<?= base_url('pemasok') ?>" class="nav-link">
                             <i class="nav-icon fas fa-truck"></i>

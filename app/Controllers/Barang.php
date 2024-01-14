@@ -27,22 +27,32 @@ class Barang extends BaseController
             ->select('tb_barang.*, tb_pemasok.nama_pemasok')
             ->join('tb_pemasok', 'tb_pemasok.id = tb_barang.id_pemasok')->findAll();
 
-        $historyBarang = $this->stok
-            ->select('tb_stok.*, tb_barang.barang, tb_barang.stok as total_stok, tb_pemasok.nama_pemasok, tb_transaksi_barang.harga, tb_transaksi_barang.total')
-            ->join('tb_barang', 'tb_barang.id = tb_stok.id_barang')
-            ->join('tb_pemasok', 'tb_pemasok.id = tb_stok.id_pemasok')
-            ->join('tb_transaksi_barang', 'tb_transaksi_barang.id_barang = tb_stok.id_barang')
-            ->orderBy('tb_stok.id_stok', 'DESC')
-            ->findAll();
-
         $data = [
             'title' => 'Daftar Barang',
             'barang' => $barangWithPemasok,
             'pemasok' => $this->pemasok->findAll(),
-            'history' => $historyBarang,
         ];
 
         return view('barang/index', $data);
+    }
+
+    public function history()
+    {
+        $historyBarang = $this->trbrg
+            ->select('tb_transaksi_barang.*, tb_barang.barang, tb_barang.stok AS total_stok, tb_pemasok.nama_pemasok, tb_stok.id_user, tb_stok.jumlah, tb_stok.keterangan, tb_stok.tipe, tb_users.nama')
+            ->join('tb_barang', 'tb_barang.id = tb_transaksi_barang.id_barang')
+            ->join('tb_pemasok', 'tb_pemasok.id = tb_transaksi_barang.id_pemasok')
+            ->join('tb_stok', 'tb_stok.id_barang = tb_barang.id')
+            ->join('tb_users', 'tb_stok.id_user = tb_users.id')
+            ->groupBy('tb_transaksi_barang.id')
+            ->findAll();
+
+        $data = [
+            'title' => 'History Barang',
+            'history' => $historyBarang,
+        ];
+
+        return view('barang/history', $data);
     }
 
     // save data
@@ -140,7 +150,7 @@ class Barang extends BaseController
 
         return response()->setJSON(['success' => false, 'message' => 'Data tidak ditemukan']);
     }
-    
+
     // stok plus
     public function stok_plus()
     {
@@ -184,11 +194,18 @@ class Barang extends BaseController
             'total_harga' => $request->getPost('harga') * $request->getPost('jml_item'),
         ];
 
+
         $this->stok->insert($data_stok);
         $this->trbrg->insert($data_transaksi_barang);
 
         // update stok on tb_barang
-        $this->brg->where('id', $request->getPost('id_barang'))->set('stok', 'stok+' . $request->getPost('jml_item'), false)->update();
+        $stok_baru = $stok_lama + $request->getPost('jml_item');
+
+        // update
+        $this->brg->save([
+            'id' => $request->getPost('id_barang'),
+            'stok' => $stok_baru,
+        ]);
 
         return redirect()->to('/barang')->with('success', 'Data berhasil disimpan');
     }
