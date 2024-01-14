@@ -127,6 +127,23 @@
                     </li>
                 <?php endif; ?>
 
+                <?php if (esc(get_user('id_role') == 1) || esc(get_user('id_role') == 2)) : ?>
+                    <li class="nav-header">Data Barang</li>
+                    <li class="nav-item">
+                        <a href="<?= base_url('barang') ?>" class="nav-link">
+                            <i class="nav-icon fas fa-box"></i>
+                            <p> Barang </p>
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="<?= base_url('pemasok') ?>" class="nav-link">
+                            <i class="nav-icon fas fa-truck"></i>
+                            <p> Pemasok </p>
+                        </a>
+                    </li>
+                <?php endif; ?>
+
                 <li class="nav-header">Administrator</li>
                 <li class="nav-item">
                     <a href="<?= base_url('user/profile') ?>" class="nav-link">
