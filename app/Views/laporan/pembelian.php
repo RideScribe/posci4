@@ -14,7 +14,7 @@
         <div class="small-box bg-gradient-green">
             <div class="inner">
                 <h3>Rp. <?= rupiah($pembelianBulanan->total ? $pembelianBulanan->total : 0) ?>,-</h3>
-                <p><strong><u>Bulan Ini</u></strong> <br> <small>Terakhir Diupdate <strong><?= date('D, d M Y H:i:s', strtotime($pembelianBulanan->updated_at)) ?></strong></small></p>
+                <p><strong><u>Bulan Ini</u></strong> <br> <small>Terakhir Diupdate <strong><?= $pembelianBulanan->updated_at? date('D, d M Y H:i:s', strtotime($pembelianBulanan->updated_at)) : '-' ?></strong></small></p>
             </div>
             <div class="icon">
                 <i class="fas fa-dollar-sign"></i>
@@ -68,7 +68,7 @@
         <div class="small-box bg-gradient-yellow">
             <div class="inner">
                 <h3>Rp. <?= rupiah($pembelianTahunan->total ? $pembelianTahunan->total : 0) ?>,-</h3>
-                <p><strong><u>Tahun Ini</u></strong> <br> <small class="text-dark">Terakhir Diupdate <strong><?= date('D, d M Y H:i:s', strtotime($pembelianTahunan->updated_at)) ?></strong></small></p>
+                <p><strong><u>Tahun Ini</u></strong> <br> <small class="text-dark">Terakhir Diupdate <strong><?= $pembelianTahunan->updated_at? date('D, d M Y H:i:s', strtotime($pembelianTahunan->updated_at)) : '-' ?></strong></small></p>
             </div>
             <div class="icon">
                 <i class="fas fa-dollar-sign"></i>
