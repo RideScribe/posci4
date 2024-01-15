@@ -45,6 +45,9 @@ $routes->get('/meja/(:any)/menu', 'Item::menu/$1', ['as' => 'menu-tempat']);
 $routes->get('stok/masuk', 'Transaksi::index');
 $routes->get('stok/keluar', 'Transaksi::index');
 
+// laporan/penjualan/print
+$routes->get('laporan/penjualan/print', 'Laporan::penjualanPrint', ['as' => 'laporan-penjualan-print']);
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
