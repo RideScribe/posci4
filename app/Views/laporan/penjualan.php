@@ -5,10 +5,10 @@
     <div class="card shadow mb-4">
         <div class="card-body">
             <div class="pesan" data-pesan="<?= session('pesan') ?>"></div>
-            
+
             <!-- Filter -->
             <form action="" method="get" class="mb-3 d-flex flex-column flex-md-row justify-content-center align-items-center" style="gap: 5px;">
-                <input type="date" name="tanggal" id="tanggal" class="form-control" value="<?= isset($filter['tanggal']) ? $filter['tanggal'] : '' ?>">
+                <input type="month" name="tanggal" id="tanggal" class="form-control" value="<?= isset($filter['tanggal']) ? $filter['tanggal'] : '' ?>">
                 <select name="status" id="status" class="form-control custom-select" value="<?= isset($filter['tanggal']) ? $filter['status'] : '' ?>">
                     <option value="">-- Status --</option>
                     <option <?= (isset($filter['status']) ? $filter['status'] : '') == 1 ? 'selected' : '' ?> value="1">Lunas</option>
@@ -22,11 +22,13 @@
                 <table class="table" id="tabel-invoice" width="100%">
                     <thead>
                         <tr>
-                            <!-- <th class="<?= empty($data) ? '' : 'd-none' ?>">#</th> -->
+                            <!-- <th class="<?= empty($data) ? '' : 'd-' ?>">#</th> -->
+                            <th class="<?= empty($data) ? '' : 'd-none' ?>">Tanggal</th>
                             <th class="<?= empty($data) ? '' : 'd-none' ?>">Invoice</th>
                             <th class="<?= empty($data) ? '' : 'd-none' ?>">Pelanggan</th>
-                            <th class="<?= empty($data) ? '' : 'd-none' ?>">Tanggal</th>
-                            <!-- <th class="<?= empty($data) ? '' : 'd-none' ?>">Tunai</th> -->
+                            <!-- <th class="<?= empty($data) ? '' : 'd-none' ?>">Tunai</th>
+                            <th class="<?= empty($data) ? '' : 'd-none' ?>">Diskon</th>
+                            <th class="<?= empty($data) ? '' : 'd-none' ?>">Kembalian</th> -->
                             <th class="<?= empty($data) ? '' : 'd-none' ?>">Status</th>
                             <th class="<?= empty($data) ? '' : 'd-none' ?>">kasir</th>
                         </tr>
@@ -35,7 +37,7 @@
 
                         <?php if (empty($data)) : ?>
                             <tr>
-                                <td colspan="6" class="text-center">Belum ada data penjulalan hari ini</td>
+                                <td colspan="8" class="text-center">Belum ada data penjulalan hari ini</td>
                             </tr>
                         <?php endif ?>
 
@@ -44,20 +46,17 @@
                             <!-- light gray -->
                             <tr style="background-color: #dfdfdf;">
                                 <!-- <td><?= $no++ ?></td> -->
+                                <td><strong>Tanggal :</strong> <?= date('D, d M Y H:i:s', strtotime($item['tanggal'])) ?></td>
                                 <td><strong>No. Invoice :</strong> <?= $item['invoice'] ?></td>
                                 <td><strong>Pelanggan :</strong> <?= $item['pelanggan'] ?></td>
-                                <td>
-                                    <?php
-                                    $dt = new \DateTime($item['updated_at'], new \DateTimeZone('Asia/Jakarta'));
-                                    ?>
-                                    <strong>Tanggal :</strong> <?= $dt->format('D, d M Y H:i:s') ?>
-                                </td>
-                                <!-- <td><strong>Tunai :</strong> <?= $item['tunai'] ?  $item['tunai'] : 0 ?></td> -->
+                                <!-- <td><strong>Tunai :</strong> Rp. <?= rupiah($item['tunai'] ?  $item['tunai'] : 0) ?></td>
+                                <td><strong>Diskon: </strong> <?= $item['diskon'] ?></td>
+                                <td><strong>Kembalian :</strong> Rp. <?= rupiah($item['kembalian'] ?  $item['kembalian'] : 0) ?></td> -->
                                 <td><strong>Status :</strong> <?= $item['tunai'] && $item['tunai'] != 0 ? '<span class="badge badge-success">Lunas</span>' : '<span class="badge badge-warning">Belum Lunas</span>' ?></td>
                                 <td><strong>Kasir :</strong> <?= $item['kasir'] ?></td>
                             </tr>
                             <tr>
-                                <td colspan="6" class="p-0 m-0">
+                                <td colspan="8" class="p-0 m-0">
                                     <table class="table table-bordered table-striped table-compact table-sm" width="100%">
                                         <thead style="background-color: #dfdfdf;">
                                             <tr>
@@ -70,7 +69,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php $noItem = 1; ?> 
+                                            <?php $noItem = 1; ?>
                                             <?php foreach ($transaksi[$item['id']] as $t) : ?>
                                                 <tr>
                                                     <td><?= $noItem++ ?></td>
@@ -83,10 +82,26 @@
                                             <?php endforeach ?>
 
                                             <tr>
-                                                <td colspan="5" class="text-right"><strong>Total</strong></td>
-                                                <td><strong>Rp. <?= rupiah($item['total_harga']) ?></strong></td>
+                                                <td colspan="5" class="text-right"><strong>Diskon</strong></td>
+                                                <td><strong><?= $item['diskon'] ?> %</strong></td>
                                             </tr>
                                             <tr>
+                                                <td colspan="5" class="text-right"><strong>Total</strong></td>
+                                                <td>
+                                                    <?php if ($item['diskon'] && $item['diskon'] != 0) : ?>
+                                                        <s><strong>Rp. <?= rupiah($item['total_harga']) ?></strong></s>
+                                                        <strong class="ml-2">Rp. <?= rupiah($item['total_akhir']) ?></strong>
+                                                    <?php else : ?>
+                                                        <strong>Rp. <?= rupiah($item['total_harga']) ?></strong>
+                                                    <?php endif ?>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="5" class="text-right"><strong>Kembalian</strong></td>
+                                                <td><strong>Rp. <?= rupiah($item['kembalian'] ? $item['kembalian'] : 0) ?></strong></td>
+                                            </tr>
+
+                                            <!-- <tr>
                                                 <td colspan="5" class="text-right"><strong>Diskon</strong></td>
                                                 <td><strong><?= $item['diskon'] ?> %</strong></td>
                                             </tr>
@@ -101,9 +116,9 @@
                                                 <td><strong>Rp. <?= rupiah($item['tunai'] ? $item['tunai'] : 0) ?></strong></td>
                                             </tr>
                                             <tr>
-                                            <td colspan="5" class="text-right"><strong>Kembalian</strong></td>
+                                                <td colspan="5" class="text-right"><strong>Kembalian</strong></td>
                                                 <td><strong>Rp. <?= rupiah($item['kembalian'] ? $item['kembalian'] : 0) ?></strong></td>
-                                            </tr>
+                                            </tr> -->
                                         </tbody>
                                     </table>
                                 </td>

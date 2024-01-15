@@ -33,9 +33,9 @@ class Laporan extends BaseController
             ->orderBy('tb_penjualan.id', 'desc');
 
         if ($tanggal) {
-            $dataPenjualan->where('tanggal', $tanggal);
+            $dataPenjualan->where('MONTH(tanggal)', date('m', strtotime($tanggal)))->where('YEAR(tanggal)', date('Y', strtotime($tanggal)));
         } else {
-            $dataPenjualan->where('tanggal', date('Y-m-d'));
+            $dataPenjualan->where('MONTH(tanggal)', date('m'))->where('YEAR(tanggal)', date('Y'));
         }
 
         if ($status) {
@@ -58,7 +58,7 @@ class Laporan extends BaseController
         }
 
         $data = [
-            'title'     => 'Laporan Penjualan | ' . ($tanggal ? date('d M Y', strtotime($tanggal)) : date('d M Y')),
+            'title'     => 'Laporan Penjualan | ' . ($tanggal ? date('M Y', strtotime($tanggal)) : date('M Y')),
             'data'      => $dataPenjualan,
             'transaksi' => $dataTransaksi,
             'filter'    => $this->request->getGet()
