@@ -40,7 +40,7 @@
 
       <div class="card shadow mb-4">
         <div class="card-header">
-          <h6 class="m-0 font-weight-bold text-primary">Detail Pendapatan Bulanan</h6>
+          <h6 class="m-0 font-weight-bold text-primary">Pendapatan Bulanan</h6>
         </div>
         <div class="card-body p-1 m-1">
           <table class="table table-compact table-sm">
@@ -95,7 +95,7 @@
 
       <div class="card shadow mb-4">
         <div class="card-header">
-          <h6 class="m-0 font-weight-bold text-primary">Pendapatan Harian</h6>
+          <h6 class="m-0 font-weight-bold text-primary">Pendapatan</h6>
         </div>
         <div class="card-body p-1 m-1">
           <table class="table table-compact table-sm">
