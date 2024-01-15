@@ -125,6 +125,16 @@
                 <?php endif; ?>
 
                 <?php if (esc(get_user('id_role') == 1) || esc(get_user('id_role') == 2)) : ?>
+                    <li class="nav-header">Log Data Barang</li>
+                    <li class="nav-item">
+                        <a href="<?= base_url('barang/history') ?>" class="nav-link">
+                            <i class="nav-icon fas fa-history"></i>
+                            <p> History Barang </p>
+                        </a>
+                    </li>
+                <?php endif; ?>
+
+                <?php if (esc(get_user('id_role') == 2)) : ?>
                     <li class="nav-header">Data Barang</li>
                     <li class="nav-item">
                         <a href="<?= base_url('barang') ?>" class="nav-link">
@@ -132,15 +142,7 @@
                             <p> Barang </p>
                         </a>
                     </li>
-
-                    <li class="nav-item">
-                        <a href="<?= base_url('barang/history') ?>" class="nav-link">
-                            <i class="nav-icon fas fa-history"></i>
-                            <p> History Barang </p>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
+                    <li class="nav-item d-none">
                         <a href="<?= base_url('pemasok') ?>" class="nav-link">
                             <i class="nav-icon fas fa-truck"></i>
                             <p> Pemasok </p>
