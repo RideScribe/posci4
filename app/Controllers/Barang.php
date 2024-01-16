@@ -45,6 +45,7 @@ class Barang extends BaseController
             ->join('tb_stok', 'tb_stok.id_barang = tb_barang.id')
             ->join('tb_users', 'tb_stok.id_user = tb_users.id')
             ->groupBy('tb_transaksi_barang.id')
+            ->orderBy('tb_transaksi_barang.id', 'DESC')
             ->findAll();
 
         $data = [
@@ -62,10 +63,11 @@ class Barang extends BaseController
         $validation = \Config\Services::validation();
 
         $validation->setRules([
+            'faktur' => 'required',
             'barang' => 'required',
             'harga_beli' => 'required',
             'jml_item' => 'required',
-            'pemasok' => 'required',
+            // 'pemasok' => 'required',
         ]);
 
         if (!$validation->run($request->getPost())) {
@@ -74,9 +76,10 @@ class Barang extends BaseController
         }
 
         $data_barang = [
-            'kode' => rand(100000000, 999900000),
+            'kode' => $request->getPost('faktur'),
             'barang' => $request->getPost('barang'),
-            'id_pemasok' => $request->getPost('pemasok'),
+            'id_pemasok' => 1,
+            // 'id_pemasok' => $request->getPost('pemasok'),
             'stok' => $request->getPost('jml_item'),
         ];
 
@@ -85,7 +88,9 @@ class Barang extends BaseController
 
         $data_transaksi_barang = [
             'id_barang' => $id_barang,
-            'id_pemasok' => $request->getPost('pemasok'),
+            'id_pemasok' => 1,
+            'id_user' => session()->get('id'),
+            // 'id_pemasok' => $request->getPost('pemasok'),
             'harga' => $request->getPost('harga_beli'),
             'jml_beli' => $request->getPost('jml_item'),
             'total' => $request->getPost('harga_beli') * $request->getPost('jml_item'),
@@ -96,7 +101,8 @@ class Barang extends BaseController
         $data_stok = [
             'tipe' => 'masuk',
             'id_barang' => $id_barang,
-            'id_pemasok' => $request->getPost('pemasok'),
+            'id_pemasok' => 1,
+            // 'id_pemasok' => $request->getPost('pemasok'),
             'jumlah' => $request->getPost('jml_item'),
             'keterangan' => 'Penambahan stok barang',
             'id_user' => session()->get('id'),
@@ -117,7 +123,7 @@ class Barang extends BaseController
         // nama barang, pemasok only
         $validation->setRules([
             'barang' => 'required',
-            'pemasok' => 'required',
+            // 'pemasok' => 'required',
         ]);
 
         if (!$validation->run($request->getPost())) {
@@ -127,7 +133,7 @@ class Barang extends BaseController
 
         $data = [
             'barang' => $request->getPost('barang'),
-            'id_pemasok' => $request->getPost('pemasok'),
+            // 'id_pemasok' => $request->getPost('pemasok'),
         ];
 
         if ($this->brg->find($request->getPost('id_barang'))) {

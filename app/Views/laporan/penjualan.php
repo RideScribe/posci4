@@ -77,7 +77,7 @@
                                                 <th class="text-nowrap">Harga Item</th>
                                                 <th class="text-nowrap">Diskon Item</th>
                                                 <th class="text-nowrap">Jml Item</th>
-                                                <th style="width: 380px;;">Sub Total</th>
+                                                <th style="width: 200px;;">Sub Total</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -89,7 +89,7 @@
                                             <?php foreach ($transaksi[$item['id']] as $t) : ?>
                                                 <tr>
                                                     <td><?= $noItem++ ?></td>
-                                                    <td><?= $item['tanggal'] ?></td>
+                                                    <td><?= date('d M Y', strtotime($item['tanggal'])) ?></td>
                                                     <td><?= $item['invoice'] ?></td>
                                                     <td><?= $item['pelanggan'] ?></td>
                                                     <td><?= $t['nama_item'] ?></td>

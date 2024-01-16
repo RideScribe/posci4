@@ -47,6 +47,7 @@ $routes->get('stok/keluar', 'Transaksi::index');
 
 // laporan/penjualan/print
 $routes->get('laporan/penjualan/print', 'Laporan::penjualanPrint', ['as' => 'laporan-penjualan-print']);
+$routes->get('laporan/pembelian/print', 'Laporan::pembelianPrint', ['as' => 'laporan-pembelian-print']);
 
 /*
  * --------------------------------------------------------------------

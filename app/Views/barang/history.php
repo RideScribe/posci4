@@ -10,7 +10,7 @@
                         <tr>
                             <th>#</th>
                             <th>Tipe</th>
-                            <th>Nama Barang</th>
+                            <th style="max-width:160px;">Nama Barang</th>
                             <th>Jumlah</th>
                             <th>Harga</th>
                             <th>Pemasok</th>
@@ -47,11 +47,7 @@
 <?= $this->section('js'); ?>
 <script>
     $(document).ready(function() {
-        $('#table-unit').DataTable({
-            "order": [
-                [8, "desc"]
-            ]
-        });
+        $('#table-unit').DataTable();
     });
 </script>
 <?php $this->endSection(); ?>

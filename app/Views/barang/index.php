@@ -12,7 +12,7 @@
                             <th>#</th>
                             <th>Nama Barang</th>
                             <th>Stok</th>
-                            <th>Pemasok</th>
+                            <!-- <th>Pemasok</th> -->
                             <th>Terakhir Diubah</th>
                             <th class="text-right">Aksi</th>
                             <th class="text-right">Stok Opname</th>
@@ -33,7 +33,7 @@
                                     <div class="badge badge-secondary"><?= $b->kode ?></div>
                                 </td>
                                 <td><?= $b->stok ?? 0 ?></td>
-                                <td><?= $b->nama_pemasok ?></td>
+                                <!-- <td><?= $b->nama_pemasok ?></td> -->
                                 <td><?= $b->updated_at ?></td>
                                 <td class="text-right">
                                     <button class="btn btn-sm btn-warning edit-barang" data-id="<?= $b->id ?>" data-nama-barang="<?= $b->barang ?>" data-pemasok="<?= $b->id_pemasok ?>"><i class="fas fa-edit"></i></button>
@@ -42,7 +42,7 @@
                                 <!-- button plus and minus -->
                                 <td class="text-right">
                                     <button class="btn btn-sm btn-success stok-plus" data-id="<?= $b->id ?>"><i class="fas fa-plus"></i></button>
-                                    <button class="btn btn-sm btn-danger stok-minus" data-id="<?= $b->id ?>"><i class="fas fa-minus"></i></button>
+                                    <!-- <button class="btn btn-sm btn-danger stok-minus" data-id="<?= $b->id ?>"><i class="fas fa-minus"></i></button> -->
                                 </td>
                             </tr>
                         <?php endforeach ?>
@@ -66,6 +66,13 @@
             </div>
             <div class="modal-body">
                 <div class="form-group row">
+                    <label for="faktur" class="col-sm-2 col-form-label">No Faktur</label>
+                    <div class="col-sm-10">
+                        <input required type="text" class="form-control" name="faktur" id="faktur" placeholder="faktur...">
+                        <small class="invalid-feedback"></small>
+                    </div>
+                </div>
+                <div class="form-group row">
                     <label for="barang" class="col-sm-2 col-form-label">Barang</label>
                     <div class="col-sm-10">
                         <input required type="text" class="form-control" name="barang" id="barang" placeholder="barang...">
@@ -86,14 +93,14 @@
                         <small>setelah disimpan tidak bisa diubah lagi mohon diisi dengan teliti</small>
                     </div>
                 </div>
-                <div class="form-group row">
+                <!-- <div class="form-group row">
                     <label for="total_harga" class="col-sm-2 col-form-label">Total Harga</label>
                     <div class="col-sm-10">
                         <input required type="number" class="form-control" name="total_harga" id="total_harga" placeholder="total_harga..." readonly>
                         <small>setelah disimpan tidak bisa diubah lagi mohon diisi dengan teliti</small>
                     </div>
-                </div>
-                <div class="form-group row">
+                </div> -->
+                <!-- <div class="form-group row">
                     <label for="pemasok" class="col-sm-2 col-form-label">Pemasok</label>
                     <div class="col-sm-10">
                         <select name="pemasok" id="pemasok" class="form-control custom-select" required>
@@ -104,7 +111,7 @@
                         </select>
                         <small class="invalid-feedback"></small>
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
@@ -135,7 +142,7 @@
                         <small class="invalid-feedback"></small>
                     </div>
                 </div>
-                <div class="form-group row">
+                <!-- <div class="form-group row">
                     <label for="pemasok" class="col-sm-2 col-form-label">Pemasok</label>
                     <div class="col-sm-10">
                         <select name="pemasok" id="pemasok" class="form-control custom-select" required>
@@ -146,7 +153,7 @@
                         </select>
                         <small class="invalid-feedback"></small>
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>

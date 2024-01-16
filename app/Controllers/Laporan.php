@@ -205,7 +205,7 @@ class Laporan extends BaseController
 
     public function pembelian()
     {
-        $month = $this->request->getGet('bulan');
+        $month = $this->request->getGet('tanggal');
 
         if ($month) {
             $bulan = date('m', strtotime($month));
@@ -215,18 +215,69 @@ class Laporan extends BaseController
             $tahun = date('Y');
         }
 
-        $data = [
-            'title'                     => 'Laporan Pembelian',
-            'filter'                    => $this->request->getGet() ? $this->request->getGet() : ['bulan' => date('Y-m')],
-            'pembelianBulanan'          => $this->transaksi_barang->pembelianBulananSum($bulan, $tahun),
-            'pembelianBulananGrouped'   => $this->transaksi_barang->pembelianBulananGrouped($bulan, $tahun),
-            'transaksiBarang'           => $this->transaksi_barang,
+        $pembalianBulanan = $this->transaksi_barang
+            ->select('tb_transaksi_barang.*, tb_barang.kode, tb_barang.barang, tb_barang.stok as total_stok, tb_users.nama as kasir')
+            ->join('tb_barang', 'tb_barang.id = tb_transaksi_barang.id_barang', 'left')
+            ->join('tb_users', 'tb_users.id = tb_transaksi_barang.id_user', 'left')
+            ->where('YEAR(tb_transaksi_barang.created_at)', $tahun)
+            ->where('MONTH(tb_transaksi_barang.created_at)', $bulan)
+            ->orderBy('tb_transaksi_barang.created_at', 'desc')
+            ->findAll();
 
-            'pembelianTahunan'          => $this->transaksi_barang->pembelianTahunanSum($tahun),
-            'pembelianTahunanGrouped'   => $this->transaksi_barang->pembelianTahunanGrouped($tahun),
-            'pembelianTahunanDetail'    => $this->transaksi_barang->pembelianTahunanDetail($tahun),
+        $data = [
+            'title'                     => 'Laporan Pembelian | ' . ($month ? date('M Y', strtotime($month)) : date('M Y')),
+            'filter'                    => $this->request->getGet() ? $this->request->getGet() : ['tanggal' => date('Y-m')],
+            'pembelianBulanan'          => $pembalianBulanan,
         ];
 
-        return view('laporan/pembelian', $data);
+        return view('laporan/pembelian-2', $data);
+    }
+
+    public function pembelianPrint()
+    {
+        $month = $this->request->getGet('tanggal');
+
+        if ($month) {
+            $bulan = date('m', strtotime($month));
+            $tahun = date('Y', strtotime($month));
+        } else {
+            $bulan = date('m');
+            $tahun = date('Y');
+        }
+
+        $pembalianBulanan = $this->transaksi_barang
+            ->select('tb_transaksi_barang.*, tb_barang.kode, tb_barang.barang, tb_barang.stok as total_stok, tb_users.nama as kasir')
+            ->join('tb_barang', 'tb_barang.id = tb_transaksi_barang.id_barang', 'left')
+            ->join('tb_users', 'tb_users.id = tb_transaksi_barang.id_user', 'left')
+            ->where('YEAR(tb_transaksi_barang.created_at)', $tahun)
+            ->where('MONTH(tb_transaksi_barang.created_at)', $bulan)
+            ->orderBy('tb_transaksi_barang.created_at', 'desc')
+            ->findAll();
+
+        $totalItem = 0;
+        $totalUang = 0;
+
+        foreach ($pembalianBulanan as $item) {
+            $totalItem += $item->jml_beli;
+            $totalUang += $item->total;
+        }
+
+        $data = [
+            'title'                     => 'Laporan Pembelian | ' . ($month ? date('M Y', strtotime($month)) : date('M Y')),
+            'filter'                    => $this->request->getGet() ? $this->request->getGet() : ['tanggal' => date('Y-m')],
+            'pembelianBulanan'          => $pembalianBulanan,
+            'totalItem'                 => $totalItem,
+            'totalUang'                 => $totalUang,
+        ];
+
+        $html = view('laporan/pembelian-2-print', $data);
+
+        $this->dompdf->loadHtml($html);
+        $this->dompdf->setPaper('A4', 'potrait');
+        $this->dompdf->render();
+
+        $this->dompdf->stream('laporan-pembelian-' . ($month ? date('M Y', strtotime($month)) : date('M Y')) . '.pdf', ['Attachment' => false]);
+
+        exit(0);
     }
 }
