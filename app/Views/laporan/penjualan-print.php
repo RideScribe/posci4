@@ -1,6 +1,15 @@
 <?php $this->extend('layout/print'); ?>
 <?php $this->section('content'); ?>
 
+<?php 
+    $strKondisi = "";
+    if ($persenUntung >= 0) {
+        $strKondisi = "naik";
+    } else {
+        $strKondisi = "turun";
+    }
+?>
+
 <div class="p-2" style="font-size:13px !important;">
 
     <h5 class="text-center pb-0 mb-0">Laporan Penjualan</h5>
@@ -9,7 +18,7 @@
 
     <!-- justify and make margin on first line -->
     <div class="my-3 mt-4" style="text-align: justify; text-justify: inter-word;">
-        <span class="ml-5">Berdasarkan hasil penjualan pada bulan <strong><?= $filter['tanggal'] ? date('F Y', strtotime($filter['tanggal'])) : date('M Y') ?></strong>, diperoleh pendapatan sebesar <strong>Rp. <?= rupiah($totalPendapatan) ?></strong> dari <?= $totalItemTerjual ?> menu terjual. <strong>Naik <?= number_format($persenUntung, 2, '.', '.') ?>%</strong> dari bulan sebelumnya, yang mana jumlah pendapatan bulan sebelumnya (<?= date('F Y', strtotime('-1 month', strtotime($filter['tanggal'] ? $filter['tanggal'] : date('Y-m-d')))) ?>) sebesar Rp. <?= rupiah($totalPendapatanBulanLalu) ?>.
+        <span class="ml-5">Berdasarkan hasil penjualan pada bulan <strong><?= $filter['tanggal'] ? date('F Y', strtotime($filter['tanggal'])) : date('M Y') ?></strong>, diperoleh pendapatan sebesar <strong>Rp. <?= rupiah($totalPendapatan) ?></strong> dari <?= $totalItemTerjual ?> menu terjual. <strong><?= $strKondisi ?> <?= number_format($persenUntung, 2, '.', '.') ?>%</strong> dari bulan sebelumnya, yang mana jumlah pendapatan bulan sebelumnya (<?= date('F Y', strtotime('-1 month', strtotime($filter['tanggal'] ? $filter['tanggal'] : date('Y-m-d')))) ?>) sebesar Rp. <?= rupiah($totalPendapatanBulanLalu) ?>.
     </div>
 
     <div class="my-2">
