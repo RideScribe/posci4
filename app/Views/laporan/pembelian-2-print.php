@@ -1,7 +1,7 @@
 <?php $this->extend('layout/print'); ?>
 <?php $this->section('content'); ?>
 
-<div class="p-2">
+<div class="p-2" style="font-size:13px !important;">
 
     <h5 class="text-center pb-0 mb-0">Laporan Pembelian Bahan</h5>
     <h4 class="text-center pb-0 mb-0"><u>RESTORAN LEGITA</u></h4>
