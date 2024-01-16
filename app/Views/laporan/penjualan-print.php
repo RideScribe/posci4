@@ -79,11 +79,11 @@
                                 <?php endforeach ?>
 
                                 <tr>
-                                    <td colspan="6" class="text-right"><strong>Diskon</strong></td>
+                                    <td colspan="7" class="text-right"><strong>Diskon</strong></td>
                                     <td><strong><?= $item['diskon'] ?> %</strong></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="6" class="text-right"><strong>Total</strong></td>
+                                    <td colspan="7" class="text-right"><strong>Total</strong></td>
                                     <td>
                                         <?php if ($item['diskon'] && $item['diskon'] != 0) : ?>
                                             <s><strong>Rp. <?= rupiah($item['total_harga']) ?></strong></s>
