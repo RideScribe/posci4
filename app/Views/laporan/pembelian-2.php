@@ -21,40 +21,67 @@
             </div>
 
             <div class="table-responsive">
-                <?php $totalItem = 0; $totalUang = 0 ?>
-                <?php foreach ($pembelianBulanan as $item) : ?>
-                    <?php $totalItem += $item->jml_beli ?>
-                    <?php $totalUang += $item->total ?>
-                    <table class="table table-bordered table-sm">
-                        <tbody>
-                            <tr style="background-color: #f3f3f3;">
+                <?php $totalItem = 0;
+                $totalUang = 0 ?>
+                <table class="table table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th>Tanggal</th>
+                            <th>No. Inv</th>
+                            <th>Barang</th>
+                            <th>Harga Satuan</th>
+                            <th>Jumlah Beli</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($pembelianBulanan as $item) : ?>
+                            <?php $totalItem += $item->jml_beli ?>
+                            <?php $totalUang += $item->total ?>
+                            <!-- <tr style="background-color: #f3f3f3;">
                                 <td colspan="2">
                                     <strong>No. Faktur : </strong> <code><?= $item->kode ?></code>
                                 </td>
                                 <td colspan='3'>
                                     <strong>Oleh :</strong> <?= $item->kasir ?>
                                 </td>
-                            </tr>
-                            <tr style="background-color: #f3f3f3;">
-                                <td style="width:200px;">Tanggal</td>
-                                <td style="width:330px;">Barang</td>
+                            </tr> -->
+                            <!-- <tr style="background-color: #f3f3f3;">
+                                <td style="width:190px;">Tanggal</td>
+                                <td style="width:350px;">Barang</td>
                                 <td>Harga Satuan</td>
-                                <td style="width:80px;">Jumlah Beli</td>
-                                <td>Total</td>
-                            </tr>
-
+                                <td style="width:150px;">Jumlah Beli</td>
+                                <td style="width:150px;">Total</td>
+                            </tr> -->
                             <tr class="">
-                                <td><?= date('d M Y H:i:s', strtotime($item->updated_at)) ?></td>
+                                <td><?= date('d M Y', strtotime($item->updated_at)) ?></td>
+                                <td><code><?= $item->kode ?></code></td>
                                 <td><?= $item->barang ?></td>
                                 <td>Rp. <?= rupiah($item->harga) ?></td>
                                 <td><?= $item->jml_beli ?></td>
                                 <td>Rp. <?= rupiah($item->total) ?></td>
                             </tr>
-                        </tbody>
-                    </table>
-                <?php endforeach ?>
+                        <?php endforeach ?>
+                    </tbody>
+                    <tfoot class="bg-warning">
+                        <tr>
+                            <td colspan="2" class="text-right">
+                                <strong>Total Pembelian : </strong>
+                            </td>
+                            <td>
+                                <strong><?= $totalItem ?> Item</strong>
+                            </td>
+                            <td colspan='2' class="text-right">
+                                <strong>Total : </strong>
+                            </td>
+                            <td>
+                                <strong>Rp. <?= rupiah($totalUang) ?></strong>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
 
-                <table class="table table-bordered">
+                <!-- <table class="table table-bordered">
                     <tbody class="bg-warning">
                         <tr>
                             <td colspan="2">
@@ -65,7 +92,7 @@
                             </td>
                         </tr>
                     </tbody>
-                </table>
+                </table> -->
             </div>
         </div>
     </div>

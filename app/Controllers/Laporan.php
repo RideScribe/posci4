@@ -37,7 +37,7 @@ class Laporan extends BaseController
 
         $dataPenjualan = $this->penjualan->select('tb_penjualan.*, tb_users.nama as kasir')
             ->join('tb_users', 'tb_users.id = tb_penjualan.id_user', 'left')
-            ->orderBy('tb_penjualan.id', 'desc');
+            ->orderBy('tb_penjualan.id', 'asc');
 
         if ($tanggal) {
             $dataPenjualan->where('MONTH(tanggal)', date('m', strtotime($tanggal)))->where('YEAR(tanggal)', date('Y', strtotime($tanggal)));
@@ -81,7 +81,7 @@ class Laporan extends BaseController
 
         $dataPenjualan = $this->penjualan->select('tb_penjualan.*, tb_users.nama as kasir')
             ->join('tb_users', 'tb_users.id = tb_penjualan.id_user', 'left')
-            ->orderBy('tb_penjualan.id', 'desc');
+            ->orderBy('tb_penjualan.id', 'asc');
 
         if ($tanggal) {
             $dataPenjualan->where('MONTH(tanggal)', date('m', strtotime($tanggal)))->where('YEAR(tanggal)', date('Y', strtotime($tanggal)));
@@ -221,7 +221,7 @@ class Laporan extends BaseController
             ->join('tb_users', 'tb_users.id = tb_transaksi_barang.id_user', 'left')
             ->where('YEAR(tb_transaksi_barang.created_at)', $tahun)
             ->where('MONTH(tb_transaksi_barang.created_at)', $bulan)
-            ->orderBy('tb_transaksi_barang.created_at', 'desc')
+            ->orderBy('tb_transaksi_barang.created_at', 'asc')
             ->findAll();
 
         $data = [

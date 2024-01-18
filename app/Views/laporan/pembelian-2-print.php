@@ -13,41 +13,45 @@
         </span>
     </div>
 
-    <?php foreach ($pembelianBulanan as $item) : ?>
-        <!-- avoid break -->
-        <table class="table table-bordered table-sm" style="page-break-inside: avoid;">
-            <tbody>
-                <tr style="background-color: #f3f3f3;">
+    <!-- avoid break -->
+    <table class="table table-bordered table-sm" style="page-break-inside: avoid;">
+        <thead>
+            <tr>
+                <th>Tanggal</th>
+                <th>No. Inv</th>
+                <th>Barang</th>
+                <th>Satuan</th>
+                <th>Jml</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($pembelianBulanan as $item) : ?>
+                <!-- <tr style="background-color: #f3f3f3;">
                     <td colspan="2">
                         <strong>No. Faktur : </strong> <code><?= $item->kode ?></code>
                     </td>
                     <td colspan='3'>
                         <strong>Oleh :</strong> <?= $item->kasir ?>
                     </td>
-                </tr>
-                <tr style="background-color: #f3f3f3;">
-                    <td style="width:120px;">Tanggal</td>
-                    <td>Barang</td>
-                    <td style="width:120px;">Satuan</td>
-                    <td style="width:50px;">Jml</td>
-                    <td style="width:120px;">Total</td>
-                </tr>
+                </tr> -->
 
                 <tr class="">
                     <td>
-                        <?= date('D, d M Y', strtotime($item->updated_at)) ?> <br>
-                        <?= date('H:i:s', strtotime($item->updated_at)) ?>
+                        <?= date('D, d M Y', strtotime($item->updated_at)) ?> 
+                        <!-- <br> <?= date('H:i:s', strtotime($item->updated_at)) ?> -->
                     </td>
+                    <td><code><?= $item->kode ?></code></td>
                     <td><?= $item->barang ?></td>
                     <td>Rp. <?= rupiah($item->harga) ?></td>
                     <td><?= $item->jml_beli ?></td>
                     <td>Rp. <?= rupiah($item->total) ?></td>
                 </tr>
-            </tbody>
-        </table>
-    <?php endforeach ?>
+            <?php endforeach ?>
+        </tbody>
+    </table>
 
-    <table class="table table-bordered">
+    <!-- <table class="table table-bordered">
         <tbody class="bg-warning">
             <tr>
                 <td colspan="2">
@@ -58,7 +62,7 @@
                 </td>
             </tr>
         </tbody>
-    </table>
+    </table> -->
 
     <!-- avoid break -->
     <div class="my-3 mt-4" style="text-align: right; text-justify: inter-word; page-break-inside: avoid;">
