@@ -33,13 +33,13 @@
                             <!-- <th class="<?= empty($data) ? '' : 'd-none' ?>">#</th> -->
                             <th class="<?= empty($data) ? '' : 'd-' ?>">Tanggal</th>
                             <th class="<?= empty($data) ? '' : 'd-' ?>">Invoice</th>
-                            <!-- <th class="<?= empty($data) ? '' : 'd-none' ?>">Pelanggan</th> -->
+                            <th class="<?= empty($data) ? '' : 'd-' ?>">Pelanggan</th>
                             <!-- <th class="<?= empty($data) ? '' : 'd-none' ?>">Tunai</th> -->
                             <!-- <th class="<?= empty($data) ? '' : 'd-none' ?>">Diskon</th> -->
                             <!-- <th class="<?= empty($data) ? '' : 'd-none' ?>">Kembalian</th> -->
                             <!-- <th class="<?= empty($data) ? '' : 'd-none' ?>">Status</th> -->
                             <!-- <th class="<?= empty($data) ? '' : 'd-none' ?>">kasir</th> -->
-                            <th class="<?= empty($data) ? '' : 'd-' ?>">Data Barang</th>
+                            <th class="<?= empty($data) ? '' : 'd-' ?>">Data Pembelian</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -57,7 +57,7 @@
                                 <!-- <td><?= $no++ ?></td> -->
                                 <td style=""><?= date('D, d M Y H:i:s', strtotime($item['tanggal'])) ?></td>
                                 <td style=""><?= $item['invoice'] ?></td>
-                                <!-- <td><strong>Pelanggan :</strong> <?= $item['pelanggan'] ?></td> -->
+                                <td style=""><?= $item['pelanggan'] ?></td>
                                 <!-- <td><strong>Tunai :</strong> Rp. <?= rupiah($item['tunai'] ?  $item['tunai'] : 0) ?></td> -->
                                 <!-- <td><strong>Diskon: </strong> <?= $item['diskon'] ?></td> -->
                                 <!-- <td><strong>Kembalian :</strong> Rp. <?= rupiah($item['kembalian'] ?  $item['kembalian'] : 0) ?></td> -->
@@ -70,7 +70,7 @@
                                                 <th>No.</th>
                                                 <!-- <th>Tgl</th> -->
                                                 <!-- <th>No.Inv</th> -->
-                                                <th>Pelanggan</th>
+                                                <!-- <th>Pelanggan</th> -->
                                                 <th style="width: 380px;">Nama Item</th>
                                                 <th class="text-nowrap">Harga Item</th>
                                                 <th class="text-nowrap">Diskon Item</th>
@@ -89,7 +89,7 @@
                                                     <td><?= $noItem++ ?></td>
                                                     <!-- <td><?= date('d M Y', strtotime($item['tanggal'])) ?></td> -->
                                                     <!-- <td><?= $item['invoice'] ?></td> -->
-                                                    <td><?= $item['pelanggan'] ?></td>
+                                                    <!-- <td><?= $item['pelanggan'] ?></td> -->
                                                     <td><?= $t['nama_item'] ?></td>
                                                     <td class="text-nowrap">Rp. <?= rupiah($t['harga_item']) ?></td>
                                                     <td><?= $t['diskon_item'] ?>%</td>
@@ -103,7 +103,7 @@
                                                 <td><strong><?= $item['diskon'] ?> %</strong></td>
                                             </tr> -->
                                             <tr>
-                                                <td colspan="6" class="text-right"><strong>Total</strong></td>
+                                                <td colspan="5" class="text-right"><strong>Total</strong></td>
                                                 <td>
                                                     <?php if ($item['diskon'] && $item['diskon'] != 0) : ?>
                                                         <s><strong>Rp. <?= rupiah($item['total_harga']) ?></strong></s>
@@ -145,7 +145,7 @@
 
                     <tfoot class="bg-success">
                         <tr>
-                            <td colspan="2" class="text-center">
+                            <td colspan="4" class="text-center">
                                 <strong>Total Pendapatan</strong>
                                 <strong>: Rp. <?= rupiah($totalPendapatan) ?></strong>
                             </td>

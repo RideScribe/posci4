@@ -1,13 +1,13 @@
 <?php $this->extend('layout/print'); ?>
 <?php $this->section('content'); ?>
 
-<?php 
-    $strKondisi = "";
-    if ($persenUntung >= 0) {
-        $strKondisi = "naik";
-    } else {
-        $strKondisi = "turun";
-    }
+<?php
+$strKondisi = "";
+if ($persenUntung >= 0) {
+    $strKondisi = "naik";
+} else {
+    $strKondisi = "turun";
+}
 ?>
 
 <div class="p-2" style="font-size:13px !important;">
@@ -26,24 +26,37 @@
     </div>
 
     <table class="table" id="tabel-invoice" width="100%">
+        <thead>
+            <tr style="background-color: #dfdfdf;">
+                <th>Tgl</th>
+                <th>Inv</th>
+                <th>Pelanggan</th>
+                <!-- <th>Pembayaran</th> -->
+                <!-- <th>Diskon</th> -->
+                <!-- <th>Kembalian</th> -->
+                <!-- <th>Status</th> -->
+                <!-- <th>Kasir</th> -->
+                <th>Data Pembelian</th>
+            </tr>
+        </thead>
         <tbody>
             <?php $no = 1;
             $totalPendapatan = 0 ?>
             <?php foreach ($data as $item) : ?>
                 <!-- light gray -->
-                <tr style="background-color: #dfdfdf;">
+                <tr>
                     <!-- <td><?= $no++ ?></td> -->
-                    <td><strong>Tanggal : <br/></strong> <?= date('D, d M Y H:i:s', strtotime($item['updated_at'])) ?></td>
-                    <td><strong>No. Invoice : <br/></strong> <?= $item['invoice'] ?></td>
-                    <!-- <td><strong>Pelanggan : <br /></strong> <?= $item['pelanggan'] ?></td> -->
+                    <td>
+                        <?= date('d M Y', strtotime($item['updated_at'])) ?>
+                    </td>
+                    <td><?= $item['invoice'] ?></td>
+                    <td><?= $item['pelanggan'] ?></td>
                     <!-- <td><strong>Tunai : <br /></strong> Rp. <?= rupiah($item['tunai'] ?  $item['tunai'] : 0) ?></td> -->
-                    <!-- <td><strong>Diskon: </strong> <?= $item['diskon'] ?></td>
-                      <td><strong>Kembalian : <br/></strong> Rp. <?= rupiah($item['kembalian'] ?  $item['kembalian'] : 0) ?></td> -->
+                    <!-- <td><strong>Diskon: </strong> <?= $item['diskon'] ?></td> -->
+                    <!-- <td><strong>Kembalian : <br/></strong> Rp. <?= rupiah($item['kembalian'] ?  $item['kembalian'] : 0) ?></td> -->
                     <!-- <td><strong>Status : <br /></strong> <?= $item['tunai'] && $item['tunai'] != 0 ? '<span class="badge badge-success">Lunas</span>' : '<span class="badge badge-warning">Belum Lunas</span>' ?></td> -->
                     <!-- <td><strong>Kasir : <br /></strong> <?= $item['kasir'] ?></td> -->
-                </tr>
-                <tr>
-                    <td colspan="2" class="p-0 m-0">
+                    <td class="m-0 p-0">
                         <table class="table table-bordered table-striped table-compact table-sm" width="100%">
                             <thead style="background-color: #dfdfdf;">
                                 <tr>
@@ -51,11 +64,11 @@
                                     <!-- <th style="text-align:left;">Tgl</th> -->
                                     <!-- <th style="text-align:left;">No.Inv</th> -->
                                     <!-- <th style="text-align:left;">Pelanggan</th> -->
-                                    <th style="text-align:left;" style="width:200px;">Menu</th>
+                                    <th style="text-align:left;" style="width:120px;">Menu</th>
                                     <th style="text-align:left;">Harga</th>
                                     <th style="text-align:left;">Disc</th>
                                     <th style="text-align:left;">Jml</th>
-                                    <th style="text-align:left;" style="width:180px;">Sub Total</th>
+                                    <th style="text-align:left;" style="width:90px;">Sub Total</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -125,7 +138,7 @@
 
         <tfoot class="bg-success">
             <tr>
-                <td style="color:#fff;" colspan="2" class="text-center">
+                <td style="color:#fff;" colspan="4" class="text-center">
                     <strong>Total Pendapatan</strong>
                     <strong>: Rp. <?= rupiah($totalPendapatan) ?></strong>
                 </td>

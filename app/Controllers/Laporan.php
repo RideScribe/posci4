@@ -81,7 +81,7 @@ class Laporan extends BaseController
 
         $dataPenjualan = $this->penjualan->select('tb_penjualan.*, tb_users.nama as kasir')
             ->join('tb_users', 'tb_users.id = tb_penjualan.id_user', 'left')
-            ->orderBy('tb_penjualan.id', 'asc');
+            ->orderBy('tb_penjualan.updated_at', 'asc');
 
         if ($tanggal) {
             $dataPenjualan->where('MONTH(tanggal)', date('m', strtotime($tanggal)))->where('YEAR(tanggal)', date('Y', strtotime($tanggal)));
