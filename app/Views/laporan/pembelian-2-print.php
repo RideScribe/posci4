@@ -38,8 +38,8 @@
 
                 <tr class="">
                     <td>
-                        <?= date('D, d M Y', strtotime($item->updated_at)) ?> 
-                        <!-- <br> <?= date('H:i:s', strtotime($item->updated_at)) ?> -->
+                        <?= date('D, d M Y', strtotime($item->created_at)) ?> 
+                        <!-- <br> <?= date('H:i:s', strtotime($item->created_at)) ?> -->
                     </td>
                     <td><code><?= $item->kode ?></code></td>
                     <td><?= $item->barang ?></td>
