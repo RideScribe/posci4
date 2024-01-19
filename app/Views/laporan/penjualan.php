@@ -55,7 +55,7 @@
                             <!-- light gray -->
                             <tr>
                                 <!-- <td><?= $no++ ?></td> -->
-                                <td style=""><?= date('D, d M Y H:i:s', strtotime($item['tanggal'])) ?></td>
+                                <td style=""><?= date('D, d M Y', strtotime($item['tanggal'])) ?></td>
                                 <td style=""><?= $item['invoice'] ?></td>
                                 <td style=""><?= $item['pelanggan'] ?></td>
                                 <!-- <td><strong>Tunai :</strong> Rp. <?= rupiah($item['tunai'] ?  $item['tunai'] : 0) ?></td> -->
