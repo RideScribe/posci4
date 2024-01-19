@@ -29,23 +29,23 @@
             <div class="table-responsive">
                 <table class="table" id="tabel-invoice" width="100%">
                     <thead>
-                        <tr style="background-color: #dfdfdf;">
+                        <tr>
                             <!-- <th class="<?= empty($data) ? '' : 'd-none' ?>">#</th> -->
-                            <th class="<?= empty($data) ? '' : 'd-' ?>">Tanggal</th>
-                            <th class="<?= empty($data) ? '' : 'd-' ?>">Invoice</th>
-                            <!-- <th class="<?= empty($data) ? '' : 'd-none' ?>">Pelanggan</th> -->
+                            <!-- <th class="<?= empty($data) ? '' : 'd-none' ?>">Tanggal</th> -->
+                            <th class="<?= empty($data) ? '' : 'd-none' ?>">Pelanggan</th>
+                            <th class="<?= empty($data) ? '' : 'd-none' ?>">Invoice</th>
                             <!-- <th class="<?= empty($data) ? '' : 'd-none' ?>">Tunai</th> -->
                             <!-- <th class="<?= empty($data) ? '' : 'd-none' ?>">Diskon</th> -->
                             <!-- <th class="<?= empty($data) ? '' : 'd-none' ?>">Kembalian</th> -->
                             <!-- <th class="<?= empty($data) ? '' : 'd-none' ?>">Status</th> -->
                             <!-- <th class="<?= empty($data) ? '' : 'd-none' ?>">kasir</th> -->
-                            <th class="<?= empty($data) ? '' : 'd-' ?>">Data Barang</th>
                         </tr>
                     </thead>
                     <tbody>
+
                         <?php if (empty($data)) : ?>
                             <tr>
-                                <td colspan="3" class="text-center">Belum ada data penjulalan hari ini</td>
+                                <td colspan="2" class="text-center">Belum ada data penjulalan hari ini</td>
                             </tr>
                         <?php endif ?>
 
@@ -53,20 +53,22 @@
                         $totalPendapatan = 0 ?>
                         <?php foreach ($data as $item) : ?>
                             <!-- light gray -->
-                            <tr>
+                            <tr style="background-color: #dfdfdf;">
                                 <!-- <td><?= $no++ ?></td> -->
-                                <td style=""><?= date('D, d M Y H:i:s', strtotime($item['tanggal'])) ?></td>
-                                <td style=""><?= $item['invoice'] ?></td>
+                                <td style=""><strong>Tanggal :</strong> <br /><?= date('D, d M Y H:i:s', strtotime($item['tanggal'])) ?></td>
+                                <td style=""><strong>No. Invoice :</strong> <br /><?= $item['invoice'] ?></td>
                                 <!-- <td><strong>Pelanggan :</strong> <?= $item['pelanggan'] ?></td> -->
                                 <!-- <td><strong>Tunai :</strong> Rp. <?= rupiah($item['tunai'] ?  $item['tunai'] : 0) ?></td> -->
                                 <!-- <td><strong>Diskon: </strong> <?= $item['diskon'] ?></td> -->
                                 <!-- <td><strong>Kembalian :</strong> Rp. <?= rupiah($item['kembalian'] ?  $item['kembalian'] : 0) ?></td> -->
                                 <!-- <td><strong>Status :</strong> <?= $item['tunai'] && $item['tunai'] != 0 ? '<span class="badge badge-success">Lunas</span>' : '<span class="badge badge-warning">Belum Lunas</span>' ?></td> -->
                                 <!-- <td><strong>Kasir :</strong> <?= $item['kasir'] ?></td> -->
-                                <td class="p-0 m-0">
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="p-0 m-0">
                                     <table class="table table-bordered table-striped table-compact table-sm" width="100%">
-                                        <thead>
-                                            <tr style="background-color: #dfdfdf;">
+                                        <thead style="background-color: #dfdfdf;">
+                                            <tr>
                                                 <th>No.</th>
                                                 <!-- <th>Tgl</th> -->
                                                 <!-- <th>No.Inv</th> -->

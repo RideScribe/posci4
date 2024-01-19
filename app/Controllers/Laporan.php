@@ -251,7 +251,7 @@ class Laporan extends BaseController
             ->join('tb_users', 'tb_users.id = tb_transaksi_barang.id_user', 'left')
             ->where('YEAR(tb_transaksi_barang.created_at)', $tahun)
             ->where('MONTH(tb_transaksi_barang.created_at)', $bulan)
-            ->orderBy('tb_transaksi_barang.created_at', 'desc')
+            ->orderBy('tb_transaksi_barang.created_at', 'ASC')
             ->findAll();
 
         $totalItem = 0;
