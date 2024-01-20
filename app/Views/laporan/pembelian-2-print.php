@@ -51,7 +51,7 @@
         </tbody>
     </table>
 
-    <!-- <table class="table table-bordered">
+    <table class="table table-bordered">
         <tbody class="bg-warning">
             <tr>
                 <td colspan="2">
@@ -62,7 +62,7 @@
                 </td>
             </tr>
         </tbody>
-    </table> -->
+    </table>
 
     <!-- avoid break -->
     <div class="my-3 mt-4" style="text-align: right; text-justify: inter-word; page-break-inside: avoid;">
@@ -73,7 +73,19 @@
             <tr></tr>
             <tr></tr>
             <tr>
-                <td width="50%"></td>
+                <td class="text-center">
+                    <p>Penanggung Jawab</p>
+                    <br />
+                    <br />
+                    <br />
+                    <p>
+                        (........................................)
+                        <br>
+                        <span class="text-center">
+                            <?= $pembelianBulanan['0']->kasir ?>
+                        </span>
+                    </p>
+                </td>
                 <td class="text-center">
                     <p>Mengetahui</p>
                     <br />

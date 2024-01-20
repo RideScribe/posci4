@@ -154,8 +154,22 @@ if ($persenUntung >= 0) {
             <tr></tr>
             <tr></tr>
             <tr>
-                <td width="50%"></td>
-                <td class="text-center">
+                <td width="50%" class="text-center">
+                    <p>
+                        Penanggung Jawab Kasir
+                    </p>
+                    <br />
+                    <br />
+                    <br />
+                    <p>
+                        (........................................)
+                        <br>
+                        <span class="text-center">
+                            <?= $data[0]['kasir'] ?>
+                        </span>
+                    </p>
+                </td>
+                <td width="50%" class="text-center">
                     <p>Mengetahui</p>
                     <br />
                     <br />
