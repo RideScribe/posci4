@@ -17,15 +17,17 @@
     <table class="table table-bordered table-sm" style="page-break-inside: avoid;">
         <thead>
             <tr>
+                <th>No.</th>
                 <th>Tanggal</th>
                 <th>No. Inv</th>
                 <th>Barang</th>
-                <th>Satuan</th>
                 <th>Jml</th>
+                <th>Satuan</th>
                 <th>Total</th>
             </tr>
         </thead>
         <tbody>
+            <?php $no = 1 ?>
             <?php foreach ($pembelianBulanan as $item) : ?>
                 <!-- <tr style="background-color: #f3f3f3;">
                     <td colspan="2">
@@ -37,21 +39,37 @@
                 </tr> -->
 
                 <tr class="">
+                    <td><?= $no++ ?></td>
                     <td>
-                        <?= date('D, d M Y', strtotime($item->created_at)) ?> 
-                        <!-- <br> <?= date('H:i:s', strtotime($item->created_at)) ?> -->
+                        <span style="white-space: nowrap;"><?= date('D, d M Y', strtotime($item->created_at)) ?></span>
                     </td>
                     <td><code><?= $item->kode ?></code></td>
                     <td><?= $item->barang ?></td>
-                    <td>Rp. <?= rupiah($item->harga) ?></td>
                     <td><?= $item->jml_beli ?></td>
-                    <td>Rp. <?= rupiah($item->total) ?></td>
+                    <td style="white-space: nowrap;">Rp. <?= rupiah($item->harga) ?></td>
+                    <td style="white-space: nowrap;">Rp. <?= rupiah($item->total) ?></td>
                 </tr>
             <?php endforeach ?>
         </tbody>
+        <tfoot class="bg-warning">
+            <tr>
+                <td colspan="4" class="text-right">
+                    <strong>Total Pembelian : </strong>
+                </td>
+                <td>
+                    <div style="white-space: nowrap;"><?= $totalItem ?> Item</div>
+                </td>
+                <td colspan='' class="text-right">
+                    <strong>Total : </strong>
+                </td>
+                <td>
+                    <div style="white-space: nowrap;">Rp. <?= rupiah($totalUang) ?></div>
+                </td>
+            </tr>
+        </tfoot>
     </table>
 
-    <table class="table table-bordered">
+    <!-- <table class="table table-bordered">
         <tbody class="bg-warning">
             <tr>
                 <td colspan="2">
@@ -62,7 +80,7 @@
                 </td>
             </tr>
         </tbody>
-    </table>
+    </table> -->
 
     <!-- avoid break -->
     <div class="my-3 mt-4" style="text-align: right; text-justify: inter-word; page-break-inside: avoid;">

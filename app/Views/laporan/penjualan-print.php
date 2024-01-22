@@ -28,6 +28,7 @@ if ($persenUntung >= 0) {
     <table class="table" id="tabel-invoice" width="100%">
         <thead>
             <tr style="background-color: #dfdfdf;">
+                <th>No.</th>
                 <th>Tgl</th>
                 <th>Inv</th>
                 <th>Pelanggan</th>
@@ -45,9 +46,9 @@ if ($persenUntung >= 0) {
             <?php foreach ($data as $item) : ?>
                 <!-- light gray -->
                 <tr>
-                    <!-- <td><?= $no++ ?></td> -->
+                    <td><?= $no++ ?></td>
                     <td>
-                        <?= date('d M Y', strtotime($item['updated_at'])) ?>
+                        <span style="white-space: nowrap;"><?= date('d M Y', strtotime($item['updated_at'])) ?></span>
                     </td>
                     <td><?= $item['invoice'] ?></td>
                     <td><?= $item['pelanggan'] ?></td>
@@ -68,7 +69,7 @@ if ($persenUntung >= 0) {
                                     <th style="text-align:left;">Harga</th>
                                     <th style="text-align:left;">Disc</th>
                                     <th style="text-align:left;">Jml</th>
-                                    <th style="text-align:left;" style="width:90px;">Sub Total</th>
+                                    <th style="text-align:left;" style="width:100px;">Sub Total</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -99,7 +100,7 @@ if ($persenUntung >= 0) {
                                     <td colspan="5" class="text-right"><strong>Total</strong></td>
                                     <td>
                                         <?php if ($item['diskon'] && $item['diskon'] != 0) : ?>
-                                            <s><strong>Rp. <?= rupiah($item['total_harga']) ?></strong></s> <strong class="ml-2">( <?= $item['diskon'] ?> % )</strong> <br />
+                                            <s><strong>Rp. <?= rupiah($item['total_harga']) ?></strong></s> <br><strong>(<?= $item['diskon'] ?>%)</strong> <br />
                                             <strong>Rp. <?= rupiah($item['total_akhir']) ?></strong>
                                         <?php else : ?>
                                             <strong>Rp. <?= rupiah($item['total_akhir']) ?></strong>
@@ -134,16 +135,32 @@ if ($persenUntung >= 0) {
                     </td>
                 </tr>
             <?php endforeach ?>
+
+            <tr class="bg-success p-0 m-0">
+                <td colspan="4" class="p-0 m-0"></td>
+                <td class="p-0 m-0">
+                    <table class="table table-borderless table-compact table-sm mb-0 pb-0">
+                        <tbody>
+                            <tr style="color:#fff;" >
+                                <td colspan="5" class="text-right" style="border-right: .5px solid #efefef" >
+                                    <strong>Total Pendapatan</strong>
+                                </td>
+                                <td style="width: 27%;" class=""><strong>Rp. <?= rupiah($totalPendapatan) ?></strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
         </tbody>
 
-        <tfoot class="bg-success">
+        <!-- <tfoot class="bg-success">
             <tr>
                 <td style="color:#fff;" colspan="4" class="text-center">
                     <strong>Total Pendapatan</strong>
                     <strong>: Rp. <?= rupiah($totalPendapatan) ?></strong>
                 </td>
             </tr>
-        </tfoot>
+        </tfoot> -->
     </table>
 
     <div class="my-3 mt-4" style="text-align: right; text-justify: inter-word;">

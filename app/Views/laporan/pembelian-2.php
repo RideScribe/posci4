@@ -26,15 +26,17 @@
                 <table class="table table-bordered table-sm">
                     <thead>
                         <tr>
+                            <th>No.</th>
                             <th>Tanggal</th>
                             <th>No. Inv</th>
                             <th>Barang</th>
-                            <th>Harga Satuan</th>
                             <th>Jumlah Beli</th>
+                            <th>Harga Satuan</th>
                             <th>Total</th>
                         </tr>
                     </thead>
                     <tbody>
+                        <?php $no = 1 ?>
                         <?php foreach ($pembelianBulanan as $item) : ?>
                             <?php $totalItem += $item->jml_beli ?>
                             <?php $totalUang += $item->total ?>
@@ -54,24 +56,25 @@
                                 <td style="width:150px;">Total</td>
                             </tr> -->
                             <tr class="">
+                                <td><?= $no++ ?></td>
                                 <td><?= date('d M Y', strtotime($item->updated_at)) ?></td>
                                 <td><code><?= $item->kode ?></code></td>
                                 <td><?= $item->barang ?></td>
-                                <td>Rp. <?= rupiah($item->harga) ?></td>
                                 <td><?= $item->jml_beli ?></td>
+                                <td>Rp. <?= rupiah($item->harga) ?></td>
                                 <td>Rp. <?= rupiah($item->total) ?></td>
                             </tr>
                         <?php endforeach ?>
                     </tbody>
                     <tfoot class="bg-warning">
                         <tr>
-                            <td colspan="2" class="text-right">
+                            <td colspan="4" class="text-right">
                                 <strong>Total Pembelian : </strong>
                             </td>
                             <td>
                                 <strong><?= $totalItem ?> Item</strong>
                             </td>
-                            <td colspan='2' class="text-right">
+                            <td colspan='' class="text-right">
                                 <strong>Total : </strong>
                             </td>
                             <td>
