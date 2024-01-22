@@ -40,9 +40,15 @@ class Dashboard extends BaseController
         echo view('dashboard', $data);
     }
 
-    public function laporan()
+    public function laporan_pengunjung()
     {
-        $data = $this->penjualan->laporanPenjualan(date('Y'));
+        $data = $this->penjualan->laporanPengunjung(date('Y'));
+        return $this->response->setJSON($data);
+    }
+
+    public function laporan_pendapatan()
+    {
+        $data = $this->penjualan->laporanPendapatan(date('Y'));
         return $this->response->setJSON($data);
     }
 }

@@ -99,10 +99,17 @@ class PenjualanModel extends Model
     }
 
 
-    public function laporanPenjualan($tahun)
+    public function laporanPengunjung($tahun)
     {
         return $this->builder('tb_bulan_tahun')->select('bulan')->selectCount('jumlah_item', 'total')->join('tb_transaksi', 'date_format(created_at, "%m-%Y") = bln_thn', 'left')->where('tahun', $tahun)->groupBy('bln_thn')->get()->getResult();
     }
+
+    public function laporanPendapatan($tahun)
+    {
+        return $this->builder('tb_bulan_tahun')->select('bulan')->selectSum('subtotal', 'total')->join('tb_transaksi', 'date_format(created_at, "%m-%Y") = bln_thn', 'left')->where('tahun', $tahun)->groupBy('bln_thn')->get()->getResult();
+    }
+
+    
 
     public function bayarInvoice($id, $data)
     {

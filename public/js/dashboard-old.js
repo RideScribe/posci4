@@ -9,7 +9,7 @@ $(function () {
           timer: 1500
       })
   }
-  $.getJSON(`${BASE_URL}/dashboard/laporan`, function (data) {
+  $.getJSON(`${BASE_URL}/dashboard/laporan_pengunjung`, function (data) {
       let label = [];
       let total = [];
       $(data).each(function (i) {

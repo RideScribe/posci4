@@ -95,18 +95,34 @@
 
     <!-- /.row -->
     <div class="row">
-        <div class="col-md-12">
-            <!-- Total Penjualan -->
+        <div class="col-12 col-md-6">
+            <!-- Total pengunjung -->
             <div class="card">
                 <div class="card-header border-0">
                     <div class="d-flex justify-content-between">
-                        <h3 class="card-title">Total Penjualan</h3>
-                        <a href="javascript:void(0);">Lihat Laporan</a>
+                        <h3 class="card-title">Total Pengunjung</h3>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="position-relative mb-4">
-                        <canvas id="laporan-penjualan" height="300"></canvas>
+                        <canvas id="laporan-pengunjung" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card -->
+        </div>
+        <div class="col-12 col-md-6">
+            <!-- Total pendapatan -->
+            <div class="card">
+                <div class="card-header border-0">
+                    <div class="d-flex justify-content-between">
+                        <h3 class="card-title">Total Pendapatan</h3>
+                        <a href="/laporan/pendapatan">Lihat Detail Laporan Pendapatan</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="position-relative mb-4">
+                        <canvas id="laporan-pendapatan" height="300"></canvas>
                     </div>
                 </div>
             </div>
