@@ -26,6 +26,8 @@ class Dashboard extends BaseController
     }
     public function index()
     {
+        $tahun = $this->request->getGet('tahun');
+
         $data = [
             'title'     => 'Dashboard',
             'produk'    => $this->produk->countAllResults(),
@@ -34,7 +36,9 @@ class Dashboard extends BaseController
             // 'pelanggan' => $this->pelanggan->countAllResults(),
             'pengguna'  => $this->pengguna->countAllResults(),
             'harian'    => $this->penjualan->penjualanHarian(date('Y-m-d')),
-            'bulanan'   => $this->penjualan->penjualanBulanan(date('m'), date('Y')),
+            // 'bulanan'   => $this->penjualan->penjualanBulanan(date('m'), date('Y')),
+            'bulanan'   => $this->penjualan->penjualanBulanan(date('m', strtotime($tahun ?? date('Y-m'))), date('Y', strtotime($tahun ?? date('Y-m')))),
+            'tahun'     => $tahun ?? date('Y-m'),
         ];
 
         echo view('dashboard', $data);
@@ -48,7 +52,9 @@ class Dashboard extends BaseController
 
     public function laporan_pendapatan()
     {
-        $data = $this->penjualan->laporanPendapatan(date('Y'));
+        $tahun = $this->request->getGet('tahun');
+        
+        $data = $this->penjualan->laporanPendapatan($tahun ?? date('Y'));
         return $this->response->setJSON($data);
     }
 }

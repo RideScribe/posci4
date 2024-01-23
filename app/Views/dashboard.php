@@ -1,8 +1,21 @@
 <?= $this->extend('layout/template'); ?>
 <?= $this->section('content'); ?>
 
-<div class="container-fluid">
+<div class="container-fluid" id="tahun-bulan" data-tahun-bulan="<?= $tahun ?? date('Y-m') ?>">
     <div id="pesan" data-pesan="<?= session()->getFlashdata('pesan') ?>"></div>
+
+    <form action="" method="get" class="my-2">
+        <!-- inpu tahun and tombol submit -->
+        <div class="row">
+            <div class="col-md-3">
+                <input type="month" name="tahun" class="form-control" value="<?= $tahun ?? date('Y-m') ?>">
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary">Tampilkan</button>
+            </div>
+        </div>
+    </form>
+
     <div class="row">
         <div class="col-lg-4 col-12">
             <!-- small card -->

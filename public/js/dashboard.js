@@ -10,6 +10,14 @@ $(function () {
     })
   }
 
+  // get data-tahun-bulan from url
+  let url = new URL(window.location.href)
+  const tahun = url.searchParams.get('tahun')
+
+  if (tahun) {
+    alert(tahun)
+  }
+
   // grafik pengunjung
   $.getJSON(`${BASE_URL}/dashboard/laporan_pengunjung`, function (data) {
 
