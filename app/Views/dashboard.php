@@ -36,13 +36,15 @@
         <!-- <div class="col-lg-4 col-12">
             <div class="small-box bg-gradient-green">
                 <div class="inner">
-                    <h3><?= '' // esc($pemasok) ?></h3>
+                    <h3><?= '' // esc($pemasok) 
+                        ?></h3>
                     <p>Pemasok</p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-truck"></i>
                 </div>
-                <a href="<?= '' //base_url('pemasok') ?>" class="small-box-footer">
+                <a href="<?= '' //base_url('pemasok') 
+                            ?>" class="small-box-footer">
                     Selengkapnya <i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>
@@ -64,7 +66,7 @@
             </div>
         </div>
         <!-- ./col -->
-        
+
         <div class="col-lg-4 col-12">
             <div class="small-box bg-gradient-green">
                 <div class="inner">
@@ -97,7 +99,7 @@
             <div class="small-box bg-gradient-yellow">
                 <div class="inner">
                     <h3>Rp. <?= number_format(esc($bulanan) ?? 0, 0, ',', '.') ?>,-</h3>
-                    <p>Pendapatan Bulan Ini</p>
+                    <p>Pendapatan <?= $tahun ? date('F Y', strtotime($tahun)) : date('F Y') ?></p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-dollar-sign"></i>
