@@ -14,8 +14,10 @@ $(function () {
   let url = new URL(window.location.href)
   const tahun = url.searchParams.get('tahun')
 
+  var pendapatanUrl = `${BASE_URL}/dashboard/laporan_pendapatan`
+
   if (tahun) {
-    alert(tahun)
+    pendapatanUrl = `${BASE_URL}/dashboard/laporan_pendapatan?tahun=${tahun}`
   }
 
   // grafik pengunjung
@@ -103,7 +105,7 @@ $(function () {
   })
 
   // grafik pendapatan
-  $.getJSON(`${BASE_URL}/dashboard/laporan_pendapatan`, function (data) {
+  $.getJSON(pendapatanUrl, function (data) {
 
     console.log(data)
 
