@@ -108,8 +108,7 @@
 
     <!-- /.row -->
     <div class="row">
-        <div class="col-12 col-md-6">
-            <!-- Total pengunjung -->
+        <!-- <div class="col-12 col-md-6">
             <div class="card">
                 <div class="card-header border-0">
                     <div class="d-flex justify-content-between">
@@ -122,9 +121,8 @@
                     </div>
                 </div>
             </div>
-            <!-- /.card -->
-        </div>
-        <div class="col-12 col-md-6">
+        </div> -->
+        <div class="col-12 col-md-12">
             <!-- Total pendapatan -->
             <div class="card">
                 <div class="card-header border-0">

@@ -140,6 +140,16 @@ $(function () {
         tooltips: {
           mode: mode,
           intersect: intersect,
+          callbacks: {
+            label: function (tooltipItem, data) {
+              var label = data.datasets[tooltipItem.datasetIndex].label || ''
+              if (label) {
+                label += ': '
+              }
+              label += 'Rp. ' + tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+              return label
+            },
+          },
         },
         hover: {
           mode: mode,
@@ -161,7 +171,8 @@ $(function () {
                 {
                   beginAtZero: true,
                   callback: function (value) {
-                    return value
+                    // return value
+                    return 'Rp. ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
                   },
                 },
                 ticksStyle,
