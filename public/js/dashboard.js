@@ -187,13 +187,24 @@ $(function () {
               gridLines: {
                 display: false,
               },
-              ticks: ticksStyle,
+              ticks: $.extend(
+                {
+                  callback: function (value) {
+                    // value is month in 3 letters, make it example Jan, 20XX
+                    // return value
+                    // tahun is 2023-12 get only 2023
+                    const t = tahun ? tahun.split('-')[0] : new Date().getFullYear()
+                    return value + ' ' + (t)
+                  },
+                },
+                ticksStyle,
+              ),
             },
           ],
         },
         title: {
           display: true,
-          text: 'Grafik Pendapatan',
+          text: 'Grafik Penjualan',
         }
       },
     });

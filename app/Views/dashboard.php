@@ -129,7 +129,7 @@
             <div class="card">
                 <div class="card-header border-0">
                     <div class="d-flex justify-content-between">
-                        <h3 class="card-title">Total Pendapatan</h3>
+                        <h3 class="card-title">Grafik Penjualan</h3>
                         <a href="/laporan/pendapatan">Lihat Detail Laporan Pendapatan</a>
                     </div>
                 </div>
