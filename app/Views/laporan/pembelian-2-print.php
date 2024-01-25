@@ -8,8 +8,8 @@
     <h6 class="text-center">Bulan <?= $filter['tanggal'] ? date('F Y', strtotime($filter['tanggal'])) : date('M Y') ?></h6>
 
     <div class="my-3 mt-4" style="text-align: justify !important; text-justify: inter-word;">
-        <span class="ml-5">
-            Berdasarkan history pembelian barang / bahan pada bulan <strong><?= $filter['tanggal'] ? date('F Y', strtotime($filter['tanggal'])) : date('M Y') ?></strong>, diperoleh total pembelian sebesar <strong><?= $totalItem ?> Item</strong> dengan total uang sebesar <strong>Rp. <?= rupiah($totalUang) ?></strong>. Berikut adalah rincian pembelian barang / bahan pada bulan <?= $filter['tanggal'] ? date('F Y', strtotime($filter['tanggal'])) : date('M Y') ?> :
+        <span>
+            Berdasarkan data pembelian barang / bahan pada bulan <strong><?= $filter['tanggal'] ? date('F Y', strtotime($filter['tanggal'])) : date('M Y') ?></strong>, berikut ini adalah rinciannya :
         </span>
     </div>
 
@@ -84,27 +84,29 @@
 
     <!-- avoid break -->
     <div class="my-3 mt-4" style="text-align: right; text-justify: inter-word; page-break-inside: avoid;">
-        <span style="font-size: 11px !important;" class="pb-0 mb-0">
+        <!-- <span style="font-size: 11px !important;" class="pb-0 mb-0">
             * Dokumen ini dibuat secara otomatis oleh sistem pada tanggal <?= date('d M Y') ?>. <br />
-        </span>
+        </span> -->
         <table class="table table-borderless" width="100%">
             <tr></tr>
             <tr></tr>
             <tr>
                 <td class="text-center">
-                    <p>Penanggung Jawab</p>
+                    <p>dibuat oleh</p>
+                    <br />
                     <br />
                     <br />
                     <br />
                     <p>
                         (........................................)
-                        <br>
+                        <!-- <br>
                         <span class="text-center">
                             <?= $pembelianBulanan['0']->kasir ?>
-                        </span>
+                        </span> -->
                     </p>
                 </td>
                 <td class="text-center">
+                    <strong>Pemalang, <?= $filter['tanggal'] ? date('t F Y', strtotime($filter['tanggal'])) : date('t F Y') ?></strong>
                     <p>Mengetahui</p>
                     <br />
                     <br />

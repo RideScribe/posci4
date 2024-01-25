@@ -18,11 +18,7 @@ if ($persenUntung >= 0) {
 
     <!-- justify and make margin on first line -->
     <div class="my-3 mt-4" style="text-align: justify; text-justify: inter-word;">
-        <span class="ml-5">Berdasarkan hasil penjualan pada bulan <strong><?= $filter['tanggal'] ? date('F Y', strtotime($filter['tanggal'])) : date('M Y') ?></strong>, diperoleh pendapatan sebesar <strong>Rp. <?= rupiah($totalPendapatan) ?></strong> dari <?= $totalItemTerjual ?> menu terjual. <strong><?= $strKondisi ?> <?= number_format($persenUntung, 2, '.', '.') ?>%</strong> dari bulan sebelumnya, yang mana jumlah pendapatan bulan sebelumnya (<?= date('F Y', strtotime('-1 month', strtotime($filter['tanggal'] ? $filter['tanggal'] : date('Y-m-d')))) ?>) sebesar Rp. <?= rupiah($totalPendapatanBulanLalu) ?>.
-    </div>
-
-    <div class="my-2">
-        Berikut adalah rincian pendapatan pada bulan <?= $filter['tanggal'] ? date('F Y', strtotime($filter['tanggal'])) : date('M Y') ?> :</span>
+        <span>Berdasarkan hasil penjualan pada bulan <strong><?= $filter['tanggal'] ? date('F Y', strtotime($filter['tanggal'])) : date('M Y') ?></strong>, Berikut adalah rincian pendapatannya :</span>
     </div>
 
     <table class="table" id="tabel-invoice" width="100%">
@@ -141,8 +137,8 @@ if ($persenUntung >= 0) {
                 <td class="p-0 m-0">
                     <table class="table table-borderless table-compact table-sm mb-0 pb-0">
                         <tbody>
-                            <tr style="color:#fff;" >
-                                <td colspan="5" class="text-right" style="border-right: .5px solid #efefef" >
+                            <tr style="color:#fff;">
+                                <td colspan="5" class="text-right" style="border-right: .5px solid #efefef">
                                     <strong>Total Pendapatan</strong>
                                 </td>
                                 <td style="width: 27%;" class=""><strong>Rp. <?= rupiah($totalPendapatan) ?></strong></td>
@@ -163,30 +159,34 @@ if ($persenUntung >= 0) {
         </tfoot> -->
     </table>
 
+    <!-- <span style="font-size: 10px !important;">
+        * Dokumen ini digenerate secara otomatis oleh sistem pada tanggal <?= date('d M Y') ?>. <br />
+    </span> -->
     <div class="my-3 mt-4" style="text-align: right; text-justify: inter-word;">
-        <span style="font-size: 11px !important;">
-            * Dokumen ini dibuat secara otomatis oleh sistem pada tanggal <?= date('d M Y') ?>. <br />
-        </span>
         <table class="table table-borderless" width="100%">
             <tr></tr>
             <tr></tr>
             <tr>
                 <td width="50%" class="text-center">
                     <p>
-                        Penanggung Jawab Kasir
+                        dibuat oleh
                     </p>
+                    <br />
                     <br />
                     <br />
                     <br />
                     <p>
                         (........................................)
-                        <br>
+                        <!-- <br>
                         <span class="text-center">
                             <?= $data[0]['kasir'] ?>
-                        </span>
+                        </span> -->
                     </p>
                 </td>
                 <td width="50%" class="text-center">
+                    <span style="font-size: 13px !important; font-weight:bolder;">
+                        Pemalang, <?= $filter['tanggal'] ? date('t F Y', strtotime($filter['tanggal'])) : date('t M Y') ?>
+                    </span>
                     <p>Mengetahui</p>
                     <br />
                     <br />
