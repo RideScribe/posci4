@@ -43,9 +43,7 @@ if ($persenUntung >= 0) {
                 <!-- light gray -->
                 <tr>
                     <td><?= $no++ ?></td>
-                    <td>
-                        <span style="white-space: nowrap;"><?= date('d M Y', strtotime($item['updated_at'])) ?></span>
-                    </td>
+                    <td><span><?= date('d M Y', strtotime($item['updated_at'])) ?></span></td>
                     <td><?= $item['invoice'] ?></td>
                     <td><?= $item['pelanggan'] ?></td>
                     <!-- <td><strong>Tunai : <br /></strong> Rp. <?= rupiah($item['tunai'] ?  $item['tunai'] : 0) ?></td> -->
@@ -61,7 +59,7 @@ if ($persenUntung >= 0) {
                                     <!-- <th style="text-align:left;">Tgl</th> -->
                                     <!-- <th style="text-align:left;">No.Inv</th> -->
                                     <!-- <th style="text-align:left;">Pelanggan</th> -->
-                                    <th style="text-align:left;" style="width:120px;">Menu</th>
+                                    <th style="text-align:left;" style="width:80px;">Menu</th>
                                     <th style="text-align:left;">Harga</th>
                                     <th style="text-align:left;">Disc</th>
                                     <th style="text-align:left;">Jml</th>
