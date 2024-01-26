@@ -13,7 +13,6 @@
                             <th style="max-width:160px;">Nama Barang</th>
                             <th>Jumlah</th>
                             <th>Harga</th>
-                            <th>Pemasok</th>
                             <th>Total</th>
                             <th>Oleh</th>
                             <th class="text-right">Tanggal</th>
@@ -27,7 +26,6 @@
                                 <td><?= $h->barang ?></td>
                                 <td><?= $h->jumlah ?></td>
                                 <td>Rp. <?= rupiah($h->harga) ?></td>
-                                <td><?= $h->nama_pemasok ?></td>
                                 <td>Rp. <?= rupiah($h->total) ?></td>
                                 <td><?= $h->nama ?></td>
                                 <td class="text-right">

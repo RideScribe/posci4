@@ -32,7 +32,7 @@
                             <th>Barang</th>
                             <th>Jumlah Beli</th>
                             <th>Harga Satuan</th>
-                            <th>Total</th>
+                            <th>Sub Total</th>
                         </tr>
                     </thead>
                     <tbody>

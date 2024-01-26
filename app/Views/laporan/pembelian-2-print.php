@@ -23,7 +23,7 @@
                 <th>Barang</th>
                 <th>Jml</th>
                 <th>Satuan</th>
-                <th>Total</th>
+                <th>Sub Total</th>
             </tr>
         </thead>
         <tbody>
@@ -101,7 +101,7 @@
                         (........................................)
                         <!-- <br>
                         <span class="text-center">
-                            <?= $pembelianBulanan['0']->kasir ?>
+                            <?= '' // $pembelianBulanan['0']->kasir ?>
                         </span> -->
                     </p>
                 </td>
