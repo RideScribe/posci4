@@ -99,10 +99,8 @@
                     <br />
                     <p>
                         (........................................)
-                        <!-- <br>
-                        <span class="text-center">
-                            <?= '' // $pembelianBulanan['0']->kasir ?>
-                        </span> -->
+                        <br>
+                        Admin
                     </p>
                 </td>
                 <td class="text-center">

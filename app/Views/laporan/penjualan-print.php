@@ -175,10 +175,8 @@ if ($persenUntung >= 0) {
                     <br />
                     <p>
                         (........................................)
-                        <!-- <br>
-                        <span class="text-center">
-                            <?= $data[0]['kasir'] ?>
-                        </span> -->
+                        <br>
+                        Kasir
                     </p>
                 </td>
                 <td width="50%" class="text-center">
