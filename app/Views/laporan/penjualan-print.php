@@ -14,11 +14,11 @@ if ($persenUntung >= 0) {
 
     <h5 class="text-center pb-0 mb-0">Laporan Penjualan</h5>
     <h4 class="text-center pb-0 mb-0"><u>RESTORAN LEGITA</u></h4>
-    <h6 class="text-center">Bulan <?= $filter['tanggal'] ? date('F Y', strtotime($filter['tanggal'])) : date('M Y') ?></h6>
+    <h6 class="text-center">Bulan <?= month_year_indo($filter['tanggal'] ? date('Y-m', strtotime($filter['tanggal'])) : date('Y-m')) ?></h6>
 
     <!-- justify and make margin on first line -->
     <div class="my-3 mt-4" style="text-align: justify; text-justify: inter-word;">
-        <span>Berdasarkan hasil penjualan pada bulan <strong><?= $filter['tanggal'] ? date('F Y', strtotime($filter['tanggal'])) : date('M Y') ?></strong>, Berikut adalah rincian pendapatannya :</span>
+        <span>Berdasarkan hasil penjualan pada bulan <strong><?= month_year_indo($filter['tanggal'] ? date('Y-m', strtotime($filter['tanggal'])) : date('Y-m')) ?></strong>, Berikut adalah rincian pendapatannya :</span>
     </div>
 
     <table class="table" id="tabel-invoice" width="100%">
@@ -43,7 +43,7 @@ if ($persenUntung >= 0) {
                 <!-- light gray -->
                 <tr>
                     <td><?= $no++ ?></td>
-                    <td><span><?= date('d M Y', strtotime($item['updated_at'])) ?></span></td>
+                    <td><span><?= mediumdate_indo(date('Y-m-d', strtotime($item['updated_at']))) ?></span></td>
                     <td><?= $item['invoice'] ?></td>
                     <td><?= $item['pelanggan'] ?></td>
                     <!-- <td><strong>Tunai : <br /></strong> Rp. <?= rupiah($item['tunai'] ?  $item['tunai'] : 0) ?></td> -->
@@ -75,7 +75,7 @@ if ($persenUntung >= 0) {
                                 <?php foreach ($transaksi[$item['id']] as $t) : ?>
                                     <tr>
                                         <td><?= $noItem++ ?></td>
-                                        <!-- <td><?= date('d M Y', strtotime($item['tanggal'])) ?></td> -->
+                                        <!-- <td><?= mediumdate_indo(date('Y-m-d', strtotime($item['tanggal']))) ?></td> -->
                                         <!-- <td><span><?= $item['invoice'] ?></span></td> -->
                                         <!-- <td><?= $item['pelanggan'] ?></td> -->
                                         <td><?= $t['nama_item'] ?></td>
@@ -181,7 +181,7 @@ if ($persenUntung >= 0) {
                 </td>
                 <td width="50%" class="text-center">
                     <span style="font-size: 13px !important; font-weight:bolder;">
-                        Pemalang, <?= $filter['tanggal'] ? date('t F Y', strtotime($filter['tanggal'])) : date('t M Y') ?>
+                        Pemalang, <?= date_indo($filter['tanggal'] ? date('Y-m-t', strtotime($filter['tanggal'])) : date('Y-m-t')) ?>
                     </span>
                     <p>Mengetahui</p>
                     <br />

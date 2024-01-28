@@ -33,7 +33,7 @@ class BaseController extends Controller
 	 *
 	 * @var array
 	 */
-	protected $helpers = ['fungsi', 'date'];
+	protected $helpers = ['fungsi', 'date', 'tgl_indo'];
 
 	/**
 	 * Session

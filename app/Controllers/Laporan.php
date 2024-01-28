@@ -65,7 +65,7 @@ class Laporan extends BaseController
         }
 
         $data = [
-            'title'     => 'Laporan Penjualan | ' . ($tanggal ? date('M Y', strtotime($tanggal)) : date('M Y')),
+            'title'     => 'Laporan Penjualan | ' . ($tanggal ? month_year_indo(date('Y-m', strtotime($tanggal))) : month_year_indo(date('Y-m'))),
             'data'      => $dataPenjualan,
             'transaksi' => $dataTransaksi,
             'filter'    => $this->request->getGet()
@@ -130,7 +130,7 @@ class Laporan extends BaseController
         }
 
         $data = [
-            'title'     => 'Laporan Penjualan | ' . ($tanggal ? date('M Y', strtotime($tanggal)) : date('M Y')),
+            'title'     => 'Laporan Penjualan | ' . ($tanggal ? month_year_indo(date('Y-m', strtotime($tanggal))) : month_year_indo(date('Y-m'))),
             'data'      => $dataPenjualan,
             'transaksi' => $dataTransaksi,
             'totalPendapatan' => $totalPendapatan,
@@ -225,7 +225,7 @@ class Laporan extends BaseController
             ->findAll();
 
         $data = [
-            'title'                     => 'Laporan Pembelian | ' . ($month ? date('M Y', strtotime($month)) : date('M Y')),
+            'title'                     => 'Laporan Pembelian | ' . ($month ? month_year_indo(date('Y-m', strtotime($month))) : month_year_indo(date('Y-m'))),
             'filter'                    => $this->request->getGet() ? $this->request->getGet() : ['tanggal' => date('Y-m')],
             'pembelianBulanan'          => $pembalianBulanan,
         ];
@@ -263,7 +263,7 @@ class Laporan extends BaseController
         }
 
         $data = [
-            'title'                     => 'Laporan Pembelian | ' . ($month ? date('M Y', strtotime($month)) : date('M Y')),
+            'title'                     => 'Laporan Pembelian | ' . ($month ? month_year_indo(date('Y-m', strtotime($month))) : month_year_indo(date('Y-m'))),
             'filter'                    => $this->request->getGet() ? $this->request->getGet() : ['tanggal' => date('Y-m')],
             'pembelianBulanan'          => $pembalianBulanan,
             'totalItem'                 => $totalItem,

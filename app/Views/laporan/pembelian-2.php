@@ -57,7 +57,7 @@
                             </tr> -->
                             <tr class="">
                                 <td><?= $no++ ?></td>
-                                <td><?= date('d M Y', strtotime($item->updated_at)) ?></td>
+                                <td><?= mediumdate_indo(date('Y-m-d', strtotime($item->created_at))) ?></td>
                                 <td><code><?= $item->kode ?></code></td>
                                 <td><?= $item->barang ?></td>
                                 <td><?= $item->jml_beli ?></td>

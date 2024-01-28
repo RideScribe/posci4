@@ -53,7 +53,7 @@
             <tbody>
               <?php foreach ($pendapatanBulananDetail as $bulan) : ?>
                 <tr>
-                  <td><?= date('M, Y', strtotime($bulan['tanggal'])) ?></td>
+                  <td><?= month_year_indo(date('Y-m', strtotime($bulan['tanggal']))) ?></td>
                   <td>Rp. <?= rupiah($bulan['total'] ? $bulan['total'] : 0) ?></td>
                 </tr>
               <?php endforeach ?>
@@ -67,7 +67,7 @@
       <div class="small-box bg-gradient-blue">
         <div class="inner">
           <h3>Rp. <?= rupiah($pendapatanBulanan['total_akhir'] ? $pendapatanBulanan['total_akhir'] : 0) ?>,-</h3>
-          <p>Pendapatan <?= date('F', strtotime($filter['bulan'])) ?> <?= date('Y', strtotime($filter['bulan'])) ?></p>
+          <p>Pendapatan <?= month_year_indo(date('Y-m', strtotime($filter['bulan']))) ?></p>
         </div>
         <div class="icon">
           <i class="fas fa-dollar-sign"></i>
@@ -108,7 +108,7 @@
             <tbody>
               <?php foreach ($pendapatanHarianDetail as $harian) : ?>
                 <tr>
-                  <td><?= date('d M Y', strtotime($harian['tanggal'])) ?></td>
+                  <td><?= mediumdate_indo(date('Y-m-d', strtotime($harian['tanggal']))) ?></td>
                   <td>Rp. <?= rupiah($harian['total'] ? $harian['total'] : 0) ?></td>
                 </tr>
               <?php endforeach ?>
@@ -163,7 +163,7 @@
             <tbody>
               <?php foreach ($pendapatanHariIniDetail as $hariIni) : ?>
                 <tr>
-                  <td><?= date('d M Y', strtotime($hariIni['tanggal'])) ?></td>
+                  <td><?= mediumdate_indo(date('Y-m-d', strtotime($hariIni['tanggal']))) ?></td>
                   <td>Rp. <?= rupiah($hariIni['total'] ? $hariIni['total'] : 0) ?></td>
                 </tr>
               <?php endforeach ?>

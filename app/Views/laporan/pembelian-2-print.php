@@ -5,11 +5,11 @@
 
     <h5 class="text-center pb-0 mb-0">Laporan Pembelian Bahan</h5>
     <h4 class="text-center pb-0 mb-0"><u>RESTORAN LEGITA</u></h4>
-    <h6 class="text-center">Bulan <?= $filter['tanggal'] ? date('F Y', strtotime($filter['tanggal'])) : date('M Y') ?></h6>
+    <h6 class="text-center">Bulan <?= $filter['tanggal'] ? month_year_indo(date('Y-m', strtotime($filter['tanggal']))) : month_year_indo(date('Y-m')) ?></h6>
 
     <div class="my-3 mt-4" style="text-align: justify !important; text-justify: inter-word;">
         <span>
-            Berdasarkan data pembelian barang / bahan pada bulan <strong><?= $filter['tanggal'] ? date('F Y', strtotime($filter['tanggal'])) : date('M Y') ?></strong>, berikut ini adalah rinciannya :
+            Berdasarkan data pembelian barang / bahan pada bulan <strong><?= $filter['tanggal'] ? month_year_indo(date('Y-m', strtotime($filter['tanggal']))) : month_year_indo(date('Y-m')) ?></strong>, berikut ini adalah rinciannya :
         </span>
     </div>
 
@@ -41,7 +41,7 @@
                 <tr class="">
                     <td><?= $no++ ?></td>
                     <td>
-                        <span style="white-space: nowrap;"><?= date('D, d M Y', strtotime($item->created_at)) ?></span>
+                        <span style="white-space: nowrap;"><?= shortdate_day_indo(date('Y-m-d', strtotime($item->created_at))) ?></span>
                     </td>
                     <td><code><?= $item->kode ?></code></td>
                     <td><?= $item->barang ?></td>
@@ -104,7 +104,7 @@
                     </p>
                 </td>
                 <td class="text-center">
-                    <strong>Pemalang, <?= $filter['tanggal'] ? date('t F Y', strtotime($filter['tanggal'])) : date('t F Y') ?></strong>
+                    <strong>Pemalang, <?= $filter['tanggal'] ? date_indo(date('Y-m-t', strtotime($filter['tanggal']))) : date_indo(date('Y-m-t')) ?></strong>
                     <p>Mengetahui</p>
                     <br />
                     <br />
