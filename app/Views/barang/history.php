@@ -22,7 +22,13 @@
                         <?php foreach ($history as $k => $h) : ?>
                             <tr>
                                 <td><?= $k + 1 ?></td>
-                                <td><?= $h->tipe ?? "-" ?></td>
+                                <td>
+                                    <?php if (strtolower($h->tipe) == 'masuk') : ?>
+                                        <span class="badge badge-success">Masuk</span>
+                                    <?php else : ?>
+                                        <span class="badge badge-danger">Keluar</span>
+                                    <?php endif ?>
+                                </td>
                                 <td><?= $h->barang ?></td>
                                 <td><?= $h->jumlah ?? '-' ?></td>
                                 <td>Rp. <?= rupiah($h->harga) ?></td>
