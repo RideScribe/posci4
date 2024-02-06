@@ -42,12 +42,13 @@ class Barang extends BaseController
             ->select('tb_transaksi_barang.*, tb_barang.barang, tb_barang.stok AS total_stok, tb_pemasok.nama_pemasok, tb_stok.id_user, tb_stok.jumlah, tb_stok.keterangan, tb_stok.tipe, tb_users.nama')
             ->join('tb_barang', 'tb_barang.id = tb_transaksi_barang.id_barang')
             ->join('tb_pemasok', 'tb_pemasok.id = tb_transaksi_barang.id_pemasok')
-            ->join('tb_stok', 'tb_stok.id_barang = tb_barang.id')
+            ->join('tb_stok', 'tb_stok.id_trbrg = tb_transaksi_barang.id')
             ->join('tb_users', 'tb_stok.id_user = tb_users.id')
             ->groupBy('tb_transaksi_barang.id')
+            ->groupBy('tb_barang.id')
             ->orderBy('tb_transaksi_barang.id', 'DESC')
             ->findAll();
-
+            
         $data = [
             'title' => 'History Barang',
             'history' => $historyBarang,
@@ -103,6 +104,7 @@ class Barang extends BaseController
             'id_barang' => $id_barang,
             'id_pemasok' => 1,
             // 'id_pemasok' => $request->getPost('pemasok'),
+            'id_trbrg' => $this->trbrg->insertID(), // 'id_transaksi_barang',
             'jumlah' => $request->getPost('jml_item'),
             'keterangan' => 'Penambahan stok barang',
             'id_user' => session()->get('id'),
@@ -165,7 +167,7 @@ class Barang extends BaseController
 
         $validation->setRules([
             'id_barang' => 'required',
-            'pemasok' => 'required',
+            // 'pemasok' => 'required',
             'harga' => 'required',
             'jml_item' => 'required',
         ]);
@@ -185,7 +187,7 @@ class Barang extends BaseController
         $data_stok = [
             'tipe' => 'masuk',
             'id_barang' => $request->getPost('id_barang'),
-            'id_pemasok' => $request->getPost('pemasok'),
+            'id_pemasok' => 1,
             'jumlah' => $request->getPost('jml_item'),
             'keterangan' => $request->getPost('keterangan') ?? 'Penambahan stok barang',
             'id_user' => session()->get('id'),
@@ -194,15 +196,17 @@ class Barang extends BaseController
 
         $data_transaksi_barang = [
             'id_barang' => $request->getPost('id_barang'),
-            'id_pemasok' => $request->getPost('pemasok'),
+            'id_pemasok' => 1,
             'harga' => $request->getPost('harga'),
             'jml_beli' => $request->getPost('jml_item'),
-            'total_harga' => $request->getPost('harga') * $request->getPost('jml_item'),
+            'total' => ($request->getPost('harga') * $request->getPost('jml_item')),
         ];
 
+        $this->trbrg->insert($data_transaksi_barang);
+
+        $data_stok['id_trbrg'] = $this->trbrg->insertID();
 
         $this->stok->insert($data_stok);
-        $this->trbrg->insert($data_transaksi_barang);
 
         // update stok on tb_barang
         $stok_baru = $stok_lama + $request->getPost('jml_item');
@@ -223,7 +227,7 @@ class Barang extends BaseController
         $validation = \Config\Services::validation();
 
         $validation->setRules([
-            'jml_item' => 'required',
+            'stok' => 'required',
         ]);
 
         if (!$validation->run($request->getPost())) {
@@ -231,13 +235,37 @@ class Barang extends BaseController
             return redirect()->to('/barang')->withInput()->with('validation', $errors);
         }
 
-        // $data = [
-        //     'stok' => $request->getPost('jml_item'),
-        // ];
+        $data_stok = [
+            'tipe' => 'keluar',
+            'id_barang' => $request->getPost('id_barang'),
+            'id_pemasok' => 1,
+            'jumlah' => $request->getPost('stok'),
+            'keterangan' => $request->getPost('keterangan') ?? 'Pengurangan stok barang',
+            'id_user' => session()->get('id'),
+            'ip_address' => $request->getIPAddress(),
+        ];
+
+        $data_transaksi_barang = [
+            'id_barang' => $request->getPost('id_barang'),
+            'id_pemasok' => 1,
+            'id_user' => session()->get('id'),
+            'harga' => 0,
+            'jml_beli' => 0,
+            'total_harga' => 0,
+        ];
 
         if ($this->brg->find($request->getPost('id_barang'))) {
             // $this->brg->update($request->getPost('id_barang'), $data);
-            $this->brg->where('id', $request->getPost('id_barang'))->set('stok', 'stok-' . $request->getPost('jml_item'), false)->update();
+            $this->brg->where('id', $request->getPost('id_barang'))->set('stok', 'stok-' . $request->getPost('stok'), false)->update();
+
+            // insert to tb_stok
+            $this->trbrg->insert($data_transaksi_barang);
+            
+            $data_stok['id_trbrg'] = $this->trbrg->insertID();
+
+            // insert to tb_transaksi_barang
+            $this->stok->insert($data_stok);
+            
             return redirect()->to('/barang')->with('success', 'Data berhasil diubah');
         }
 

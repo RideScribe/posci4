@@ -22,9 +22,9 @@
                         <?php foreach ($history as $k => $h) : ?>
                             <tr>
                                 <td><?= $k + 1 ?></td>
-                                <td><?= $h->tipe ?></td>
+                                <td><?= $h->tipe ?? "-" ?></td>
                                 <td><?= $h->barang ?></td>
-                                <td><?= $h->jumlah ?></td>
+                                <td><?= $h->jumlah ?? '-' ?></td>
                                 <td>Rp. <?= rupiah($h->harga) ?></td>
                                 <td>Rp. <?= rupiah($h->total) ?></td>
                                 <td><?= $h->nama ?></td>

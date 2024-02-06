@@ -42,7 +42,7 @@
                                 <!-- button plus and minus -->
                                 <td class="text-right">
                                     <button class="btn btn-sm btn-success stok-plus" data-id="<?= $b->id ?>"><i class="fas fa-plus"></i></button>
-                                    <!-- <button class="btn btn-sm btn-danger stok-minus" data-id="<?= $b->id ?>"><i class="fas fa-minus"></i></button> -->
+                                    <button class="btn btn-sm btn-danger stok-minus" data-id="<?= $b->id ?>"><i class="fas fa-minus"></i></button>
                                 </td>
                             </tr>
                         <?php endforeach ?>
@@ -165,7 +165,7 @@
 </div>
 
 <!-- modal stok plus -->
-<div class="modal fade modal-edit" id="formModalStokPlus" tabindex="-1" data-backdrop="static" data-keyboard="false">
+<div class="modal fade modal-stok-plus" id="formModalStokPlus" tabindex="-1" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg" role="document">
         <?= form_open('/barang/stok_plus', ['id' => 'form-barang']); ?>
         <input type="hidden" name="id_barang" class="form-control">
@@ -177,7 +177,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="form-group row">
+                <!-- <div class="form-group row">
                     <label for="pemasok" class="col-sm-2 col-form-label">Pemasok</label>
                     <div class="col-sm-10">
                         <select name="pemasok" id="pemasok" class="form-control custom-select" required>
@@ -188,7 +188,7 @@
                         </select>
                         <small class="invalid-feedback"></small>
                     </div>
-                </div>
+                </div> -->
                 <div class="form-group row">
                     <label for="harga" class="col-sm-2 col-form-label">Harga</label>
                     <div class="col-sm-10">
@@ -203,17 +203,47 @@
                         <small class="invalid-feedback"></small>
                     </div>
                 </div>
-                <div class="form-group row">
+                <!-- <div class="form-group row">
                     <label for="total" class="col-sm-2 col-form-label">Total</label>
                     <div class="col-sm-10">
                         <input required type="number" class="form-control" name="total" id="total" placeholder="total...">
                         <small class="invalid-feedback"></small>
                     </div>
-                </div>
+                </div> -->
                 <div class="form-group row">
                     <label for="keterangan" class="col-sm-2 col-form-label">Keterangan</label>
                     <div class="col-sm-10">
                         <textarea name="keterangan" id="" cols="30" rows="5" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
+                <button type="submit" class="btn btn-primary" id="">Simpan</button>
+            </div>
+        </div>
+        <?= form_close(); ?>
+    </div>
+</div>
+
+<!-- modal stok minus -->
+<div class="modal fade modal-stok-minus" id="formModalStokminus" tabindex="-1" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg" role="document">
+        <?= form_open('/barang/stok_minus', ['id' => 'form-barang']); ?>
+        <input type="hidden" name="id_barang" class="form-control">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label for="stok" class="col-sm-2 col-form-label">stok</label>
+                    <div class="col-sm-10">
+                        <input required type="number" class="form-control" min="0" name="stok" id="stok" placeholder="pengurangan stok...">
+                        <small class="invalid-feedback"></small>
                     </div>
                 </div>
             </div>
@@ -300,6 +330,19 @@
             $(".modal-title").text("Stok Plus");
             $("button[type=submit]").attr("id", "stok-plus");
             $("input[name=id_barang]").val(id);
+        });
+
+        // stok-minus
+        $(".stok-minus").on("click", function() {
+            const id = $(this).data("id");
+            $("#formModalStokminus").modal("show");
+            $(".modal-title").text("Stok Minus");
+            $("button[type=submit]").attr("id", "stok-minus");
+            $("input[name=id_barang]").val(id);
+
+            // get stok from table and set to input max
+            const stok = $(this).closest("tr").find("td:eq(2)").text();
+            $("input[name=stok]").attr("max", stok);
         });
     });
 </script>

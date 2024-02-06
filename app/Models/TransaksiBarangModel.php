@@ -14,7 +14,7 @@ class TransaksiBarangModel extends Model
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'id_barang', 'id_pemasok', 'harga', 'jml_beli', 'total'
+        'id_barang', 'id_pemasok', 'id_user', 'harga', 'jml_beli', 'total'
     ];
 
     // Dates
