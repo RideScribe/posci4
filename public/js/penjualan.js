@@ -381,6 +381,7 @@ $(function () {
           success: function (response) {
             detailKeranjang()
             $('#pelanggan').val('')
+            $('#no_meja').val('')
             $('#diskon').val(0)
             $('#tunai').val(0)
             $('#kembalian').val(0)
@@ -395,6 +396,7 @@ $(function () {
   // proses pembayaran
   $('.wrapper').on('click', '#bayar', function () {
     let pelanggan = $('#pelanggan').val()
+    let no_meja = $('#no_meja').val()
     let subtotal = $('#sub_total').val()
     let diskon = $('#diskon').val()
     let total_akhir = $('#total_akhir').val()
@@ -406,6 +408,9 @@ $(function () {
     if (pelanggan == '') {
       toastr.error('Nama pelanggan belum diinput', '', { timeOut: 3000 })
       $('#pelanggan').focus()
+    } else if (no_meja =='') {
+      toastr.error('Nomor meja belum diinput', '', { timeOut: 3000 })
+      $('#no_meja').focus()
     } else if (tunai < 1) {
       toastr.error('Jumlah uang tunai belum diinput', '', { timeOut: 3000 })
       $('#tunai').focus()
@@ -426,6 +431,7 @@ $(function () {
             data: {
               [$('#token').attr('name')]: $('#token').val(),
               pelanggan: pelanggan,
+              no_meja: no_meja,
               subtotal: subtotal,
               diskon: diskon,
               total_akhir: total_akhir,

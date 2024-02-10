@@ -134,8 +134,11 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <div class="col-sm-12">
+                                        <div class="col-sm-9">
                                             <input type="text" class="form-control" name="pelanggan" id="pelanggan" placeholder="Pesanan atas nama . . .">
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <input type="number" class="form-control" name="no_meja" id="no_meja" placeholder="no meja">
                                         </div>
                                     </div>
                                 </div>

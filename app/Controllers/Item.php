@@ -55,8 +55,10 @@ class Item extends BaseController
         $id_meja = base64_decode($id_meja);
         $id_meja = explode('.', $id_meja);
         $id_meja = end($id_meja);
+
         // cek meja
         $cek = $this->tempat->find($id_meja);
+
         if (empty($cek)) {
             dd('Meja tidak ditemukan');
         }

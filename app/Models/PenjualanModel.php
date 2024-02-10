@@ -14,6 +14,7 @@ class PenjualanModel extends Model
     protected $allowedFields = [
         'invoice',
         'pelanggan',
+        'no_meja',
         'total_harga',
         'diskon',
         'total_akhir',

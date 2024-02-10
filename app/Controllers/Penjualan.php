@@ -15,6 +15,7 @@ class Penjualan extends BaseController
     protected $keranjangModel;
     protected $penjualanModel;
     protected $transaksi;
+    protected $meja;
 
     public function __construct()
     {
@@ -22,6 +23,7 @@ class Penjualan extends BaseController
         $this->penjualanModel = new PenjualanModel();
         $this->transaksi      = new TransaksiModel();
         $this->keranjangModel = new KeranjangModel();
+        $this->meja           = new \App\Models\TempatModel();
         helper('form');
     }
     public function index()
@@ -142,6 +144,7 @@ class Penjualan extends BaseController
             $data      = [
                 'invoice'      => $this->request->getPost('invoice') ?? $this->penjualanModel->invoice(),
                 'pelanggan'    => htmlspecialchars($this->request->getPost('pelanggan')),
+                'no_meja'      => htmlspecialchars($this->request->getPost('no_meja')),
                 'total_harga'  => $this->request->getPost('subtotal', FILTER_SANITIZE_NUMBER_INT),
                 'diskon'       => $this->request->getPost('diskon', FILTER_SANITIZE_NUMBER_INT),
                 'total_akhir'  => $this->request->getPost('total_akhir', FILTER_SANITIZE_NUMBER_INT),
@@ -218,7 +221,7 @@ class Penjualan extends BaseController
     {
         // if ($this->request->isAJAX()) {
         //     // return DataTables::use('tb_penjualan')
-        //     //     ->select('tb_penjualan.id, tb_penjualan.invoice, tb_penjualan.tanggal, tb_penjualan.tunai, tb_penjualan.total_akhir, tb_penjualan.pelanggan, tb_users.nama as kasir')
+        //     //     ->select('tb_penjualan.id, tb_penjualan.invoice, tb_penjualan.tanggal, tb_penjualan.tunai, tb_penjualan.total_akhir, tb_penjualan.pelanggan, tb_penjualan.no_meja, tb_users.nama as kasir')
         //     //     ->join('tb_users', 'tb_users.id = tb_penjualan.id_user', 'left')
         //     //     // where tb_penjualan.tunai is >= tb_penjualan.total_akhir
         //     //     ->where(['tb_penjualan.tunai >=' => 'tb_penjualan.total_akhir'])
@@ -237,7 +240,7 @@ class Penjualan extends BaseController
         $db = \Config\Database::connect();
         $bulan = $this->request->getGet('bulan');
         $data = $db->table('tb_penjualan')
-        ->select('tb_penjualan.id, tb_penjualan.invoice, tb_penjualan.tanggal, tb_penjualan.tunai, tb_penjualan.total_akhir, tb_penjualan.pelanggan, tb_users.nama as kasir')
+        ->select('tb_penjualan.id, tb_penjualan.invoice, tb_penjualan.tanggal, tb_penjualan.tunai, tb_penjualan.total_akhir, tb_penjualan.pelanggan, tb_penjualan.no_meja, tb_users.nama as kasir')
         ->join('tb_users', 'tb_users.id = tb_penjualan.id_user', 'left')
             ->where('tb_penjualan.tunai >= tb_penjualan.total_akhir')
             ->where('MONTH(tb_penjualan.tanggal)', date('m', strtotime($bulan)))
@@ -253,7 +256,7 @@ class Penjualan extends BaseController
         $db = \Config\Database::connect();
         $bulan = $this->request->getGet('bulan');
         $data = $db->table('tb_penjualan')
-            ->select('tb_penjualan.id, tb_penjualan.invoice, tb_penjualan.tanggal, tb_penjualan.tunai, tb_penjualan.total_akhir, tb_penjualan.pelanggan, tb_users.nama as kasir')
+            ->select('tb_penjualan.id, tb_penjualan.invoice, tb_penjualan.tanggal, tb_penjualan.tunai, tb_penjualan.total_akhir, tb_penjualan.pelanggan, tb_penjualan.no_meja, tb_users.nama as kasir')
             ->join('tb_users', 'tb_users.id = tb_penjualan.id_user', 'left')
             ->where('tb_penjualan.tunai < tb_penjualan.total_akhir')
             ->where('MONTH(tb_penjualan.tanggal)', date('m', strtotime($bulan)))
@@ -268,7 +271,7 @@ class Penjualan extends BaseController
     {
         $transaksi = $this->transaksi->detailTransaksi($id);
         $penjualan = $this->transaksi
-            ->select('tp.invoice, tp.pelanggan')
+            ->select('tp.invoice, tp.pelanggan, tp.no_meja')
             ->join('tb_penjualan tp', 'tp.id = tb_transaksi.id_penjualan')
             ->where('tb_transaksi.id_penjualan', $id)
             ->first();

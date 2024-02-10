@@ -29,6 +29,7 @@
                                     <th>#</th>
                                     <th>Invoice</th>
                                     <th>Pelanggan</th>
+                                    <th>No Meja</th>
                                     <th>Tanggal</th>
                                     <th>Status</th>
                                     <th>kasir</th>
@@ -54,6 +55,7 @@
                                     <th>#</th>
                                     <th>Invoice</th>
                                     <th>Pelanggan</th>
+                                    <th>No Meja</th>
                                     <th>Tanggal</th>
                                     <th>Status</th>
                                     <th>kasir</th>
@@ -236,6 +238,9 @@
                     data: 'pelanggan'
                 },
                 {
+                    data: 'no_meja'
+                },
+                {
                     // data: 'tanggal'
                     // date is YYYY-MM-DD make it day name, dd month yyyy
                     render: function(data, type, row) {
@@ -333,6 +338,9 @@
                 },
                 {
                     data: 'pelanggan'
+                },
+                {
+                    data: 'no_meja'
                 },
                 {
                     // data: 'tanggal'

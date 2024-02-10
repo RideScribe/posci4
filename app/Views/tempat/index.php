@@ -22,7 +22,7 @@
                             <?php $url = base_url('meja') . '/' . base64_encode(random_int(100000, 999999) . '.' .  $t['id']) . '/menu' ?>
                             <tr>
                                 <td><?= $no++ ?></td>
-                                <td><?= $t['tempat'] ?></td>
+                                <td>Meja Nomor - <?= $t['tempat'] ?></td>
                                 <td><?= $t['keterangan'] ?></td>
                                 <td>
                                     <img src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&choe=UTF-8&chld=H|1&chl=<?= urlencode($url) ?>" width="100px">
@@ -55,7 +55,7 @@
                     <div class="form-group row">
                         <label for="tempat" class="col-sm-3 col-form-label">Nama Tempat</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="tempat" name="tempat" placeholder="Nama tempat">
+                            <input type="number" class="form-control" id="tempat" name="tempat" placeholder="Nama tempat">
                             <small class="invalid-feedback"></small>
                         </div>
                     </div>

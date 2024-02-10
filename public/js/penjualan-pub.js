@@ -197,6 +197,7 @@ $(function () {
     let subtotal = $('#sub_total').val()
     let catatan = $('#catatan').val()
     let tanggal = $('#tanggal').val()
+    let no_meja = $('#no_meja').val()
 
     if (pelanggan == "") {
       toastr.error('Nama pelanggan belum diinput', '', { timeOut: 3000 })
@@ -207,6 +208,7 @@ $(function () {
     let data = {
       [$('#token').attr('name')]: $('#token').val(),
       pelanggan: pelanggan,
+      no_meja: no_meja,
       subtotal: subtotal,
       diskon: 0,
       total_akhir: subtotal,
@@ -220,7 +222,7 @@ $(function () {
     const localNoInvoice = localStorage.getItem('no_invoice')
     if (localNoInvoice) {
       data.invoice = localNoInvoice
-    } 
+    }
 
     Swal.fire({
       title: 'Yakin proses transaksi sudah benar?',

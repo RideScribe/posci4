@@ -209,6 +209,12 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label for="no_meja" class="col-sm-4 col-form-label">Nomor Meja</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control text-right" name="no_meja" id="no_meja" value="<?= $meja['tempat'] ?>" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <label for="sub_total" class="col-sm-4 col-form-label">Total Akhir</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control text-right" name="sub_total" id="sub_total" value="0" readonly>

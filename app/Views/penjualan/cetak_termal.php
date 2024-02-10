@@ -82,10 +82,14 @@
                 </tr>
                 <tr>
                     <td class="kiri"><?=esc($penjualan['invoice']);?></td>
+                    <td class="kanan">No. Meja :</td>
+                    <td class="kanan"><?= $penjualan['no_meja'] ?></td>
+                </tr>
+                <tr>
+                    <td class="kiri"></td>
                     <td class="kanan">Pelanggan :</td>
                     <td class="kanan"><?=esc($penjualan['pelanggan']);?></td>
                 </tr>
-
             </table>
         </div>
         <div class="transaksi">
