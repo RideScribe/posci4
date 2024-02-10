@@ -7,7 +7,7 @@
             <div class="pesan" data-pesan="<?= session('pesan') ?>"></div>
 
             <div class="row">
-                <div class="col-12 col-md-10">
+                <div class="col-12 col-md-12">
                     <!-- Filter -->
                     <form action="" method="get" class="mb-3 d-flex flex-column flex-md-row justify-content-center align-items-center" style="gap: 5px;">
                         <input type="month" name="tanggal" id="tanggal" class="form-control" value="<?= isset($filter['tanggal']) ? $filter['tanggal'] : '' ?>">
@@ -20,12 +20,27 @@
                         <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
                     </form>
                 </div>
-                <div class="col-12 col-md-2">
-                    <!-- button print -->
+                <!-- <div class="col-12 col-md-2">
                     <a href="<?= base_url('laporan/penjualan/print') . '?' . $_SERVER['QUERY_STRING'] ?>" target="_blank" class="btn btn-primary btn-block"><i class="fas fa-print"></i> Print</a>
-                </div>
+                </div> -->
             </div>
+        </div>
+    </div>
 
+    <!-- Penjualan Lunas -->
+    <div class="card shadow mb-4">
+        <div class="card-header">
+            <h3 class="card-title">Data Penjualan</h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <a href="<?= base_url('laporan/penjualan/print') . '?' . $_SERVER['QUERY_STRING'] ?>" target="_blank" class="btn btn-tool btn-primary text-primary">
+                    <i class="fas fa-print"></i>
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
             <div class="table-responsive">
                 <table class="table" id="tabel-invoice" width="100%">
                     <thead>
@@ -39,7 +54,14 @@
                             <!-- <th class="<?= empty($data) ? '' : 'd-none' ?>">Kembalian</th> -->
                             <!-- <th class="<?= empty($data) ? '' : 'd-none' ?>">Status</th> -->
                             <!-- <th class="<?= empty($data) ? '' : 'd-none' ?>">kasir</th> -->
-                            <th class="<?= empty($data) ? '' : 'd-' ?>">Data Pembelian</th>
+                            <th class="<?= empty($data) ? '' : 'd-' ?>">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span>Data Pembelian</span>
+                                    <div>
+                                        <?= $isLunas ? '<span class="badge badge-success">Lunas</span>' : '<span class="badge badge-warning">Belum Lunas</span>' ?>
+                                    </div>
+                                </div>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -62,7 +84,7 @@
                                 <!-- <td><strong>Diskon: </strong> <?= $item['diskon'] ?></td> -->
                                 <!-- <td><strong>Kembalian :</strong> Rp. <?= rupiah($item['kembalian'] ?  $item['kembalian'] : 0) ?></td> -->
                                 <!-- <td><strong>Status :</strong> <?= $item['tunai'] && $item['tunai'] != 0 ? '<span class="badge badge-success">Lunas</span>' : '<span class="badge badge-warning">Belum Lunas</span>' ?></td> -->
-                                <!-- <td><strong>Kasir :</strong> <?= $item['kasir'] ?></td> -->
+                                <!-- <td><strong>Kasir :</strong> <?= '' //$item['kasir'] ?></td> -->
                                 <td class="p-0 m-0">
                                     <table class="table table-bordered table-striped table-compact table-sm" width="100%">
                                         <thead>
@@ -99,9 +121,9 @@
                                             <?php endforeach ?>
 
                                             <!-- <tr>
-                                                <td colspan="6" class="text-right"><strong>Diskon</strong></td>
-                                                <td><strong><?= $item['diskon'] ?> %</strong></td>
-                                            </tr> -->
+                                                    <td colspan="6" class="text-right"><strong>Diskon</strong></td>
+                                                    <td><strong><?= $item['diskon'] ?> %</strong></td>
+                                                </tr> -->
                                             <tr>
                                                 <td colspan="5" class="text-right"><strong>Total</strong></td>
                                                 <td>
@@ -114,28 +136,28 @@
                                                 </td>
                                             </tr>
                                             <!-- <tr>
-                                                <td colspan="5" class="text-right"><strong>Kembalian</strong></td>
-                                                <td><strong>Rp. <?= rupiah($item['kembalian'] ? $item['kembalian'] : 0) ?></strong></td>
-                                            </tr> -->
+                                                    <td colspan="5" class="text-right"><strong>Kembalian</strong></td>
+                                                    <td><strong>Rp. <?= rupiah($item['kembalian'] ? $item['kembalian'] : 0) ?></strong></td>
+                                                </tr> -->
 
                                             <!-- <tr>
-                                                <td colspan="5" class="text-right"><strong>Diskon</strong></td>
-                                                <td><strong><?= $item['diskon'] ?> %</strong></td>
-                                            </tr>
-                                            <?php if ($item['diskon'] && $item['diskon'] != 0) : ?>
-                                                <tr>
-                                                    <td colspan="5" class="text-right"><strong>Total akhir</strong></td>
-                                                    <td><strong>Rp. <?= rupiah($item['total_akhir']) ?></strong></td>
+                                                    <td colspan="5" class="text-right"><strong>Diskon</strong></td>
+                                                    <td><strong><?= $item['diskon'] ?> %</strong></td>
                                                 </tr>
-                                            <?php endif ?>
-                                            <tr>
-                                                <td colspan="5" class="text-right"><strong>Tunai</strong></td>
-                                                <td><strong>Rp. <?= rupiah($item['tunai'] ? $item['tunai'] : 0) ?></strong></td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="5" class="text-right"><strong>Kembalian</strong></td>
-                                                <td><strong>Rp. <?= rupiah($item['kembalian'] ? $item['kembalian'] : 0) ?></strong></td>
-                                            </tr> -->
+                                                <?php if ($item['diskon'] && $item['diskon'] != 0) : ?>
+                                                    <tr>
+                                                        <td colspan="5" class="text-right"><strong>Total akhir</strong></td>
+                                                        <td><strong>Rp. <?= rupiah($item['total_akhir']) ?></strong></td>
+                                                    </tr>
+                                                <?php endif ?>
+                                                <tr>
+                                                    <td colspan="5" class="text-right"><strong>Tunai</strong></td>
+                                                    <td><strong>Rp. <?= rupiah($item['tunai'] ? $item['tunai'] : 0) ?></strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="5" class="text-right"><strong>Kembalian</strong></td>
+                                                    <td><strong>Rp. <?= rupiah($item['kembalian'] ? $item['kembalian'] : 0) ?></strong></td>
+                                                </tr> -->
                                         </tbody>
                                     </table>
                                 </td>
@@ -160,22 +182,22 @@
                     </tbody>
 
                     <!-- <tfoot class="bg-success">
-                        <tr>
-                            <td colspan="4"></td>
-                            <td>
-                                <table class="table table-bordered table-sm">
-                                    <tbody>
-                                        <tr>
-                                            <td colspan="5">
-                                                <strong>Total Pendapatan</strong>
-                                            </td>
-                                            <td style="width: 200px;">Rp. <?= rupiah($totalPendapatan) ?></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tfoot> -->
+                            <tr>
+                                <td colspan="4"></td>
+                                <td>
+                                    <table class="table table-bordered table-sm">
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="5">
+                                                    <strong>Total Pendapatan</strong>
+                                                </td>
+                                                <td style="width: 200px;">Rp. <?= rupiah($totalPendapatan) ?></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tfoot> -->
                 </table>
             </div>
         </div>

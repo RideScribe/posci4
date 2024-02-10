@@ -18,7 +18,7 @@ if ($persenUntung >= 0) {
 
     <!-- justify and make margin on first line -->
     <div class="my-3 mt-4" style="text-align: justify; text-justify: inter-word;">
-        <span>Berdasarkan hasil penjualan pada bulan <strong><?= month_year_indo($filter['tanggal'] ? date('Y-m', strtotime($filter['tanggal'])) : date('Y-m')) ?></strong>, Berikut adalah rincian pendapatannya :</span>
+        <span>Berdasarkan hasil penjualan <?= $isLunas ? '<b>Lunas</b>' : '<b>Belum Lunas</b>' ?> pada bulan <strong><?= month_year_indo($filter['tanggal'] ? date('Y-m', strtotime($filter['tanggal'])) : date('Y-m')) ?></strong>, Berikut adalah rincian pendapatannya :</span>
     </div>
 
     <table class="table" id="tabel-invoice" width="100%">

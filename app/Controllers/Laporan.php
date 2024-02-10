@@ -35,9 +35,11 @@ class Laporan extends BaseController
         $tanggal = $this->request->getGet('tanggal');
         $status = $this->request->getGet('status');
 
+
         $dataPenjualan = $this->penjualan->select('tb_penjualan.*, tb_users.nama as kasir')
             ->join('tb_users', 'tb_users.id = tb_penjualan.id_user', 'left')
             ->orderBy('tb_penjualan.id', 'asc');
+        // ->where('tunai >= total_akhir');
 
         if ($tanggal) {
             $dataPenjualan->where('MONTH(tanggal)', date('m', strtotime($tanggal)))->where('YEAR(tanggal)', date('Y', strtotime($tanggal)));
@@ -45,16 +47,13 @@ class Laporan extends BaseController
             $dataPenjualan->where('MONTH(tanggal)', date('m'))->where('YEAR(tanggal)', date('Y'));
         }
 
-        if ($status) {
-            if ($status == 1) {
-                $dataPenjualan->where('tunai >', 0);
-            } else {
-                $dataPenjualan->where('tunai', 0)->orWhere('tunai', null);
-            }
+        if ($status == 1) {
+            $dataPenjualan->where('tb_penjualan.tunai >= tb_penjualan.total_akhir');
+        } elseif ($status == 0) {
+            $dataPenjualan->where('tb_penjualan.tunai < tb_penjualan.total_akhir')->orWhere('tb_penjualan.tunai', null);
         }
 
         $dataPenjualan = $dataPenjualan->findAll();
-
 
         $dataTransaksi = [];
         foreach ($dataPenjualan as $item) {
@@ -68,6 +67,7 @@ class Laporan extends BaseController
             'title'     => 'Laporan Penjualan | ' . ($tanggal ? month_year_indo(date('Y-m', strtotime($tanggal))) : month_year_indo(date('Y-m'))),
             'data'      => $dataPenjualan,
             'transaksi' => $dataTransaksi,
+            'isLunas'   => $status,
             'filter'    => $this->request->getGet()
         ];
 
@@ -89,15 +89,13 @@ class Laporan extends BaseController
             $dataPenjualan->where('MONTH(tanggal)', date('m'))->where('YEAR(tanggal)', date('Y'));
         }
 
-        $dataPenjualan->where('tunai >', 0);
+        // $dataPenjualan->where('tb_penjualan.tunai >= tb_penjualan.total_akhir');
 
-        // if ($status) {
-        //     if ($status == 1) {
-        //         $dataPenjualan->where('tunai >', 0);
-        //     } else {
-        //         $dataPenjualan->where('tunai', 0)->orWhere('tunai', null);
-        //     }
-        // }
+        if ($status == 1) {
+            $dataPenjualan->where('tb_penjualan.tunai >= tb_penjualan.total_akhir');
+        } elseif ($status == 0) {
+            $dataPenjualan->where('tb_penjualan.tunai < tb_penjualan.total_akhir')->orWhere('tb_penjualan.tunai', null);
+        }
 
         $dataPenjualan = $dataPenjualan->findAll();
 
@@ -137,6 +135,7 @@ class Laporan extends BaseController
             'persenUntung' => $persenUntung,
             'totalItemTerjual' => $totalItemTerjual,
             'totalPendapatanBulanLalu' => $totalPemdapatanBulanLalu['total_akhir'] ?? 0,
+            'isLunas'   => $status,
             'filter'    => $this->request->getGet() ? $this->request->getGet() : ['tanggal' => date('Y-m')],
         ];
 
