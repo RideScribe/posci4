@@ -216,15 +216,52 @@ class Penjualan extends BaseController
 
     public function invoice()
     {
-        if ($this->request->isAJAX()) {
-            return DataTables::use('tb_penjualan')
-                ->select('tb_penjualan.id, tb_penjualan.invoice, tb_penjualan.tanggal, tb_penjualan.tunai, tb_penjualan.pelanggan, tb_users.nama as kasir')
-                ->join('tb_users', 'tb_users.id = tb_penjualan.id_user', 'left')
-                ->make();
-        } else if ($this->request->getMethod() == 'get') {
-            $data = ['title' => 'Daftar Invoice'];
-            echo view('penjualan/daftar_invoice', $data);
-        }
+        // if ($this->request->isAJAX()) {
+        //     // return DataTables::use('tb_penjualan')
+        //     //     ->select('tb_penjualan.id, tb_penjualan.invoice, tb_penjualan.tanggal, tb_penjualan.tunai, tb_penjualan.total_akhir, tb_penjualan.pelanggan, tb_users.nama as kasir')
+        //     //     ->join('tb_users', 'tb_users.id = tb_penjualan.id_user', 'left')
+        //     //     // where tb_penjualan.tunai is >= tb_penjualan.total_akhir
+        //     //     ->where(['tb_penjualan.tunai >=' => 'tb_penjualan.total_akhir'])
+        //     //     ->make();
+        // } else if ($this->request->getMethod() == 'get') {
+        $data = [
+            'title' => 'Daftar Invoice',
+            'bulan' => $this->request->getGet('bulan') ? $this->request->getGet('bulan') : date('Y-m'),
+        ];
+        echo view('penjualan/daftar_invoice', $data);
+        // }
+    }
+
+    public function invLunas()
+    {
+        $db = \Config\Database::connect();
+        $bulan = $this->request->getGet('bulan');
+        $data = $db->table('tb_penjualan')
+        ->select('tb_penjualan.id, tb_penjualan.invoice, tb_penjualan.tanggal, tb_penjualan.tunai, tb_penjualan.total_akhir, tb_penjualan.pelanggan, tb_users.nama as kasir')
+        ->join('tb_users', 'tb_users.id = tb_penjualan.id_user', 'left')
+            ->where('tb_penjualan.tunai >= tb_penjualan.total_akhir')
+            ->where('MONTH(tb_penjualan.tanggal)', date('m', strtotime($bulan)))
+            ->where('YEAR(tb_penjualan.tanggal)', date('Y', strtotime($bulan)))
+            ->orderBy('tb_penjualan.id', 'desc');
+            
+        $json = \Irsyadulibad\DataTables\DataTables::use($data)->make();
+        return $json;
+    }
+
+    public function invBlmLunas()
+    {
+        $db = \Config\Database::connect();
+        $bulan = $this->request->getGet('bulan');
+        $data = $db->table('tb_penjualan')
+            ->select('tb_penjualan.id, tb_penjualan.invoice, tb_penjualan.tanggal, tb_penjualan.tunai, tb_penjualan.total_akhir, tb_penjualan.pelanggan, tb_users.nama as kasir')
+            ->join('tb_users', 'tb_users.id = tb_penjualan.id_user', 'left')
+            ->where('tb_penjualan.tunai < tb_penjualan.total_akhir')
+            ->where('MONTH(tb_penjualan.tanggal)', date('m', strtotime($bulan)))
+            ->where('YEAR(tb_penjualan.tanggal)', date('Y', strtotime($bulan)))
+            ->orderBy('tb_penjualan.id', 'desc');
+            
+        $json = \Irsyadulibad\DataTables\DataTables::use($data)->make();
+        return $json;
     }
 
     public function cetak($id)
@@ -311,10 +348,10 @@ class Penjualan extends BaseController
         }
     }
 
-    public function get_unpaid_invoice() 
+    public function get_unpaid_invoice()
     {
         if ($this->request->isAJAX()) {
-            $invoice = $this->request->getVar('id_penjualan');            
+            $invoice = $this->request->getVar('id_penjualan');
             $result = $this->transaksi->select('tb_transaksi.*, tb_item.nama_item as item, tb_item.harga as harga_item')
                 ->where('id_penjualan', $invoice)
                 ->join('tb_item', 'tb_item.id = tb_transaksi.id_item')

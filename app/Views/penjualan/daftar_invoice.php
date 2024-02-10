@@ -1,26 +1,68 @@
 <?= $this->extend('layout/template'); ?>
 <?= $this->section('content'); ?>
 
-
-
 <div class="container-fluid">
-    <div class="card shadow mb-4">
-        <div class="card-body">
-            <div class="pesan" data-pesan="<?= session('pesan') ?>"></div>
-            <div class="table-responsive">
-                <table class="table table-bordered table-striped" id="tabel-invoice" width="100%">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Invoice</th>
-                            <th>Pelanggan</th>
-                            <th>Tanggal</th>
-                            <th>Status</th>
-                            <th>kasir</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                </table>
+
+    <div class="card card-body shadow mb-3">
+        <form class="form-inline">
+            <div class="form-group">
+                <label for="bulan" class="sr-only">Bulan</label>
+                <input type="month" class="form-control" id="bulan" name="bulan" value="<?= $bulan ?>">
+            </div>
+            <div class="px-1"></div>
+            <button type="submit" class="btn btn-primary mb-2">Filter</button>  
+        </form>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card shadow mb-4">
+                <div class="card-header bg-success">
+                    <h6 class="m-0 font-weight-bold text-white">Daftar Invoice Lunas</h6>
+                </div>
+                <div class="card-body">
+                    <div class="pesan" data-pesan="<?= session('pesan') ?>"></div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped" id="tabel-invoice" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Invoice</th>
+                                    <th>Pelanggan</th>
+                                    <th>Tanggal</th>
+                                    <th>Status</th>
+                                    <th>kasir</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow mb-4">
+                <div class="card-header bg-warning">
+                    <h6 class="m-0 font-weight-bold text-white">Daftar Invoice Belum Lunas</h6>
+                </div>
+                <div class="card-body">
+                    <div class="pesan" data-pesan="<?= session('pesan') ?>"></div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped" id="tabel-invoice-belum-lunas" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Invoice</th>
+                                    <th>Pelanggan</th>
+                                    <th>Tanggal</th>
+                                    <th>Status</th>
+                                    <th>kasir</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -166,18 +208,19 @@
         }
         const table = $("#tabel-invoice").DataTable({
             proseccing: true,
-            serverSide: true,
-            order: [
-                [1, "desc"]
-            ],
+            serverSide: false,
             ajax: {
-                url: `${BASE_URL}/penjualan/invoice`
+                url: `${BASE_URL}/penjualan/invLunas?bulan=<?= $bulan ?>`,
+                // success: function(data) {
+                //     console.log(data)
+                // }
             },
             //optional
             "lengthMenu": [
                 [5, 10],
                 [5, 10]
             ],
+            "pageLength": 10,
             "columns": [{
                     render: function(data, type, row, meta) {
                         return meta.row + meta.settings._iDisplayStart + 1;
@@ -208,7 +251,7 @@
                 },
                 {
                     render: function(data, type, row) {
-                        if (row.tunai && row.tunai != 0) {
+                        if (row.tunai && row.tunai >= row.total_akhir) {
                             return `<span class="badge badge-success">Lunas</span>`;
                         } else {
                             return `<span class="badge badge-warning">Belum Lunas</span>`;
@@ -261,6 +304,106 @@
                 }
             ]
         });
+
+        const tableBelumLunas = $("#tabel-invoice-belum-lunas").DataTable({
+            proseccing: true,
+            serverSide: false,
+            ajax: {
+                url: `${BASE_URL}/penjualan/invBlmLunas?bulan=<?= $bulan ?>`,
+                // success: function(data) {
+                //     console.log(data)
+                // }
+            },
+            //optional
+            "lengthMenu": [
+                [5, 10],
+                [5, 10]
+            ],
+            "pageLength": 10,
+            "columns": [{
+                    render: function(data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                {
+                    // data: 'invoice'
+                    render: function(data, type, row) {
+                        return `<a href="javascript:void(0)" class="text-primary" data-id="${row.id}">${row.invoice}</a>`;
+                    }
+                },
+                {
+                    data: 'pelanggan'
+                },
+                {
+                    // data: 'tanggal'
+                    // date is YYYY-MM-DD make it day name, dd month yyyy
+                    render: function(data, type, row) {
+                        let date = new Date(row.tanggal);
+                        let options = {
+                            weekday: 'short',
+                            day: 'numeric',
+                            month: 'short',
+                            year: 'numeric',
+                        };
+                        return date.toLocaleDateString('id-ID', options);
+                    }
+                },
+                {
+                    render: function(data, type, row) {
+                        if (row.tunai && row.tunai >= row.total_akhir) {
+                            return `<span class="badge badge-success">Lunas</span>`;
+                        } else {
+                            return `<span class="badge badge-warning">Belum Lunas</span>`;
+                        }
+                    }
+                },
+                {
+                    render: function(data, type, row) {
+                        if (row.tunai && row.tunai != 0) {
+                            return row.kasir;
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    render: function(data, type, row) {
+                        if (row.tunai && row.tunai != 0) {
+                            let html = `<button class="btn btn-success btn-sm print" data-id='${row.id}'><i class="fas fa-print"></i></button>`;
+                            return html;
+                        } else {
+                            let html = `<button type="button" id="btnBayar" data-id="${row.id}" data-invoice="${row.invoice}" data-toggle="modal" data-target="#modalBayar" class="btn btn-primary btn-sm"><i class="fas fa-money-bill-wave"></i></button>`;
+                            // html += `<button type="button" id="btnTambahPesanan" data-id="${row.id}" data-invoice="${row.invoice}" data-toggle="modal" data-target="#modalTambahPesanan" class="btn btn-warning btn-sm ml-1"><i class="fas fa-plus"></i></button>`;
+                            return html;
+                        }
+                    }
+                }
+            ],
+            columnDefs: [{
+                    targets: 0,
+                    width: "5%"
+                },
+                {
+                    targets: [0, 3],
+                    className: "text-center"
+                },
+                {
+                    targets: [0, 3],
+                    orderable: false
+                },
+                {
+                    targets: [0, 2, 3],
+                    searchable: false
+                },
+                // last column
+                {
+                    targets: -1,
+                    width: "10%",
+                    className: "text-center"
+                }
+            ]
+        });
+
         $(document).on('click', '.print', function(e) {
             window.open(`${BASE_URL}/penjualan/cetak/` + $(this).data('id'))
         });
