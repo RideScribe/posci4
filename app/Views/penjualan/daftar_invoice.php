@@ -10,7 +10,7 @@
                 <input type="month" class="form-control" id="bulan" name="bulan" value="<?= $bulan ?>">
             </div>
             <div class="px-1"></div>
-            <button type="submit" class="btn btn-primary mb-2">Filter</button>  
+            <button type="submit" class="btn btn-primary mb-2">Filter</button>
         </form>
     </div>
 
@@ -210,7 +210,7 @@
         }
         const table = $("#tabel-invoice").DataTable({
             proseccing: true,
-            serverSide: false,
+            serverSide: true,
             ajax: {
                 url: `${BASE_URL}/penjualan/invLunas?bulan=<?= $bulan ?>`,
                 // success: function(data) {
@@ -224,12 +224,13 @@
             ],
             "pageLength": 10,
             "columns": [{
+                    data: 'id',
                     render: function(data, type, row, meta) {
                         return meta.row + meta.settings._iDisplayStart + 1;
                     }
                 },
                 {
-                    // data: 'invoice'
+                    data: 'invoice',
                     render: function(data, type, row) {
                         return `<a href="javascript:void(0)" class="text-primary" data-id="${row.id}">${row.invoice}</a>`;
                     }
@@ -241,7 +242,7 @@
                     data: 'no_meja'
                 },
                 {
-                    // data: 'tanggal'
+                    data: 'tanggal',
                     // date is YYYY-MM-DD make it day name, dd month yyyy
                     render: function(data, type, row) {
                         let date = new Date(row.tanggal);
@@ -255,6 +256,7 @@
                     }
                 },
                 {
+                    data: 'tunai',
                     render: function(data, type, row) {
                         if (row.tunai && row.tunai >= row.total_akhir) {
                             return `<span class="badge badge-success">Lunas</span>`;
@@ -264,6 +266,7 @@
                     }
                 },
                 {
+                    data: 'kasir',
                     render: function(data, type, row) {
                         if (row.tunai && row.tunai != 0) {
                             return row.kasir;
@@ -273,6 +276,7 @@
                     }
                 },
                 {
+                    data: 'id',
                     render: function(data, type, row) {
                         if (row.tunai && row.tunai != 0) {
                             let html = `<button class="btn btn-success btn-sm print" data-id='${row.id}'><i class="fas fa-print"></i></button>`;
@@ -286,33 +290,15 @@
                 }
             ],
             columnDefs: [{
-                    targets: 0,
-                    width: "5%"
-                },
-                {
-                    targets: [0, 3],
-                    className: "text-center"
-                },
-                {
-                    targets: [0, 3],
-                    orderable: false
-                },
-                {
-                    targets: [0, 2, 3],
-                    searchable: false
-                },
-                // last column
-                {
-                    targets: -1,
-                    width: "10%",
-                    className: "text-center"
-                }
-            ]
+                targets: [0, 5, 7],
+                searchable: false,
+                orderable: false
+            }]
         });
 
         const tableBelumLunas = $("#tabel-invoice-belum-lunas").DataTable({
             proseccing: true,
-            serverSide: false,
+            serverSide: true,
             ajax: {
                 url: `${BASE_URL}/penjualan/invBlmLunas?bulan=<?= $bulan ?>`,
                 // success: function(data) {
@@ -326,14 +312,15 @@
             ],
             "pageLength": 10,
             "columns": [{
+                    data: 'id',
                     render: function(data, type, row, meta) {
                         return meta.row + meta.settings._iDisplayStart + 1;
                     }
                 },
                 {
-                    // data: 'invoice'
+                    data: 'invoice',
                     render: function(data, type, row) {
-                        return `<a href="javascript:void(0)" class="text-primary" data-id="${row.id}">${row.invoice}</a>`;
+                        return `<a href="javascript:void(0)" class="text-primary" data-id="${row.id}">${data}</a>`;
                     }
                 },
                 {
@@ -343,7 +330,7 @@
                     data: 'no_meja'
                 },
                 {
-                    // data: 'tanggal'
+                    data: 'tanggal',
                     // date is YYYY-MM-DD make it day name, dd month yyyy
                     render: function(data, type, row) {
                         let date = new Date(row.tanggal);
@@ -357,6 +344,7 @@
                     }
                 },
                 {
+                    data: 'tunai',
                     render: function(data, type, row) {
                         if (row.tunai && row.tunai >= row.total_akhir) {
                             return `<span class="badge badge-success">Lunas</span>`;
@@ -366,6 +354,7 @@
                     }
                 },
                 {
+                    data: 'kasir',
                     render: function(data, type, row) {
                         if (row.tunai && row.tunai != 0) {
                             return row.kasir;
@@ -375,6 +364,7 @@
                     }
                 },
                 {
+                    data: 'id',
                     render: function(data, type, row) {
                         if (row.tunai && row.tunai != 0) {
                             let html = `<button class="btn btn-success btn-sm print" data-id='${row.id}'><i class="fas fa-print"></i></button>`;
@@ -388,28 +378,10 @@
                 }
             ],
             columnDefs: [{
-                    targets: 0,
-                    width: "5%"
-                },
-                {
-                    targets: [0, 3],
-                    className: "text-center"
-                },
-                {
-                    targets: [0, 3],
-                    orderable: false
-                },
-                {
-                    targets: [0, 2, 3],
-                    searchable: false
-                },
-                // last column
-                {
-                    targets: -1,
-                    width: "10%",
-                    className: "text-center"
-                }
-            ]
+                targets: [0, 5, 7],
+                searchable: false,
+                orderable: false
+            }]
         });
 
         $(document).on('click', '.print', function(e) {

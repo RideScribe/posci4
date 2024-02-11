@@ -237,23 +237,24 @@ class Penjualan extends BaseController
 
     public function invLunas()
     {
-        $db = \Config\Database::connect();
+        $db = db_connect();
         $bulan = $this->request->getGet('bulan');
         $data = $db->table('tb_penjualan')
-        ->select('tb_penjualan.id, tb_penjualan.invoice, tb_penjualan.tanggal, tb_penjualan.tunai, tb_penjualan.total_akhir, tb_penjualan.pelanggan, tb_penjualan.no_meja, tb_users.nama as kasir')
-        ->join('tb_users', 'tb_users.id = tb_penjualan.id_user', 'left')
+            ->select('tb_penjualan.id, tb_penjualan.invoice, tb_penjualan.tanggal, tb_penjualan.tunai, tb_penjualan.total_akhir, tb_penjualan.pelanggan, tb_penjualan.no_meja, tb_users.nama as kasir')
+            ->join('tb_users', 'tb_users.id = tb_penjualan.id_user', 'left')
             ->where('tb_penjualan.tunai >= tb_penjualan.total_akhir')
             ->where('MONTH(tb_penjualan.tanggal)', date('m', strtotime($bulan)))
             ->where('YEAR(tb_penjualan.tanggal)', date('Y', strtotime($bulan)))
             ->orderBy('tb_penjualan.id', 'desc');
-            
-        $json = \Irsyadulibad\DataTables\DataTables::use($data)->make();
-        return $json;
+
+        return \Hermawan\DataTables\DataTable::of($data)->toJson(true);
+        // $json = \Irsyadulibad\DataTables\DataTables::use($data)->make();
+        // return $json;
     }
 
     public function invBlmLunas()
     {
-        $db = \Config\Database::connect();
+        $db = db_connect();
         $bulan = $this->request->getGet('bulan');
         $data = $db->table('tb_penjualan')
             ->select('tb_penjualan.id, tb_penjualan.invoice, tb_penjualan.tanggal, tb_penjualan.tunai, tb_penjualan.total_akhir, tb_penjualan.pelanggan, tb_penjualan.no_meja, tb_users.nama as kasir')
@@ -262,9 +263,10 @@ class Penjualan extends BaseController
             ->where('MONTH(tb_penjualan.tanggal)', date('m', strtotime($bulan)))
             ->where('YEAR(tb_penjualan.tanggal)', date('Y', strtotime($bulan)))
             ->orderBy('tb_penjualan.id', 'desc');
-            
-        $json = \Irsyadulibad\DataTables\DataTables::use($data)->make();
-        return $json;
+
+        return \Hermawan\DataTables\DataTable::of($data)->toJson(true);
+        // $json = \Irsyadulibad\DataTables\DataTables::use($data)->make();
+        // return $json;
     }
 
     public function cetak($id)
