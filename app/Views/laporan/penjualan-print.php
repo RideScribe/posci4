@@ -46,7 +46,7 @@ $end = date('Y-m-d', strtotime(str_replace('/', '-', trim(explode('-', $filter['
                 <!-- light gray -->
                 <tr>
                     <td><?= $no++ ?></td>
-                    <td><span><?= mediumdate_indo(date('Y-m-d', strtotime($item['updated_at']))) ?></span></td>
+                    <td><span><?= mediumdate_indo(date('Y-m-d', strtotime($item['tanggal']))) ?></span></td>
                     <td><?= $item['invoice'] ?></td>
                     <td><?= $item['pelanggan'] ?></td>
                     <!-- <td><strong>Tunai : <br /></strong> Rp. <?= rupiah($item['tunai'] ?  $item['tunai'] : 0) ?></td> -->
