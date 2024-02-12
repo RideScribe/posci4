@@ -35,7 +35,7 @@
                                 <td>Rp. <?= rupiah($h->total) ?></td>
                                 <td><?= $h->nama ?></td>
                                 <td class="text-right">
-                                    <?= date('D, d M Y', strtotime($h->created_at)) ?> <br>
+                                    <?= shortdate_day_indo(date('Y-m-d', strtotime($h->created_at))) ?> <br>
                                     <small><?= date('H:i:s', strtotime($h->created_at)) ?></small>
                                 </td>
                             </tr>

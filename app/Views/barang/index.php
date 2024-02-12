@@ -34,7 +34,10 @@
                                 </td>
                                 <td><?= $b->stok ?? 0 ?></td>
                                 <!-- <td><?= $b->nama_pemasok ?></td> -->
-                                <td><?= $b->updated_at ?></td>
+                                <td>
+                                    <?= shortdate_day_indo(date('Y-m-d', strtotime($b->updated_at))) ?> <br>
+                                    <small><?= date('H:i:s', strtotime($b->updated_at)) ?></small>
+                                </td>
                                 <td class="text-right">
                                     <button class="btn btn-sm btn-warning edit-barang" data-id="<?= $b->id ?>" data-nama-barang="<?= $b->barang ?>" data-pemasok="<?= $b->id_pemasok ?>"><i class="fas fa-edit"></i></button>
                                     <button class="btn btn-sm btn-danger hapus-barang" data-id="<?= $b->id ?>"><i class="fas fa-trash"></i></button>
