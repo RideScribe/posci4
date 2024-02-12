@@ -109,7 +109,7 @@ $end = date('Y-m-d', strtotime(str_replace('/', '-', trim(explode('-', $filter['
                     </p>
                 </td>
                 <td class="text-center">
-                    <strong>Pemalang, <?= $filter['tanggal'] ? date_indo(date('Y-m-t', strtotime($filter['tanggal']))) : date_indo(date('Y-m-t')) ?></strong>
+                    <strong>Pemalang, <?= $start ? date_indo(date('Y-m-t', strtotime($start))) : date_indo(date('Y-m-t')) ?></strong>
                     <p>Mengetahui</p>
                     <br />
                     <br />

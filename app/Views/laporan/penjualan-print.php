@@ -184,7 +184,7 @@ $end = date('Y-m-d', strtotime(str_replace('/', '-', trim(explode('-', $filter['
                 </td>
                 <td width="50%" class="text-center">
                     <span style="font-size: 13px !important; font-weight:bolder;">
-                        Pemalang, <?= date_indo($filter['tanggal'] ? date('Y-m-t', strtotime($filter['tanggal'])) : date('Y-m-t')) ?>
+                        Pemalang, <?= date_indo($start ? date('Y-m-t', strtotime($start)) : date('Y-m-t')) ?>
                     </span>
                     <p>Mengetahui</p>
                     <br />
