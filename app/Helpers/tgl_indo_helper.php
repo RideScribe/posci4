@@ -201,6 +201,21 @@ if (!function_exists('longdate_indo')) {
   }
 }
 
+if (!function_exists('longdate_indo_without_day_name')) {
+  function longdate_indo_without_day_name($tanggal)
+  {
+    $ubah = gmdate($tanggal, time() + 60 * 60 * 8);
+    $pecah = explode("-", $ubah);
+    $tgl = $pecah[2];
+    $bln = $pecah[1];
+    $thn = $pecah[0];
+    $bulan = bulan($pecah[1]);
+
+    $nama = date("l", mktime(0, 0, 0, $bln, $tgl, $thn));
+    return $tgl . ' ' . $bulan . ' ' . $thn;
+  }
+}
+
 // month and year indo
 if (!function_exists('month_year_indo')) {
   function month_year_indo($tanggal)

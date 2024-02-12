@@ -8,17 +8,20 @@ if ($persenUntung >= 0) {
 } else {
     $strKondisi = "turun";
 }
+
+$start = date('Y-m-d', strtotime(str_replace('/', '-', trim(explode('-', $filter['tanggal'])[0]))));
+$end = date('Y-m-d', strtotime(str_replace('/', '-', trim(explode('-', $filter['tanggal'])[1]))));
 ?>
 
 <div class="p-2" style="font-size:13px !important;">
 
     <h5 class="text-center pb-0 mb-0">Laporan Penjualan</h5>
     <h4 class="text-center pb-0 mb-0"><u>RESTORAN LEGITA</u></h4>
-    <h6 class="text-center">Bulan <?= month_year_indo($filter['tanggal'] ? date('Y-m', strtotime($filter['tanggal'])) : date('Y-m')) ?></h6>
+    <h6 class="text-center"><?=  $start == $end ? "Tanggal" : "Periode" ?> <?= $start == $end ? longdate_indo_without_day_name($start) : longdate_indo_without_day_name($start) . " - " . longdate_indo_without_day_name($end) ?></h6>
 
     <!-- justify and make margin on first line -->
     <div class="my-3 mt-4" style="text-align: justify; text-justify: inter-word;">
-        <span>Berdasarkan hasil penjualan <?= $isLunas ? '<b>Lunas</b>' : '<b>Belum Lunas</b>' ?> pada bulan <strong><?= month_year_indo($filter['tanggal'] ? date('Y-m', strtotime($filter['tanggal'])) : date('Y-m')) ?></strong>, Berikut adalah rincian pendapatannya :</span>
+        <span>Berdasarkan hasil penjualan <?= $isLunas && $isLunas == 0 ? '<b>Belum Lunas</b>' : ($isLunas == 1 ? '<b>Lunas</b>' : '<b>Lunas</b>') ?> pada <?=  $start == $end ? "Tanggal" : "Periode" ?> <strong><?= $start == $end ? longdate_indo_without_day_name($start) : longdate_indo_without_day_name($start) . " - " . longdate_indo_without_day_name($end) ?></strong>, Berikut adalah rincian pendapatannya :</span>
     </div>
 
     <table class="table" id="tabel-invoice" width="100%">

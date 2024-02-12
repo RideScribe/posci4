@@ -34,7 +34,7 @@ class Laporan extends BaseController
     {
         $tanggal = $this->request->getGet('tanggal');
         $status = $this->request->getGet('status');
-
+        $filter = $this->request->getGet();
 
         $dataPenjualan = $this->penjualan->select('tb_penjualan.*, tb_users.nama as kasir')
             ->join('tb_users', 'tb_users.id = tb_penjualan.id_user', 'left')
@@ -42,15 +42,29 @@ class Laporan extends BaseController
         // ->where('tunai >= total_akhir');
 
         if ($tanggal) {
-            $dataPenjualan->where('MONTH(tanggal)', date('m', strtotime($tanggal)))->where('YEAR(tanggal)', date('Y', strtotime($tanggal)));
+            $start = date('Y-m-d', strtotime(str_replace('/', '-', trim(explode('-', $tanggal)[0]))));
+            $end = date('Y-m-d', strtotime(str_replace('/', '-', trim(explode('-', $tanggal)[1]))));
+
+            // $dataPenjualan->where('MONTH(tanggal)', date('m', strtotime($tanggal)))->where('YEAR(tanggal)', date('Y', strtotime($tanggal)));
+            $dataPenjualan->where("tanggal BETWEEN '$start' AND '$end'");
         } else {
-            $dataPenjualan->where('MONTH(tanggal)', date('m'))->where('YEAR(tanggal)', date('Y'));
+            $start = date('Y-m-1');
+            $end = date('Y-m-t');
+
+            // $dataPenjualan->where('MONTH(tanggal)', date('m'))->where('YEAR(tanggal)', date('Y'));
+            $dataPenjualan->where("tanggal BETWEEN '$start' AND '$end'");
+
+            $filter['tanggal'] = "$start-$end";
         }
 
-        if ($status == 1) {
+        if ($status) {
+            if ($status == 1) {
+                $dataPenjualan->where('tb_penjualan.tunai >= tb_penjualan.total_akhir');
+            } else if ($status == 0) {
+                $dataPenjualan->where('tb_penjualan.tunai < tb_penjualan.total_akhir')->orWhere('tb_penjualan.tunai', null);
+            }
+        } else {
             $dataPenjualan->where('tb_penjualan.tunai >= tb_penjualan.total_akhir');
-        } elseif ($status == 0) {
-            $dataPenjualan->where('tb_penjualan.tunai < tb_penjualan.total_akhir')->orWhere('tb_penjualan.tunai', null);
         }
 
         $dataPenjualan = $dataPenjualan->findAll();
@@ -64,11 +78,11 @@ class Laporan extends BaseController
         }
 
         $data = [
-            'title'     => 'Laporan Penjualan | ' . ($tanggal ? month_year_indo(date('Y-m', strtotime($tanggal))) : month_year_indo(date('Y-m'))),
+            'title'     => 'Laporan Penjualan | ' . mediumdate_indo($start) . " - " . mediumdate_indo($end),
             'data'      => $dataPenjualan,
             'transaksi' => $dataTransaksi,
             'isLunas'   => $status,
-            'filter'    => $this->request->getGet()
+            'filter'    => $filter
         ];
 
         return view('laporan/penjualan', $data);
@@ -78,23 +92,36 @@ class Laporan extends BaseController
     {
         $tanggal = $this->request->getGet('tanggal');
         $status = $this->request->getGet('status');
+        $filter = $this->request->getGet();
 
         $dataPenjualan = $this->penjualan->select('tb_penjualan.*, tb_users.nama as kasir')
             ->join('tb_users', 'tb_users.id = tb_penjualan.id_user', 'left')
             ->orderBy('tb_penjualan.updated_at', 'asc');
 
         if ($tanggal) {
-            $dataPenjualan->where('MONTH(tanggal)', date('m', strtotime($tanggal)))->where('YEAR(tanggal)', date('Y', strtotime($tanggal)));
+            $start = date('Y-m-d', strtotime(str_replace('/', '-', trim(explode('-', $tanggal)[0]))));
+            $end = date('Y-m-d', strtotime(str_replace('/', '-', trim(explode('-', $tanggal)[1]))));
+
+            // $dataPenjualan->where('MONTH(tanggal)', date('m', strtotime($tanggal)))->where('YEAR(tanggal)', date('Y', strtotime($tanggal)));
+            $dataPenjualan->where("tanggal BETWEEN '$start' AND '$end'");
         } else {
-            $dataPenjualan->where('MONTH(tanggal)', date('m'))->where('YEAR(tanggal)', date('Y'));
+            $start = date('Y-m-1');
+            $end = date('Y-m-t');
+
+            // $dataPenjualan->where('MONTH(tanggal)', date('m'))->where('YEAR(tanggal)', date('Y'));
+            $dataPenjualan->where("tanggal BETWEEN '$start' AND '$end'");
+
+            $filter['tanggal'] = "$start-$end";
         }
 
-        // $dataPenjualan->where('tb_penjualan.tunai >= tb_penjualan.total_akhir');
-
-        if ($status == 1) {
+        if ($status) {
+            if ($status == 1) {
+                $dataPenjualan->where('tb_penjualan.tunai >= tb_penjualan.total_akhir');
+            } else if ($status == 0) {
+                $dataPenjualan->where('tb_penjualan.tunai < tb_penjualan.total_akhir')->orWhere('tb_penjualan.tunai', null);
+            }
+        } else {
             $dataPenjualan->where('tb_penjualan.tunai >= tb_penjualan.total_akhir');
-        } elseif ($status == 0) {
-            $dataPenjualan->where('tb_penjualan.tunai < tb_penjualan.total_akhir')->orWhere('tb_penjualan.tunai', null);
         }
 
         $dataPenjualan = $dataPenjualan->findAll();
@@ -136,7 +163,7 @@ class Laporan extends BaseController
             'totalItemTerjual' => $totalItemTerjual,
             'totalPendapatanBulanLalu' => $totalPemdapatanBulanLalu['total_akhir'] ?? 0,
             'isLunas'   => $status,
-            'filter'    => $this->request->getGet() ? $this->request->getGet() : ['tanggal' => date('Y-m')],
+            'filter'    => $filter,
         ];
 
         $html = view('laporan/penjualan-print', $data);

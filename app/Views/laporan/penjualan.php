@@ -10,12 +10,13 @@
                 <div class="col-12 col-md-12">
                     <!-- Filter -->
                     <form action="" method="get" class="mb-3 d-flex flex-column flex-md-row justify-content-center align-items-center" style="gap: 5px;">
-                        <input type="month" name="tanggal" id="tanggal" class="form-control" value="<?= isset($filter['tanggal']) ? $filter['tanggal'] : '' ?>">
-                        <select name="status" id="status" class="form-control custom-select" value="<?= isset($filter['tanggal']) ? $filter['status'] : '' ?>">
+                        <!-- <input type="month" name="tanggal" id="tanggal" class="form-control" value="<?= isset($filter['tanggal']) ? $filter['tanggal'] : '' ?>"> -->
+                        <input type="text" class="form-control float-right" name="tanggal" id="tanggal" value="<?= isset($filter['tanggal']) ? $filter['tanggal'] : '' ?>">
+                        <!-- <select name="status" id="status" class="form-control custom-select" value="<?= isset($filter['status']) ? $filter['status'] : '' ?>">
                             <option value="">-- Status --</option>
-                            <option <?= (isset($filter['status']) ? $filter['status'] : '') == 1 ? 'selected' : '' ?> value="1">Lunas</option>
-                            <option <?= (isset($filter['status']) ? $filter['status'] : '') == 0 ? 'selected' : '' ?> value="0">Belum Lunas</option>
-                        </select>
+                            <option <?= '' //(isset($filter['status']) ? $filter['status'] : '') == 1 ? 'selected' : '' ?> value="1">Lunas</option>
+                            <option <?= '' //(isset($filter['status']) ? $filter['status'] : '') == 0 ? 'selected' : '' ?> value="0">Belum Lunas</option>
+                        </select> -->
 
                         <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
                     </form>
@@ -57,9 +58,9 @@
                             <th class="<?= empty($data) ? '' : 'd-' ?>">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <span>Data Pembelian</span>
-                                    <div>
-                                        <?= $isLunas ? '<span class="badge badge-success">Lunas</span>' : '<span class="badge badge-warning">Belum Lunas</span>' ?>
-                                    </div>
+                                    <!-- <div>
+                                        <?= ''//$isLunas ? '<span class="badge badge-success">Lunas</span>' : '<span class="badge badge-warning">Belum Lunas</span>' ?>
+                                    </div> -->
                                 </div>
                             </th>
                         </tr>
@@ -84,7 +85,8 @@
                                 <!-- <td><strong>Diskon: </strong> <?= $item['diskon'] ?></td> -->
                                 <!-- <td><strong>Kembalian :</strong> Rp. <?= rupiah($item['kembalian'] ?  $item['kembalian'] : 0) ?></td> -->
                                 <!-- <td><strong>Status :</strong> <?= $item['tunai'] && $item['tunai'] != 0 ? '<span class="badge badge-success">Lunas</span>' : '<span class="badge badge-warning">Belum Lunas</span>' ?></td> -->
-                                <!-- <td><strong>Kasir :</strong> <?= '' //$item['kasir'] ?></td> -->
+                                <!-- <td><strong>Kasir :</strong> <?= '' //$item['kasir'] 
+                                                                    ?></td> -->
                                 <td class="p-0 m-0">
                                     <table class="table table-bordered table-striped table-compact table-sm" width="100%">
                                         <thead>
@@ -204,12 +206,24 @@
     </div>
 </div>
 
-<?= $this->section('js'); ?>
-<script>
-    $(document).ready(function() {
-
-    })
-</script>
 <?php $this->endsection(); ?>
 
+
+<?= $this->section('header'); ?>
+<link rel="stylesheet" href="<?= base_url('/plugins/daterangepicker/daterangepicker.css') ?>">
+<?= $this->endSection(); ?>
+
+
+<?= $this->section('js'); ?>
+<script src="<?= base_url('/plugins/moment/moment.min.js') ?>"></script>
+<script src="<?= base_url('/plugins/daterangepicker/daterangepicker.js') ?>"></script>
+<script>
+    $(document).ready(function() {
+        $('#tanggal').daterangepicker({
+            locale: {
+                format: 'DD/MM/YYYY'
+            }
+        })
+    })
+</script>
 <?php $this->endsection(); ?>
