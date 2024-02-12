@@ -54,7 +54,7 @@ class Laporan extends BaseController
             // $dataPenjualan->where('MONTH(tanggal)', date('m'))->where('YEAR(tanggal)', date('Y'));
             $dataPenjualan->where("tanggal BETWEEN '$start' AND '$end'");
 
-            $filter['tanggal'] = "$start-$end";
+            $filter['tanggal'] = date("d/m/Y", strtotime($start)) . " - " . date("d/m/Y", strtotime($end));
         }
 
         if ($status) {
@@ -111,7 +111,7 @@ class Laporan extends BaseController
             // $dataPenjualan->where('MONTH(tanggal)', date('m'))->where('YEAR(tanggal)', date('Y'));
             $dataPenjualan->where("tanggal BETWEEN '$start' AND '$end'");
 
-            $filter['tanggal'] = "$start-$end";
+            $filter['tanggal'] = date("d/m/Y", strtotime($start)) . " - " . date("d/m/Y", strtotime($end));
         }
 
         if ($status) {
@@ -172,7 +172,9 @@ class Laporan extends BaseController
         $this->dompdf->setPaper('A4', 'potrait');
         $this->dompdf->render();
 
-        $this->dompdf->stream('laporan-penjualan-' . ($tanggal ? date('M Y', strtotime($tanggal)) : date('M Y')) . '.pdf', ['Attachment' => false]);
+        $tgl_name = $start == $end ? $start : "$start ~ $end";
+
+        $this->dompdf->stream('laporan-penjualan-' . $tgl_name . '.pdf', ['Attachment' => false]);
 
         exit(0);
     }
@@ -231,28 +233,30 @@ class Laporan extends BaseController
 
     public function pembelian()
     {
-        $month = $this->request->getGet('tanggal');
+        $tanggal = $this->request->getGet('tanggal');
+        $filter = $this->request->getGet();
 
-        if ($month) {
-            $bulan = date('m', strtotime($month));
-            $tahun = date('Y', strtotime($month));
+        if ($tanggal) {
+            $start = date('Y-m-d', strtotime(str_replace('/', '-', trim(explode('-', $tanggal)[0]))));
+            $end = date('Y-m-d', strtotime(str_replace('/', '-', trim(explode('-', $tanggal)[1]))));
         } else {
-            $bulan = date('m');
-            $tahun = date('Y');
+            $start = date('Y-m-1');
+            $end = date('Y-m-t');
+
+            $filter['tanggal'] = date("d/m/Y", strtotime($start)) . " - " . date("d/m/Y", strtotime($end));
         }
 
         $pembalianBulanan = $this->transaksi_barang
-            ->select('tb_transaksi_barang.*, tb_barang.kode, tb_barang.barang, tb_barang.stok as total_stok, tb_users.nama as kasir')
-            ->join('tb_barang', 'tb_barang.id = tb_transaksi_barang.id_barang', 'left')
-            ->join('tb_users', 'tb_users.id = tb_transaksi_barang.id_user', 'left')
-            ->where('YEAR(tb_transaksi_barang.created_at)', $tahun)
-            ->where('MONTH(tb_transaksi_barang.created_at)', $bulan)
-            ->orderBy('tb_transaksi_barang.created_at', 'asc')
+            ->select("tb_transaksi_barang.*, tb_barang.kode, tb_barang.barang, tb_barang.stok as total_stok, tb_users.nama as kasir")
+            ->join("tb_barang", "tb_barang.id = tb_transaksi_barang.id_barang", "left")
+            ->join("tb_users", "tb_users.id = tb_transaksi_barang.id_user", "left")
+            ->where("DATE(tb_transaksi_barang.created_at) BETWEEN '$start' AND '$end'")
+            ->orderBy("tb_transaksi_barang.created_at", "asc")
             ->findAll();
 
         $data = [
-            'title'                     => 'Laporan Pembelian | ' . ($month ? month_year_indo(date('Y-m', strtotime($month))) : month_year_indo(date('Y-m'))),
-            'filter'                    => $this->request->getGet() ? $this->request->getGet() : ['tanggal' => date('Y-m')],
+            'title'                     => 'Laporan Pembelian | ' . mediumdate_indo($start) . " - " . mediumdate_indo($end),
+            'filter'                    => $filter,
             'pembelianBulanan'          => $pembalianBulanan,
         ];
 
@@ -261,22 +265,24 @@ class Laporan extends BaseController
 
     public function pembelianPrint()
     {
-        $month = $this->request->getGet('tanggal');
+        $tanggal = $this->request->getGet('tanggal');
+        $filter = $this->request->getGet();
 
-        if ($month) {
-            $bulan = date('m', strtotime($month));
-            $tahun = date('Y', strtotime($month));
+        if ($tanggal) {
+            $start = date('Y-m-d', strtotime(str_replace('/', '-', trim(explode('-', $tanggal)[0]))));
+            $end = date('Y-m-d', strtotime(str_replace('/', '-', trim(explode('-', $tanggal)[1]))));
         } else {
-            $bulan = date('m');
-            $tahun = date('Y');
+            $start = date('Y-m-1');
+            $end = date('Y-m-t');
+
+            $filter['tanggal'] = date("d/m/Y", strtotime($start)) . " - " . date("d/m/Y", strtotime($end));
         }
 
         $pembalianBulanan = $this->transaksi_barang
             ->select('tb_transaksi_barang.*, tb_barang.kode, tb_barang.barang, tb_barang.stok as total_stok, tb_users.nama as kasir')
             ->join('tb_barang', 'tb_barang.id = tb_transaksi_barang.id_barang', 'left')
             ->join('tb_users', 'tb_users.id = tb_transaksi_barang.id_user', 'left')
-            ->where('YEAR(tb_transaksi_barang.created_at)', $tahun)
-            ->where('MONTH(tb_transaksi_barang.created_at)', $bulan)
+            ->where("DATE(tb_transaksi_barang.created_at) BETWEEN '$start' AND '$end'")
             ->orderBy('tb_transaksi_barang.created_at', 'ASC')
             ->findAll();
 
@@ -289,8 +295,8 @@ class Laporan extends BaseController
         }
 
         $data = [
-            'title'                     => 'Laporan Pembelian | ' . ($month ? month_year_indo(date('Y-m', strtotime($month))) : month_year_indo(date('Y-m'))),
-            'filter'                    => $this->request->getGet() ? $this->request->getGet() : ['tanggal' => date('Y-m')],
+            'title'                     => 'Laporan Pembelian | ' . mediumdate_indo($start) . " - " . mediumdate_indo($end),
+            'filter'                    => $filter,
             'pembelianBulanan'          => $pembalianBulanan,
             'totalItem'                 => $totalItem,
             'totalUang'                 => $totalUang,
@@ -302,7 +308,9 @@ class Laporan extends BaseController
         $this->dompdf->setPaper('A4', 'potrait');
         $this->dompdf->render();
 
-        $this->dompdf->stream('laporan-pembelian-' . ($month ? date('M Y', strtotime($month)) : date('M Y')) . '.pdf', ['Attachment' => false]);
+        $tgl_name = $start == $end ? $start : "$start ~ $end";
+
+        $this->dompdf->stream('laporan-pembelian-' . $tgl_name . '.pdf', ['Attachment' => false]);
 
         exit(0);
     }

@@ -5,12 +5,11 @@
     <div class="card shadow mb-4">
         <div class="card-body">
             <div class="pesan" data-pesan="<?= session('pesan') ?>"></div>
-
             <div class="row">
                 <div class="col-12 col-md-10">
                     <!-- Filter -->
                     <form action="" method="get" class="mb-3 d-flex flex-column flex-md-row justify-content-center align-items-center" style="gap: 5px;">
-                        <input type="month" name="tanggal" id="tanggal" class="form-control" value="<?= isset($filter['tanggal']) ? $filter['tanggal'] : '' ?>">
+                        <input type="text" class="form-control float-right" name="tanggal" id="tanggal" value="<?= isset($filter['tanggal']) ? $filter['tanggal'] : '' ?>">
                         <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
                     </form>
                 </div>
@@ -101,4 +100,23 @@
     </div>
 </div>
 
+<?php $this->endsection(); ?>
+
+<?= $this->section('header'); ?>
+<link rel="stylesheet" href="<?= base_url('/plugins/daterangepicker/daterangepicker.css') ?>">
+<?= $this->endSection(); ?>
+
+
+<?= $this->section('js'); ?>
+<script src="<?= base_url('/plugins/moment/moment.min.js') ?>"></script>
+<script src="<?= base_url('/plugins/daterangepicker/daterangepicker.js') ?>"></script>
+<script>
+    $(document).ready(function() {
+        $('#tanggal').daterangepicker({
+            locale: {
+                format: 'DD/MM/YYYY'
+            }
+        })
+    })
+</script>
 <?php $this->endsection(); ?>

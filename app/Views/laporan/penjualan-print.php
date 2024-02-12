@@ -21,7 +21,7 @@ $end = date('Y-m-d', strtotime(str_replace('/', '-', trim(explode('-', $filter['
 
     <!-- justify and make margin on first line -->
     <div class="my-3 mt-4" style="text-align: justify; text-justify: inter-word;">
-        <span>Berdasarkan hasil penjualan <?= $isLunas && $isLunas == 0 ? '<b>Belum Lunas</b>' : ($isLunas == 1 ? '<b>Lunas</b>' : '<b>Lunas</b>') ?> pada <?=  $start == $end ? "Tanggal" : "Periode" ?> <strong><?= $start == $end ? longdate_indo_without_day_name($start) : longdate_indo_without_day_name($start) . " - " . longdate_indo_without_day_name($end) ?></strong>, Berikut adalah rincian pendapatannya :</span>
+        <span>Berdasarkan hasil penjualan <?= $isLunas && $isLunas == 0 ? '<b>Belum Lunas</b>' : ($isLunas == 1 ? '<b>Lunas</b>' : '<b>Lunas</b>') ?> pada <span class="mr-1"><?=  $start == $end ? "Tanggal" : "Periode" ?></span> <strong><?= $start == $end ? longdate_indo_without_day_name($start) : longdate_indo_without_day_name($start) . " - " . longdate_indo_without_day_name($end) ?></strong>, Berikut adalah rincian pendapatannya :</span>
     </div>
 
     <table class="table" id="tabel-invoice" width="100%">

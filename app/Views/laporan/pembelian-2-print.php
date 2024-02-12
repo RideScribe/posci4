@@ -1,15 +1,20 @@
 <?php $this->extend('layout/print'); ?>
 <?php $this->section('content'); ?>
 
+<?php
+$start = date('Y-m-d', strtotime(str_replace('/', '-', trim(explode('-', $filter['tanggal'])[0]))));
+$end = date('Y-m-d', strtotime(str_replace('/', '-', trim(explode('-', $filter['tanggal'])[1]))));
+?>
+
 <div class="p-2" style="font-size:13px !important;">
 
     <h5 class="text-center pb-0 mb-0">Laporan Pembelian Bahan</h5>
     <h4 class="text-center pb-0 mb-0"><u>RESTORAN LEGITA</u></h4>
-    <h6 class="text-center">Bulan <?= $filter['tanggal'] ? month_year_indo(date('Y-m', strtotime($filter['tanggal']))) : month_year_indo(date('Y-m')) ?></h6>
+    <h6 class="text-center"><?=  $start == $end ? "Tanggal" : "Periode" ?> <?= $start == $end ? longdate_indo_without_day_name($start) : longdate_indo_without_day_name($start) . " - " . longdate_indo_without_day_name($end) ?></h6>
 
     <div class="my-3 mt-4" style="text-align: justify !important; text-justify: inter-word;">
         <span>
-            Berdasarkan data pembelian barang / bahan pada bulan <strong><?= $filter['tanggal'] ? month_year_indo(date('Y-m', strtotime($filter['tanggal']))) : month_year_indo(date('Y-m')) ?></strong>, berikut ini adalah rinciannya :
+            Berdasarkan data pembelian barang / bahan <span class="mr-1"><?=  $start == $end ? "Tanggal" : "Periode" ?></span> <strong><?= $start == $end ? longdate_indo_without_day_name($start) : longdate_indo_without_day_name($start) . " - " . longdate_indo_without_day_name($end) ?></strong>, berikut ini adalah rinciannya :
         </span>
     </div>
 
