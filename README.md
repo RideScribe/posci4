@@ -26,3 +26,8 @@ Aplikasi sistem penjualan berbasis web menggunakan framework codeigniter 4.
  - Akun untuk login :
     - Username : superadmin / admin / kasir
     - Password : 123456
+  
+  ## Ispired
+  This project is inspired by [sejator/posci4](https://github.com/sejator/posci4) with some additional features tailored to personal use.
+
+  <small>credit [halimkun](https://www.github.com/halimkun) | big thanks to [sejator](https://github.com/sejator)</small>
