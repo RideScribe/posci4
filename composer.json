@@ -12,7 +12,7 @@
   "require": {
     "php": "^7.2 || ^8.0",
     "codeigniter4/framework": "^4",
-    "phpoffice/phpspreadsheet": "^1.15",
+    "phpoffice/phpspreadsheet": "^2.2",
     "mailjet/mailjet-apiv3-php": "^1.5",
     "dompdf/dompdf": "^2.0",
     "irsyadulibad/codeigniter4-datatables": "^3.0",
